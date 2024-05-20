@@ -8,7 +8,7 @@ function HighlightedText({ text }) {
         WebkitTextFillColor: "transparent",
       }}
     >
-      {text}
+      {text}{" "}
     </span>
   );
 }
