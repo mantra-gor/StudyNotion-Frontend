@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 
 import CTAButton from "./Button";
-import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import { TypeAnimation } from "react-type-animation";
 
@@ -62,6 +61,8 @@ function CodeBlocks({
             <p>9</p>
             <p>10</p>
             <p>11</p>
+            <p>12</p>
+            <p>13</p>
           </div>
           <div
             className={`w-[90%] flex flex-col gap-2 font-mono ${codeColor} relative`}
