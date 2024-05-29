@@ -38,7 +38,7 @@ function CodeBlocks({
       {/* Section 2 */}
       <div className="md:w-[50%] h-fit relative">
         <div
-          className="flex gap-2 items-start p-2 max-w-[830px] self-stretch"
+          className=" rounded-lg flex gap-2 items-start p-2 max-w-[100vw] md:max-w-[730px] self-stretch"
           style={{
             backdropFilter: "blur(26px)",
             background:
@@ -49,7 +49,7 @@ function CodeBlocks({
             className="opacity-10 z-10 absolute w-full h-full rounded-full"
             style={bgGradient}
           />
-          <div className="text-center flex flex-col w-[10%] text-richblack-400 font-bold ">
+          <div className="text-center flex flex-col w-[10%] text-xs md:text-base text-richblack-400 font-bold ">
             <p>1</p>
             <p>2</p>
             <p>3</p>
@@ -63,9 +63,10 @@ function CodeBlocks({
             <p>11</p>
             <p>12</p>
             <p>13</p>
+            <p>14</p>
           </div>
           <div
-            className={`w-[90%] flex flex-col gap-2 font-mono ${codeColor} relative`}
+            className={`max-w-[90%] flex flex-col gap-2 text-xs md:text-base font-mono ${codeColor} relative overflow-hidden`}
           >
             <TypeAnimation
               sequence={[codeblock, 7000, ""]}
@@ -75,9 +76,8 @@ function CodeBlocks({
               style={{
                 whiteSpace: "pre-line",
                 display: "block",
-                maxWidth: "90vw",
+                maxWidth: "100%",
                 overflow: "hidden",
-                position: "absolute",
               }}
             />
           </div>

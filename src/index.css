@@ -2,9 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
-html{
-    overflow-x: hidden;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
-.homepage_bg{
-    background-image: url(../src/assets/Images/bghome.svg);
+.homepage_bg {
+  background-image: url(../src/assets/Images/bghome.svg);
+}
+
+.timelineImage {
+  /* Ellipse 2 */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+
+  /* Gradient/03 */
+  background: linear-gradient(
+    117.82deg,
+    #9cecfb -9.12%,
+    #65c7f7 48.59%,
+    #0052d4 106.3%
+  );
+  opacity: 0.3;
+  filter: blur(34px);
+  transform: matrix(1, 0, -0.03, 1, 0, 0);
+
+  /* Inside auto layout */
+  flex: none;
+  order: 4;
+  flex-grow: 0;
 }

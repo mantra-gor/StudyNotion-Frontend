@@ -6,6 +6,10 @@ import banner from "../assets/Images/banner.mp4";
 import CodeBlocks from "../components/core/Homepage/CodeBlocks";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
 import TimelineSection from "../components/core/Homepage/TimelineSection";
+import TimelineImage from "../assets/Images/TimelineImage.png";
+import InstructorSection from "../components/core/Homepage/InstructorSection";
+import ExploreMore from "../components/core/Homepage/ExploreMore";
+import Footer from "../components/common/Footer";
 
 function Home() {
   return (
@@ -171,13 +175,15 @@ function Home() {
             codeColor={"text-richblack-10"}
           />
         </div>
+
+        <ExploreMore />
       </div>
 
       {/* Section 2 */}
       <div className="bg-pure-greys-5 text-richblack-700">
-        <div className="homepage_bg h-[300px]">
+        <div className="homepage_bg md:h-[300px]">
           <div className="w-11/12 max-w-maxContent flex items-center justify-center gap-5 mx-auto">
-            <div className="flex flex-row gap-7 text-white mt-[10rem]">
+            <div className="flex flex-row gap-7 text-white mt-20 md:mt-[10rem]">
               <CTAButton active={true} linkTo="/signup">
                 <div className="flex gap-2 items-center">
                   Explore Full Catalog
@@ -192,14 +198,14 @@ function Home() {
         </div>
 
         <div className="w-11/12 mx-auto max-w-maxContent flex flex-col gap-5 items-center justify-center">
-          <div className="flex flex-col md:flex-row gap-4 justify-center my-24">
+          <div className="flex flex-col min-h-max md:flex-row gap-4 justify-center mt-24 md:mb-24">
             <div className="md:w-[40%]">
               <h2 className="text-3xl font-semibold">
                 Get the skills you need for a{" "}
                 <HighlightedText text="job that is in demand." />
               </h2>
             </div>
-            <div className="md:w-[40%]">
+            <div className="md:w-[40%] w-full min-h-[200px]">
               <p className="text-base font-medium mb-8">
                 The modern StudyNotion is the dictates its own terms. Today, to
                 be a competitive specialist requires more than professional
@@ -208,20 +214,57 @@ function Home() {
               <CTAButton active={true}>Learn More</CTAButton>
             </div>
           </div>
-        </div>
 
-        <div className="w-11/12 mx-auto max-w-maxContent flex flex-col md:flex-row gap-5 items-center justify-center">
-          <TimelineSection />
-          <div>
-            <img src="" alt="" />
+          <div className="w-11/12 mx-auto max-w-maxContent flex flex-col md:flex-row gap-14 items-center justify-center bg-yellow">
+            <TimelineSection />
+            <div className="relative z-10 h-full">
+              <div className="timelineImage" />
+              <img
+                src={TimelineImage}
+                className="z-10"
+                alt="Timeline Image"
+                style={{
+                  filter: "drop-shadow(16px 16px #ffffff)",
+                }}
+              />
+              <div className="max-w-[96%] z-60 flex flex-col md:flex-row gap-7 md:gap-0 absolute left-[35%] bottom-[10%] md:left-[50%] translate-x-[-50%] md:bottom-[-10%] py-5 md:py-8 bg-caribbeangreen-700">
+                <div className="flex justify-between items-center px-8 md:px-12 gap-5 border-r border-caribbeangreen-500">
+                  <div className="text-3xl md:text-4xl text-white font-bold">
+                    10
+                  </div>
+                  <div className="text-caribbeangreen-300 uppercase text-sm font-light">
+                    years <br /> experiences
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center px-8 md:px-12 gap-5">
+                  <div className="text-3xl md:text-4xl text-white font-bold">
+                    250
+                  </div>
+                  <div className="text-caribbeangreen-300 uppercase text-sm font-light">
+                    types of <br /> courses
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <LearningLanguageSection />
+          <LearningLanguageSection />
+        </div>
       </div>
 
       {/* Section 3 */}
+      <div className="w-11/12 flex flex-col mx-auto items-center justify-between gap-8 bg-richblack-900 text-white">
+        <InstructorSection />
+
+        <h2 className="md:text-center text-4xl font-semibold mt-10">
+          Reviews from other Learners
+        </h2>
+        {/* Review Carousel */}
+      </div>
+
       {/* Footer */}
+      <Footer />
     </div>
   );
 }
