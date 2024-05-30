@@ -221,8 +221,9 @@ function Home() {
               <div className="timelineImage" />
               <img
                 src={TimelineImage}
-                className="z-10"
                 alt="Timeline Image"
+                className="z-10"
+                loading="lazy"
                 style={{
                   filter: "drop-shadow(16px 16px #ffffff)",
                 }}

@@ -12,6 +12,7 @@ function InstructorSection() {
             src={Instructor}
             alt="Instructor Image"
             className="shadow-white w-[90%]"
+            loading="lazy"
             style={{
               boxShadow: "-20px -20px 0px 0px #FFFFFF",
             }}

@@ -92,6 +92,7 @@ function Footer() {
                 src={Logo}
                 alt="StudyNotion Logo"
                 className="w-[160px] mb-4"
+                loading="lazy"
               />
               <div className="flex flex-col">
                 <FooterHeading>Company</FooterHeading>
