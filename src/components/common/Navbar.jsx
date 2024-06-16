@@ -18,8 +18,8 @@ function Navbar() {
   const request = async () => {
     try {
       const res = await apiConnector("GET", "/course/get-all-category");
-      console.log(res);
-      setSubLinks(res.data.data);
+      console.log(res.data);
+      setSubLinks(res.data);
     } catch (error) {
       console.error("Couldn't fetch the category list: ", error);
     }
@@ -42,25 +42,56 @@ function Navbar() {
           />
         </Link>
 
-        <nav>
+        <nav className="hidden md:block">
           <ul className="flex gap-x-6 text-richblack-25">
             {NavbarLinks.map((item, index) => (
-              <li key={index}>
-                {item.title !== "Catalog" ? (
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      isActive ? "text-yellow-25" : "text-richblack-25"
-                    }
-                  >
-                    {item.title}
-                  </NavLink>
-                ) : (
-                  <div className="flex items-center justify-center gap-2">
-                    {item.title}
-                    <FaAngleDown />
-                  </div>
-                )}
+              <li
+                key={index}
+                className="relative cursor-pointer transition-all duration-200 group"
+              >
+                <>
+                  {item.title !== "Catalog" ? (
+                    <NavLink
+                      to={item.path}
+                      className={({ isActive }) =>
+                        isActive ? "text-yellow-25" : "text-richblack-25"
+                      }
+                    >
+                      {item.title}
+                    </NavLink>
+                  ) : (
+                    <div className="flex items-center justify-center relative gap-1 group">
+                      {item.title}
+                      <FaAngleDown />
+
+                      <div
+                        className="invisible md:w-[300px] -left-8 absolute top-[50px] flex flex-col rounded-md 
+                    bg-richblack-800 p-2 text-richblack-50 opacity-0 transition-all duration-200 
+                    group-hover:visible group-hover:opacity-100 drop-shadow-white-lg z-30"
+                      >
+                        {subLinks?.length ? (
+                          subLinks.map((category, _id) => {
+                            const linkPath = category?.name
+                              ?.toLowerCase()
+                              ?.replace(/ /g, "-");
+                            return (
+                              <Link
+                                key={_id}
+                                className="p-3 hover:bg-richblack-700 rounded-md"
+                                to={linkPath}
+                              >
+                                <div>{category?.name}</div>
+                              </Link>
+                            );
+                          })
+                        ) : (
+                          <div>No Category Found</div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  <div className="mt-3 absolute bg-yellow-100 w-full h-1 opacity-0 group-hover:opacity-100 transition-all duration-200" />
+                </>
               </li>
             ))}
           </ul>
@@ -77,13 +108,15 @@ function Navbar() {
             <div className=" flex gap-4">
               <Link
                 to="/login"
-                className="text-richblack-200 bg-richblack-800 border-richblack-700 px-3 py-2 rounded-md"
+                className="bg-richblack-800 text-richblack-100 border border-richblack-700
+                py-[8px] px-[12px] rounded-[8px] active:bg-opacity-80"
               >
                 Log In
               </Link>
               <Link
                 to="/signup"
-                className="text-richblack-200 bg-richblack-800 border-richblack-700 px-3 py-2 rounded-md"
+                className="bg-richblack-800 text-richblack-100 border border-richblack-700
+                py-[8px] px-[12px] rounded-[8px] active:bg-opacity-80"
               >
                 Sign Up
               </Link>

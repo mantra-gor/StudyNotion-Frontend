@@ -25,8 +25,6 @@ function ExploreMore() {
     setCurrentCard(result[0]?.courses[0]?.heading);
   };
 
-  console.log(courses, "courses");
-
   return (
     <div>
       <div className="text-4xl font-semibold md:text-center">
