@@ -18,7 +18,7 @@ function Navbar() {
   const request = async () => {
     try {
       const res = await apiConnector("GET", "/course/get-all-category");
-      console.log(res.data);
+      // console.log(res.data);
       setSubLinks(res.data);
     } catch (error) {
       console.error("Couldn't fetch the category list: ", error);

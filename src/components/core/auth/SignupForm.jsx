@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Input from "../../ui/Input";
 
 function SignupForm() {
   const [activeRole, setActiveRole] = useState("Student");
@@ -71,7 +72,7 @@ function SignupForm() {
               First Name <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
           </label>
-          <input
+          <Input
             type="text"
             required
             name="firstname"
@@ -79,7 +80,6 @@ function SignupForm() {
             placeholder="Enter First Name"
             onChange={changeHandler}
             value={formData.firstname}
-            className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
           />
         </div>
 
@@ -89,7 +89,7 @@ function SignupForm() {
               Last Name <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
           </label>
-          <input
+          <Input
             type="text"
             required
             name="lastname"
@@ -97,7 +97,6 @@ function SignupForm() {
             placeholder="Enter Last Name"
             onChange={changeHandler}
             value={formData.lastname}
-            className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
           />
         </div>
 
@@ -108,7 +107,7 @@ function SignupForm() {
               <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
           </label>
-          <input
+          <Input
             type="email"
             required
             name="email"
@@ -116,7 +115,7 @@ function SignupForm() {
             placeholder="Enter Email Address"
             onChange={changeHandler}
             value={formData.email}
-            className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
+            className="w-full"
           />
         </div>
         <div className=" col-span-2">
@@ -126,7 +125,7 @@ function SignupForm() {
               <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
           </label>
-          <input
+          <Input
             type="tel"
             required
             name="phone"
@@ -134,7 +133,7 @@ function SignupForm() {
             placeholder="Enter Email Address"
             onChange={changeHandler}
             value={formData.phone}
-            className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
+            className="w-full"
           />
         </div>
 
@@ -145,7 +144,7 @@ function SignupForm() {
               <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
           </label>
-          <input
+          <Input
             type={showPassword ? "text" : "password"}
             required
             name="password"
@@ -153,7 +152,6 @@ function SignupForm() {
             placeholder="Enter Password"
             onChange={changeHandler}
             value={formData.password}
-            className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
           />
           <span
             className=" absolute cursor-pointer text-richblack-5 right-3 top-[38px] text-2xl"
@@ -175,7 +173,7 @@ function SignupForm() {
             </p>
           </label>
           <div>
-            <input
+            <Input
               type={showConfirmPassword ? "text" : "password"}
               required
               name="confirmPassword"
@@ -183,7 +181,6 @@ function SignupForm() {
               placeholder="Confirm Password"
               onChange={changeHandler}
               value={formData.confirmPassword}
-              className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
             />
             <span
               className=" absolute cursor-pointer text-richblack-5 right-3 top-[38px] text-2xl"
@@ -198,7 +195,13 @@ function SignupForm() {
           </div>
         </div>
 
-        <button className=" col-span-2 bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-4">
+        <button
+          style={{
+            boxShadow: "-2px -2px 0px 0px rgba(255, 255, 255, 0.51) inset",
+          }}
+          className="col-span-2 bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-4 active:bg-yellow-25 
+        transition-all duration-200"
+        >
           Create Account
         </button>
       </form>

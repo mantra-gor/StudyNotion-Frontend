@@ -11,9 +11,11 @@ function Template({ title, desc1, desc2, image, formtype }) {
           {title}
         </h1>
         <div className="text-[1.125rem] leading-[1.625rem] mt-4">
-          <span className=" text-richblack-100">{desc1}</span>
+          <span className="text-richblack-100">{desc1}</span>
           <br />
-          <span className=" text-blue-100 italic">{desc2}</span>
+          <span className="font-edu-sa font-semibold text-blue-100 italic">
+            {desc2}
+          </span>
         </div>
 
         {formtype === "signup" ? <SignupForm /> : <LoginForm />}

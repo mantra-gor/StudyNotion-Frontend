@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
+import Input from "../../ui/Input";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -20,8 +21,9 @@ function LoginForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-    toast.success("Logged In");
-    navigate("/dashboard");
+
+    // toast.success("Logged In");
+    // navigate("/dashboard");
   }
 
   return (
@@ -36,7 +38,7 @@ function LoginForm() {
             <sup className=" text-[0.725rem] text-pink-200">*</sup>
           </p>
         </label>
-        <input
+        <Input
           type="email"
           required
           name="email"
@@ -44,7 +46,6 @@ function LoginForm() {
           value={formData.email}
           placeholder="Enter Email Address"
           onChange={changehandler}
-          className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
         />
       </div>
 
@@ -54,7 +55,7 @@ function LoginForm() {
             Password <sup className=" text-[0.725rem] text-pink-200">*</sup>
           </p>
         </label>
-        <input
+        <Input
           type={showPassword ? "text" : "password"}
           required
           name="password"
@@ -62,7 +63,6 @@ function LoginForm() {
           value={formData.password}
           placeholder="Enter Password"
           onChange={changehandler}
-          className=" bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px] shadow-richblack"
         />
         <span
           className=" absolute cursor-pointer text-richblack-5 right-3 top-[38px] text-2xl"
@@ -76,14 +76,23 @@ function LoginForm() {
         </span>
       </div>
 
-      <Link
-        className=" select-none text-blue-100 text-xs italic text-right -mt-2"
-        to="/forgot-password"
-      >
-        Forget Password
-      </Link>
+      <div className="text-right">
+        <Link
+          className="select-none text-blue-100 text-xs italic -mt-2 hover:underline"
+          to="/forgot-password"
+          state={{ emailId: formData.email }}
+        >
+          Forget Password
+        </Link>
+      </div>
 
-      <button className=" bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-4">
+      <button
+        style={{
+          boxShadow: "-2px -2px 0px 0px rgba(255, 255, 255, 0.51) inset",
+        }}
+        className="bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-4 active:bg-yellow-25 
+        transition-all duration-200"
+      >
         Sign In
       </button>
     </form>
