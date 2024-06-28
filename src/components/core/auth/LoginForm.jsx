@@ -10,7 +10,7 @@ function LoginForm() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   function changehandler(event) {
     setFormData((prevFormData) => ({
@@ -76,9 +76,9 @@ function LoginForm() {
         </span>
       </div>
 
-      <div className="text-right">
+      <div className="text-right -mt-3">
         <Link
-          className="select-none text-blue-100 text-xs italic -mt-2 hover:underline"
+          className="select-none text-blue-100 text-xs italic hover:underline"
           to="/forgot-password"
           state={{ emailId: formData.email }}
         >

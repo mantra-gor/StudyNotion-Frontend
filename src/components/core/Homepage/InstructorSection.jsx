@@ -1,6 +1,6 @@
 import Instructor from "../../../assets/Images/Instructor.png";
 import HighlightedText from "./HighlightedText";
-import CTAButton from "./Button";
+import CTAButton from "./CTAButton";
 import { FaArrowRight } from "react-icons/fa6";
 
 function InstructorSection() {

@@ -9,6 +9,13 @@ const axiosInstance = axios.create({
   baseURL: localBaseUrl,
 });
 
+// API Interceptors
+axios.interceptors.request.use((config) => {
+  return config;
+
+  // config.headers.Authorization = `Bearer ${token}`
+});
+
 // API connector function
 export const apiConnector = async (
   method,

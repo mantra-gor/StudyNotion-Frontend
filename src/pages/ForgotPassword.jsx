@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import Input from "../components/ui/Input";
+import { getPasswordResetToken } from "../services/operations/authApi";
+import Button from "../components/ui/Button";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import Spinner from "../components/ui/spinner/Spinner";
 
 function ForgotPassword() {
   const { loading } = useSelector((state) => state.auth);
@@ -9,13 +13,18 @@ function ForgotPassword() {
   const initialEmailId = location.state?.emailId || "";
   const [emailId, setEmailId] = useState(initialEmailId);
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const dispatch = useDispatch();
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getPasswordResetToken(emailId, setIsEmailSent));
+  };
 
   return (
-    <div className="w-full h-full text-richblack-5 flex flex-col justify-center items-center">
+    <div className="w-full h-[90vh] text-richblack-5 flex flex-col justify-center items-center">
       {loading ? (
-        <p>Loading...</p>
+        <Spinner />
       ) : (
-        <div className="md:w-3/12 h-full ">
+        <div className="w-10/12 md:w-3/12 ">
           <h1 className="text-2xl font-bold">
             {!isEmailSent ? "Reset Your Password" : "Check your mail"}
           </h1>
@@ -24,10 +33,10 @@ function ForgotPassword() {
               ? "Have no fear. We’ll email you instructions to reset your password. If you dont have access to your email we can try account recovery"
               : `We have sent the reset email to ${emailId}`}
           </p>
-          <form>
+          <form onSubmit={handleOnSubmit}>
             {!isEmailSent && (
               <label>
-                <p className="text-sm text-richblack-25">Email Address</p>
+                <p className="text-sm text-richblack-25 mb-2">Email Address</p>
                 <Input
                   type="email"
                   name="email"
@@ -35,22 +44,25 @@ function ForgotPassword() {
                   value={emailId}
                   disabled={initialEmailId !== ""}
                   placeholder="Enter your email address"
-                  className="w-full"
+                  className="w-full mb-6"
                   onChange={(e) => setEmailId(e.target.value)}
                 />
               </label>
             )}
             <div>
               {!isEmailSent ? (
-                <button>Reset Password</button>
+                <Button active={true}>Reset Password</Button>
               ) : (
-                <button>Resend Email</button>
+                <Button active={true}>Resend Email</Button>
               )}
             </div>
           </form>
-          <div>
-            <Link to="/login">Back to login</Link>
-          </div>
+          <Link to="/login">
+            <div className="mt-4 flex place-items-center gap-2">
+              <FaArrowLeftLong />
+              <span className="text-sm">Back to login</span>
+            </div>
+          </Link>
         </div>
       )}
     </div>

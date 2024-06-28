@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import HighlightedText from "../components/core/Homepage/HighlightedText";
-import CTAButton from "../components/core/Homepage/Button";
+import CTAButton from "../components/core/Homepage/CTAButton";
 import banner from "../assets/Images/banner.mp4";
 import CodeBlocks from "../components/core/Homepage/CodeBlocks";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
