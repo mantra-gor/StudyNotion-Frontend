@@ -3,12 +3,16 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Input from "../../ui/Input";
+import { useDispatch } from "react-redux";
+import { sendOtp } from "../../../services/operations/authApi";
+import { setSignupData } from "../../../redux/slices/authSlice";
 
 function SignupForm() {
   const [activeRole, setActiveRole] = useState("Student");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -31,9 +35,8 @@ function SignupForm() {
       toast.error("Passwords do not match");
       return;
     }
-    toast.success("Account Created");
-
-    navigate("/dashboard");
+    dispatch(setSignupData(formData));
+    dispatch(sendOtp(formData.email, navigate));
   }
 
   function roleChangeHandler(event) {
@@ -41,7 +44,7 @@ function SignupForm() {
   }
 
   return (
-    <div className="">
+    <div>
       <div className=" my-6 flex justify-between p-1 text-richblack-5 bg-richblack-800 rounded-full w-[50%] shadow-richblack">
         <button
           onClick={roleChangeHandler}

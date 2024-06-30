@@ -1,5 +1,7 @@
 // AUTH ENDPOINTS
 export const authEndpoints = {
+  SIGNUP: "/auth/signup",
+  SENDOTP: "/auth/sendotp",
   RESETPASSWORD_API: "/auth/reset-password",
   FORGOTPASSWORD_API: "/auth/forgot-password",
 };

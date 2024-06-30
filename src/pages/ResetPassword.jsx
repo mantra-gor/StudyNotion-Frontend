@@ -1,18 +1,38 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/ui/spinner/Spinner";
 import Input from "../components/ui/Input";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Button from "../components/ui/Button";
+import { Link, useLocation } from "react-router-dom";
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { resetPassword } from "../services/operations/authApi";
 
 function ResetPassword() {
   const { loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
-    newPassword: null,
-    confirmPassword: null,
+    newPassword: "",
+    confirmPassword: "",
   });
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const token = location.pathname.split("/").at(-1);
+    dispatch(
+      resetPassword(formData.newPassword, formData.confirmPassword, token)
+    );
+  };
 
   return (
     <div className="w-full h-[90vh] text-richblack-5 flex flex-col justify-center items-center">
@@ -24,7 +44,7 @@ function ResetPassword() {
           <p className=" text-richblack-100 my-4">
             Almost done. Enter your new password and youre all set.
           </p>
-          <form>
+          <form onSubmit={onSubmit}>
             <div className=" relative">
               <label htmlFor="newPassword">
                 <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
@@ -39,7 +59,7 @@ function ResetPassword() {
                 id="newPassword"
                 placeholder="Enter Password"
                 className="w-full"
-                onChange={(e) => setFormData({ newPassword: e.target.value })}
+                onChange={handleChange}
                 value={formData.password}
               />
               <span
@@ -66,11 +86,9 @@ function ResetPassword() {
                 required
                 name="confirmPassword"
                 id="confirmPassword"
-                placeholder="Enter Password"
+                placeholder="Confirm Password"
                 className="w-full"
-                onChange={(e) =>
-                  setFormData({ confirmPassword: e.target.value })
-                }
+                onChange={handleChange}
                 value={formData.password}
               />
               <span
@@ -90,6 +108,12 @@ function ResetPassword() {
               <Button active={true}>Reset Password</Button>
             </div>
           </form>
+          <Link to="/login">
+            <div className="mt-4 flex place-items-center gap-2">
+              <FaArrowLeftLong />
+              <span className="text-sm">Back to login</span>
+            </div>
+          </Link>
         </div>
       )}
     </div>
