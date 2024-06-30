@@ -12,6 +12,7 @@ import {
   RiYoutubeFill,
   RiLinkedinFill,
 } from "react-icons/ri";
+import { useState } from "react";
 
 const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
 const Resources = [
@@ -50,9 +51,6 @@ const SocialLinks = [
   },
 ];
 
-// text-richblack-100 heading
-// text-richblack-400 other text
-
 function FooterHeading({ children, className = "" }) {
   return (
     <div className={`${className} mb-3 font-semibold text-richblack-100`}>
@@ -80,6 +78,7 @@ function FooterItem({
 }
 
 function Footer() {
+  const [currentYear] = useState(new Date().getFullYear());
   return (
     <div className="bg-richblack-800 border-t border-richblack-600 mt-6 py-6">
       <div className="w-11/12 mx-auto">
@@ -92,6 +91,7 @@ function Footer() {
                 src={Logo}
                 alt="StudyNotion Logo"
                 className="w-[160px] mb-4"
+                loading="lazy"
               />
               <div className="flex flex-col">
                 <FooterHeading>Company</FooterHeading>
@@ -174,7 +174,7 @@ function Footer() {
               className="hover:text-richblack-200 transition-all duration-200"
               linkTo="https://www.mantragor.tech/"
             >
-              © 2024 Mantra Gor. All rights reserved.
+              © {currentYear} Mantra Gor. All rights reserved.
             </FooterItem>
           </div>
         </div>

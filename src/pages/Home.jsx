@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import HighlightedText from "../components/core/Homepage/HighlightedText";
-import CTAButton from "../components/core/Homepage/Button";
+import CTAButton from "../components/core/Homepage/CTAButton";
 import banner from "../assets/Images/banner.mp4";
 import CodeBlocks from "../components/core/Homepage/CodeBlocks";
 import LearningLanguageSection from "../components/core/Homepage/LearningLanguageSection";
@@ -16,18 +16,18 @@ function Home() {
     <div>
       {/* Section 1 */}
       <div className="w-11/12 relative mx-auto flex flex-col items-center justify-between text-white">
-        <Link to="/signup">
-          <div
-            style={{ boxShadow: "0px -1px 0p x 0px #FFFFFF2E inset" }}
-            className="mx-auto mt-16 p-1 rounded-full bg-richblack-800 font-medium text-richblack-200 transition-all duration-200 
+        <div
+          style={{ boxShadow: "0px -1px 0p x 0px #FFFFFF2E inset" }}
+          className="mx-auto mt-16 p-1 rounded-full bg-richblack-800 font-medium text-richblack-200 transition-all duration-200 
         active:scale-95 w-fit group"
-          >
+        >
+          <Link to="/signup">
             <div className="flex items-center gap-2 px-10 py-[5px] rounded-full group-hover:bg-richblack-900">
               <p>Become an Instructor</p>
               <FaArrowRight />
             </div>
-          </div>
-        </Link>
+          </Link>
+        </div>
 
         <div className="mx-auto mt-16">
           <h1 className="text-richblack-5 text-4xl font-semibold">
@@ -221,8 +221,9 @@ function Home() {
               <div className="timelineImage" />
               <img
                 src={TimelineImage}
-                className="z-10"
                 alt="Timeline Image"
+                className="z-10"
+                loading="lazy"
                 style={{
                   filter: "drop-shadow(16px 16px #ffffff)",
                 }}

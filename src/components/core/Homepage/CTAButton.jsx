@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Button({ children, linkTo, active }) {
+function CTAButton({ children, linkTo, active }) {
   return (
     <Link
       to={linkTo}
@@ -14,4 +14,4 @@ function Button({ children, linkTo, active }) {
   );
 }
 
-export default Button;
+export default CTAButton;

@@ -44,7 +44,7 @@ function TimelineSection() {
                   boxShadow: "0px 0px 62px rgba(0, 0, 0, 0.12)",
                 }}
               >
-                <img src={item.logo} alt={item.logo} />
+                <img src={item.logo} alt={item.logo} loading="lazy" />
               </div>
 
               <div>

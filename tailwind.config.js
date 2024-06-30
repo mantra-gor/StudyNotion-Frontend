@@ -129,6 +129,9 @@ export default {
         maxContent: "1260px",
         maxContentTab: "650px",
       },
+      dropShadow: {
+        "white-lg": [" 2.4px 2.4px 3.2px rgb(255 255 255/ 0.15)"],
+      },
     },
   },
   plugins: [],

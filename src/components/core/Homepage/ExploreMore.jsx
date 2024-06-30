@@ -25,8 +25,6 @@ function ExploreMore() {
     setCurrentCard(result[0]?.courses[0]?.heading);
   };
 
-  console.log(courses, "courses");
-
   return (
     <div>
       <div className="text-4xl font-semibold md:text-center">
@@ -36,12 +34,12 @@ function ExploreMore() {
         Learn to Build Anything You Can Imagine
       </p>
       <div className="w-full flex justify-center items-center">
-        <div className="w-fit mx-auto flex item-center gap-0 md:gap-2 md:m-4 bg-richblack-700 p-2 rounded-full">
+        <div className="w-fit mx-auto flex item-center gap-0 md:gap-2 md:m-2 bg-richblack-700 p-2 rounded-full">
           {tabs.map((tab, index) => (
             <div
               key={index}
               onClick={() => setMyCards(tab)}
-              className={`text-xs md:text-base lg:text-lg flex item-center gap-2 rounded-full transition-all 
+              className={`text-xs md:text-base flex item-center gap-2 rounded-full transition-all 
             duration-200 cursor-pointer hover:bg-richblack-800 py-2 px-[4px] md:px-4 lg:py-3 lg:px-6
              ${
                currentTab === tab
@@ -55,7 +53,7 @@ function ExploreMore() {
         </div>
       </div>
 
-      <div className="h-[50px] md:h-[150px]" />
+      <div className="h-[50px] md:h-[120px]" />
       <div className="flex flex-col justify-between items-center">
         <div className="flex flex-col flex-wrap gap-10 md:flex-row justify-center lg:justify-between pb-5 lg:absolute items-center">
           {courses.map((course, index) => (
