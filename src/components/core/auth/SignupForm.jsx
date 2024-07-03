@@ -14,12 +14,13 @@ function SignupForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    phone: "",
+    phoneNo: "",
     password: "",
     confirmPassword: "",
+    accountType: activeRole,
   });
 
   function changeHandler(event) {
@@ -31,6 +32,7 @@ function SignupForm() {
 
   function submitHandler(event) {
     event.preventDefault();
+    console.log(formData);
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -41,11 +43,15 @@ function SignupForm() {
 
   function roleChangeHandler(event) {
     setActiveRole(event.target.innerText);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      accountType: event.target.innerText,
+    }));
   }
 
   return (
     <div>
-      <div className=" my-6 flex justify-between p-1 text-richblack-5 bg-richblack-800 rounded-full w-[50%] shadow-richblack">
+      <div className="my-6 flex justify-between p-1 text-richblack-5 bg-richblack-800 rounded-full w-[50%] shadow-richblack">
         <button
           onClick={roleChangeHandler}
           className={`${
@@ -68,9 +74,9 @@ function SignupForm() {
         </button>
       </div>
 
-      <form className="grid grid-cols-2 gap-4" onSubmit={submitHandler}>
+      <form className="grid lg:grid-cols-2 gap-4" onSubmit={submitHandler}>
         <div>
-          <label htmlFor="firstname">
+          <label htmlFor="firstName">
             <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
               First Name <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
@@ -78,16 +84,16 @@ function SignupForm() {
           <Input
             type="text"
             required
-            name="firstname"
-            id="firstname"
+            name="firstName"
+            id="firstName"
             placeholder="Enter First Name"
             onChange={changeHandler}
-            value={formData.firstname}
+            value={formData.firstName}
           />
         </div>
 
         <div>
-          <label htmlFor="lastname">
+          <label htmlFor="lastName">
             <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
               Last Name <sup className=" text-[0.725rem] text-pink-200">*</sup>
             </p>
@@ -95,11 +101,11 @@ function SignupForm() {
           <Input
             type="text"
             required
-            name="lastname"
-            id="lastname"
+            name="lastName"
+            id="lastName"
             placeholder="Enter Last Name"
             onChange={changeHandler}
-            value={formData.lastname}
+            value={formData.lastName}
           />
         </div>
 
@@ -122,7 +128,7 @@ function SignupForm() {
           />
         </div>
         <div className=" col-span-2">
-          <label htmlFor="phone">
+          <label htmlFor="phoneNo">
             <p className="text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]">
               Phone Number
               <sup className=" text-[0.725rem] text-pink-200">*</sup>
@@ -131,11 +137,11 @@ function SignupForm() {
           <Input
             type="tel"
             required
-            name="phone"
-            id="phone"
+            name="phoneNo"
+            id="phoneNo"
             placeholder="Enter Email Address"
             onChange={changeHandler}
-            value={formData.phone}
+            value={formData.phoneNo}
             className="w-full"
           />
         </div>

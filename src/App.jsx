@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import AboutUs from "./pages/AboutUs";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/about" element={<AboutUs />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -9,6 +9,7 @@ import { sendOtp, signUp } from "../services/operations/authApi";
 
 function VerifyEmail() {
   const { loading, signupData } = useSelector((state) => state.auth);
+  console.log("signupData", signupData);
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
@@ -49,23 +50,41 @@ function VerifyEmail() {
       {loading ? (
         <Spinner />
       ) : (
-        <div>
-          <h1>Verify Email</h1>
-          <p>A verification code has been sent to you. Enter the code here.</p>
+        <div className="w-10/12 md:w-3/12">
+          <h1 className="text-2xl font-bold">Verify Email</h1>
+          <p className=" text-richblack-100 mt-4">
+            A verification code has been sent to you. Enter the code here.
+          </p>
           <form onSubmit={handleSubmit}>
             <OtpInput
               value={otp}
               numInputs={6}
               onChange={setOtp}
-              renderInput={(props) => <input {...props} />}
+              shouldAutoFocus={true}
+              renderSeparator={<span> - </span>}
+              renderInput={(props) => (
+                <input
+                  {...props}
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "13px",
+                  }}
+                  placeholder="x"
+                  className=" text-richblack-5 bg-richblack-600 rounded-md mx-2 my-4 text-2xl"
+                />
+              )}
             />
             <Button active={true}>Verify Email</Button>
           </form>
           <div className="flex items-center justify-between">
-            <Link to="/login">
+            <Link to="/signup">
               <div className="mt-4 flex place-items-center gap-2">
                 <FaArrowLeftLong />
-                <span className="text-sm">Back to login</span>
+                <span className="text-sm">Back to Signup</span>
               </div>
             </Link>
             <Link>

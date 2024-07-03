@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import toast from "react-hot-toast";
 import Input from "../../ui/Input";
+import { useDispatch } from "react-redux";
+import { login } from "../../../services/operations/authApi";
 
 function LoginForm() {
   const [formData, setFormData] = useState({
@@ -10,7 +11,8 @@ function LoginForm() {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   function changehandler(event) {
     setFormData((prevFormData) => ({
@@ -21,9 +23,7 @@ function LoginForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-
-    // toast.success("Logged In");
-    // navigate("/dashboard");
+    dispatch(login(formData.email, formData.password));
   }
 
   return (
