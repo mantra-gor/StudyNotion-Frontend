@@ -4,25 +4,19 @@ import Logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import { FaAngleDown } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileDropdown from "../core/auth/ProfileDropdown";
-import { apiConnector } from "../../services/apiConnector";
+import { getAllCategory } from "../../services/operations/authApi";
 
 function Navbar() {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalCartItems } = useSelector((state) => state.cart);
-
   const [subLinks, setSubLinks] = useState(null);
+  const dispatch = useDispatch();
 
   const request = async () => {
-    try {
-      const res = await apiConnector("GET", "/course/get-all-category");
-      // console.log(res.data);
-      setSubLinks(res.data);
-    } catch (error) {
-      console.error("Couldn't fetch the category list: ", error);
-    }
+    dispatch(getAllCategory(setSubLinks));
   };
 
   useEffect(() => {
@@ -97,7 +91,7 @@ function Navbar() {
           </ul>
         </nav>
 
-        <div className="flex gap-x-4 items-center">
+        <div className="flex gap-x-4 items-center text-richblack-100">
           {user && user?.accountType === "Student" && (
             <Link to="/dashboard/cart">
               <AiOutlineShoppingCart />

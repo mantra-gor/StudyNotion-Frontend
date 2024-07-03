@@ -4,7 +4,7 @@ import Input from "../components/ui/Input";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import Button from "../components/ui/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { resetPassword } from "../services/operations/authApi";
 
@@ -12,6 +12,7 @@ function ResetPassword() {
   const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,7 +31,12 @@ function ResetPassword() {
     e.preventDefault();
     const token = location.pathname.split("/").at(-1);
     dispatch(
-      resetPassword(formData.newPassword, formData.confirmPassword, token)
+      resetPassword(
+        formData.newPassword,
+        formData.confirmPassword,
+        token,
+        navigate
+      )
     );
   };
 
