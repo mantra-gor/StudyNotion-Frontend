@@ -91,7 +91,7 @@ function Navbar() {
           </ul>
         </nav>
 
-        <div className="flex gap-x-4 items-center">
+        <div className="flex gap-x-4 items-center text-richblack-100">
           {user && user?.accountType === "Student" && (
             <Link to="/dashboard/cart">
               <AiOutlineShoppingCart />

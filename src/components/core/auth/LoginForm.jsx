@@ -87,6 +87,7 @@ function LoginForm() {
       </div>
 
       <button
+        type="submit"
         style={{
           boxShadow: "-2px -2px 0px 0px rgba(255, 255, 255, 0.51) inset",
         }}

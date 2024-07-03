@@ -29,21 +29,24 @@ function AboutUs() {
           </header>
           <div className="flex flex-col justify-between items-center mt-12">
             <div className="md:h-[150px]" />
-            <div className="flex flex-col md:flex-row mx-auto gap-6 md:absolute">
+            <div className="flex flex-col md:flex-row mx-auto justify-center items-center gap-6 md:absolute">
               <img
                 src={BannerImage1}
                 alt="About Us Banner Image1"
                 loading="lazy"
+                className="md:w-1/3"
               />
               <img
                 src={BannerImage2}
                 alt="About Us Banner Image2"
                 loading="lazy"
+                className="md:w-1/3"
               />
               <img
                 src={BannerImage3}
                 alt="About Us Banner Image3"
                 loading="lazy"
+                className="md:w-1/3"
               />
             </div>
           </div>
@@ -88,8 +91,12 @@ function AboutUs() {
               from all walks of life to unlock their full potential.
             </p>
           </div>
-          <div className="md:w-6/12">
-            <img src={FoundingStory} alt="Founding Story" />
+          <div className="md:w-6/12 flex flex-col items-end">
+            <img
+              src={FoundingStory}
+              alt="Founding Story"
+              className="lg:w-[760px]"
+            />
           </div>
         </div>
 
@@ -225,10 +232,11 @@ function AboutUs() {
       </section>
 
       {/* Section 6 */}
-      <section className="w-11/12 relative mx-auto flex flex-col items-center justify-between mt-20">
+      <section className="w-11/12 relative mx-auto flex flex-col items-center justify-between my-24">
         <ContactFormSection />
       </section>
 
+      {/* Footer Section */}
       <Footer />
     </div>
   );

@@ -1,7 +1,8 @@
 import toast from "react-hot-toast";
-import { setLoading } from "../../redux/slices/authSlice";
+import { setLoading, setToken } from "../../redux/slices/authSlice";
 import { apiConnector } from "../apiConnector";
 import { authEndpoints, catalogData } from "../apiEndpoints";
+import { setUser } from "../../redux/slices/profileSlice";
 
 const { SENDOTP, SIGNUP, LOGIN, FORGOTPASSWORD_API, RESETPASSWORD_API } =
   authEndpoints;
@@ -75,6 +76,9 @@ export function login(email, password) {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
+          dispatch(setToken(res.data.token));
+          dispatch(setUser(res.data));
+          localStorage.setItem("token", res.data.token);
         } else {
           throw new Error(res.message);
         }
@@ -107,7 +111,7 @@ export function getPasswordResetToken(email, setIsEmailSent) {
   };
 }
 
-export function resetPassword(newPassword, confirmPassword, token) {
+export function resetPassword(newPassword, confirmPassword, token, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     await apiConnector("POST", RESETPASSWORD_API, {
@@ -118,6 +122,7 @@ export function resetPassword(newPassword, confirmPassword, token) {
       .then((res) => {
         if (res.success) {
           toast.success(res.message);
+          navigate("/login");
         } else {
           throw new Error(res.message);
         }
