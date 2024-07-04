@@ -66,7 +66,7 @@ export function signUp(
   };
 }
 
-export function login(email, password) {
+export function login(email, password, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     await apiConnector("POST", LOGIN, {
@@ -78,7 +78,9 @@ export function login(email, password) {
           toast.success(res.message);
           dispatch(setToken(res.data.token));
           dispatch(setUser(res.data));
+          localStorage.setItem("user", JSON.stringify(res.data));
           localStorage.setItem("token", res.data.token);
+          navigate("/dashboard/my-profile");
         } else {
           throw new Error(res.message);
         }
@@ -147,5 +149,16 @@ export function getAllCategory(setSubLinks) {
       .catch((error) =>
         console.log("Couldn't fetch the category list: ", error)
       );
+  };
+}
+
+export function logout(navigate) {
+  return (dispatch) => {
+    dispatch(setToken(null));
+    dispatch(setUser(null));
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    toast.success("Logged out successfully");
+    navigate("/");
   };
 }
