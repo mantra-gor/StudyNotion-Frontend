@@ -93,9 +93,13 @@ function Navbar() {
 
         <div className="flex gap-x-4 items-center text-richblack-100">
           {user && user?.accountType === "Student" && (
-            <Link to="/dashboard/cart">
-              <AiOutlineShoppingCart />
-              {totalCartItems > 0 && <span>{totalCartItems}</span>}
+            <Link className="relative" to="/dashboard/cart">
+              <AiOutlineShoppingCart size={27} />
+              {totalCartItems > 0 && (
+                <span className="absolute -top-1 -right-2 bg-caribbeangreen-400 px-[5px] py-[1px] font-bold text-richblack-5 rounded-full animate-bounce text-xs">
+                  {totalCartItems}
+                </span>
+              )}
             </Link>
           )}
           {token === null && (
