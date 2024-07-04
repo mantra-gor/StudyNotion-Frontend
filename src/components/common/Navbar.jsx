@@ -24,7 +24,7 @@ function Navbar() {
   }, []);
 
   return (
-    <div className="flex h-14 items-center justify-center border-b border-richblack-700">
+    <div className="flex h-14 items-center justify-center border-b border-richblack-700 bg-richblack-800/50">
       <div className="w-9/12 flex max-w-maxContent items-center justify-between">
         <Link to={"/"}>
           <img

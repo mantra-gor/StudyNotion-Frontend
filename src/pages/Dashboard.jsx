@@ -15,7 +15,7 @@ function Dashboard() {
     <div className="w-full h-full flex">
       <Sidebar />
       <div className="h-full w-full overflow-x-hidden">
-        <div className="py-4">
+        <div className="w-11/12 mx-auto max-w-[1000px] py-4">
           <Outlet />
         </div>
       </div>

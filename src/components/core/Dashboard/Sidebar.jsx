@@ -33,7 +33,7 @@ function Sidebar() {
     setLogoutModalOpen(false);
   };
   return (
-    <div className="bg-richblack-800">
+    <div className="bg-richblack-800/50">
       <div className="flex min-w-[222px] flex-col border-r border-r-richblack-700 h-[calc(100vh-3.5rem)]">
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
