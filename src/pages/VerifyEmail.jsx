@@ -9,7 +9,6 @@ import { sendOtp, signUp } from "../services/operations/authApi";
 
 function VerifyEmail() {
   const { loading, signupData } = useSelector((state) => state.auth);
-  console.log("signupData", signupData);
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const dispatch = useDispatch();
