@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Button from "../../ui/Button";
+import Button from "../../../ui/Button";
 import { TbEdit } from "react-icons/tb";
 import { useState } from "react";
 
