@@ -11,7 +11,7 @@ function ConfirmationModal({
 }) {
   return (
     <div
-      className={`absolute flex justify-center items-center top-0 bottom-0 right-0 left-0 transition-all duration-200 ${
+      className={`fixed flex justify-center items-center top-0 bottom-0 right-0 left-0 transition-all duration-200 z-20 ${
         blur && " backdrop-blur-md"
       }`}
     >

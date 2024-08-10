@@ -34,7 +34,7 @@ function Sidebar() {
   };
   return (
     <div className="bg-richblack-800/50">
-      <div className="flex min-w-[222px] flex-col border-r border-r-richblack-700 h-[calc(100vh-3.5rem)]">
+      <div className="flex min-w-[222px] h-full flex-col border-r border-r-richblack-700">
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
             if (link.type == user?.accountType || !link.type) {

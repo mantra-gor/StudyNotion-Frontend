@@ -23,7 +23,7 @@ function ProfileDropdown() {
   };
   return (
     <>
-      <div className="w-full h-full relative ">
+      <div className="w-full h-full relative">
         {/* group */}
         <div
           className="cursor-pointer"
@@ -45,6 +45,7 @@ function ProfileDropdown() {
             <Link
               className="p-2 hover:bg-richblack-700 rounded-md"
               to="/dashboard/my-profile"
+              onClick={() => setOpen(false)}
             >
               <div className="flex items-center gap-2">
                 <VscAccount />
@@ -53,7 +54,10 @@ function ProfileDropdown() {
             </Link>
             <div
               className="p-2 hover:bg-richblack-700 rounded-md"
-              onClick={() => setLogoutModalOpen(true)}
+              onClick={() => {
+                setLogoutModalOpen(true);
+                setOpen(false);
+              }}
             >
               <div className="flex items-center gap-2 cursor-pointer">
                 <FiLogOut />
@@ -64,7 +68,7 @@ function ProfileDropdown() {
         )}
       </div>
       {logoutModalOpen && (
-        <FocusLock>
+        <FocusLock returnFocus={{ preventScroll: false }}>
           <ConfirmationModal
             modalTitle="Are you sure ?"
             modalText="You will be logged out of your account."
