@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
 import Input from "../../../ui/Input";
+import Flatpickr from "react-flatpickr";
+import "@styles/lib/react-flatpickr/flatpickr.css";
 
 function PersonalDetails({ user, userDetails, setUserDetails }) {
   const handleUserDetailsChange = (e) => {
     const { name, value } = e.target;
+    console.log(value);
     setUserDetails((prev) => ({
       ...prev,
       [name]: value,
@@ -97,12 +99,24 @@ function PersonalDetails({ user, userDetails, setUserDetails }) {
               <p className="text-sm text-richblack-600 font-normal">
                 Date Of Birth
               </p>
-              <Input
+              {/* <Input
                 onChange={handleUserDetailsChange}
                 name="dob"
                 className="text-sm text-richblack-5 font-medium !bg-richblack-700 w-full"
                 type="date"
                 value={userDetails.dob}
+              /> */}
+              <Flatpickr
+                options={{
+                  dateFormat: "d-m-Y",
+                }}
+                placeholder="Choose Date"
+                className=" rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack text-sm font-medium
+                 !bg-richblack-700 w-full"
+                style={{
+                  boxShadow:
+                    " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
+                }}
               />
             </div>
           </div>

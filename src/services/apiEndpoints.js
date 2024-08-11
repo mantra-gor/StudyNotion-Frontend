@@ -1,4 +1,4 @@
-// AUTH ENDPOINTS
+//** AUTH ENDPOINTS
 export const authEndpoints = {
   SIGNUP: "/auth/signup",
   SENDOTP: "/auth/sendotp",
@@ -7,12 +7,17 @@ export const authEndpoints = {
   FORGOTPASSWORD_API: "/auth/forgot-password",
 };
 
-// CATALOG PAGE ENDPOINTS
+//** PROFILE ENDPOINTS
+export const profileEndpoints = {
+  UPDATE_PROFILE: "/profile/update-profile",
+};
+
+//** CATALOG PAGE ENDPOINTS
 export const catalogData = {
   CATALOG_PAGE_API: "/course/get-all-category",
 };
 
-// CONTACT US
+//** CONTACT US
 export const contactUsEndpoint = {
   CONTACT_US_API: "/contact-us",
 };
