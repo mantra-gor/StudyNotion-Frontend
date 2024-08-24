@@ -1,6 +1,7 @@
 import Input from "../../../ui/Input";
 import Flatpickr from "react-flatpickr";
 import "@styles/lib/react-flatpickr/flatpickr.css";
+import moment from "moment";
 
 function PersonalDetails({ user, userDetails, setUserDetails }) {
   const handleUserDetailsChange = (e) => {
@@ -14,7 +15,7 @@ function PersonalDetails({ user, userDetails, setUserDetails }) {
 
   return (
     <div>
-      <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <div>
         <div className="flex justify-between items-center">
           <h2 className="text-richblack-5 text-lg font-semibold">
             Personal Details
@@ -99,23 +100,22 @@ function PersonalDetails({ user, userDetails, setUserDetails }) {
               <p className="text-sm text-richblack-600 font-normal">
                 Date Of Birth
               </p>
-              {/* <Input
-                onChange={handleUserDetailsChange}
-                name="dob"
-                className="text-sm text-richblack-5 font-medium !bg-richblack-700 w-full"
-                type="date"
-                value={userDetails.dob}
-              /> */}
               <Flatpickr
-                options={{
-                  dateFormat: "d-m-Y",
-                }}
+                options={{ dateFormat: "d-m-Y", maxDate: new Date() }}
                 placeholder="Choose Date"
-                className=" rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack text-sm font-medium
-                 !bg-richblack-700 w-full"
+                className=" rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack text-sm font-medium !bg-richblack-700 w-full"
+                value={userDetails?.dob}
                 style={{
                   boxShadow:
                     " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
+                }}
+                onChange={(date) => {
+                  console.log(moment(date[0]).toISOString());
+                  setUserDetails((prev) => ({
+                    ...prev,
+                    // dob: date[0].toISOString(),
+                    dob: moment(date[0]).toISOString(),
+                  }));
                 }}
               />
             </div>

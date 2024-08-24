@@ -12,7 +12,7 @@ function Dashboard() {
   }
 
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full h-screen flex">
       <Sidebar />
       <div className="h-full w-full overflow-x-hidden">
         <div className="w-11/12 mx-auto max-w-[1000px] py-4">

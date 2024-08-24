@@ -4,8 +4,14 @@ import { apiConnector } from "../apiConnector";
 import { authEndpoints, catalogData } from "../apiEndpoints";
 import { setUser } from "../../redux/slices/profileSlice";
 
-const { SENDOTP, SIGNUP, LOGIN, FORGOTPASSWORD_API, RESETPASSWORD_API } =
-  authEndpoints;
+const {
+  SENDOTP,
+  SIGNUP,
+  LOGIN,
+  FORGOTPASSWORD_API,
+  RESETPASSWORD_API,
+  CHANGE_PASSWORD,
+} = authEndpoints;
 const { CATALOG_PAGE_API } = catalogData;
 
 export function sendOtp(email, navigate) {
@@ -149,6 +155,22 @@ export function getAllCategory(setSubLinks) {
       .catch((error) =>
         console.log("Couldn't fetch the category list: ", error)
       );
+  };
+}
+
+export function updatePassword(payload) {
+  return async () => {
+    await apiConnector("PUT", CHANGE_PASSWORD, payload)
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.message);
+        } else {
+          throw new Error(res.message);
+        }
+      })
+      .catch((error) => {
+        console.log("Couldn't Change Password: ", error);
+      });
   };
 }
 

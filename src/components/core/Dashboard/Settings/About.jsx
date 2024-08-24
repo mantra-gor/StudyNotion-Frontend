@@ -6,7 +6,7 @@ function About({ user, userDetails, setUserDetails }) {
   };
   return (
     <div>
-      <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <div>
         <div className="flex justify-between items-center">
           <h2 className="text-richblack-5 text-lg font-semibold">About</h2>
         </div>
