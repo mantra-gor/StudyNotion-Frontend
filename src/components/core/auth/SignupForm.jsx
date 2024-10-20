@@ -32,7 +32,6 @@ function SignupForm() {
 
   function submitHandler(event) {
     event.preventDefault();
-    console.log(formData);
     if (formData.password !== formData.confirmPassword) {
       toast.error("Passwords do not match");
       return;

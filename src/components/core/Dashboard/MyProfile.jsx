@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Button from "../../ui/Button";
 import { TbEdit } from "react-icons/tb";
+import moment from "moment";
 
 function MyProfile() {
   const { user } = useSelector((state) => state.profile);
@@ -68,6 +69,9 @@ function MyProfile() {
           <Button
             active
             className="flex justify-center items-center gap-2 !w-[90px] !h-[40px] !p-5"
+            onClick={() => {
+              navigate("/dashboard/settings");
+            }}
           >
             <TbEdit size={28} />
             Edit
@@ -120,7 +124,7 @@ function MyProfile() {
                 Date Of Birth
               </p>
               <p className="text-sm text-richblack-5 font-medium">
-                {user?.additionalDetails?.dob}
+                {moment(user?.additionalDetails?.dob).format("DD-MMM-YYYY")}
               </p>
             </div>
           </div>

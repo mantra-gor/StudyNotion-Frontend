@@ -11,6 +11,9 @@ import AboutUs from "./pages/AboutUs";
 import ContactUs from "./pages/ContactUs";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/Dashboard/MyProfile";
+import Settings from "./components/core/Dashboard/Settings";
+import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart";
 
 function App() {
   return (
@@ -31,9 +34,13 @@ function App() {
         {/* Protected routes */}
         <Route path="/dashboard" element={<Dashboard />}>
           <Route index path="/dashboard/my-profile" element={<MyProfile />} />
-          <Route path="/dashboard/enrolled-courses" element={<MyProfile />} />
+          <Route
+            path="/dashboard/enrolled-courses"
+            element={<EnrolledCourses />}
+          />
           <Route path="/dashboard/purchase-history" element={<MyProfile />} />
-          <Route path="/dashboard/settings" element={<MyProfile />} />
+          <Route path="/dashboard/settings" element={<Settings />} />
+          <Route path="/dashboard/cart" element={<Cart />} />
         </Route>
       </Routes>
     </div>

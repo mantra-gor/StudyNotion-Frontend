@@ -9,12 +9,32 @@ const axiosInstance = axios.create({
   baseURL: localBaseUrl,
 });
 
-// API Interceptors
-axios.interceptors.request.use((config) => {
-  return config;
+// Axios Request Interceptors
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
-  // config.headers.Authorization = `Bearer ${token}`
-});
+// Axios Response Interceptors
+axiosInstance.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      console.log("Invalid Token!");
+    }
+    return Promise.reject(error);
+  }
+);
 
 // API connector function
 export const apiConnector = async (

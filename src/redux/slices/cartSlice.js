@@ -21,10 +21,19 @@ const cartSlice = createSlice({
     addToCart(state, action) {
       state.cart = action.payload;
     },
+
     // remove from cart
+    removeFromCart(state, action) {
+      state.cart = state.cart.filter((course) => course.id !== action.payload);
+    },
+
     // reset cart
+    resetCart(state) {
+      state.cart = [];
+    },
   },
 });
 
-export const { setTotalCartItems } = cartSlice.actions;
+export const { setTotalCartItems, removeFromCart, resetCart } =
+  cartSlice.actions;
 export default cartSlice.reducer;
