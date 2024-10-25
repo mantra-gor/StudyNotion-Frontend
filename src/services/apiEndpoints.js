@@ -1,4 +1,4 @@
-//** AUTH ENDPOINTS
+//* AUTH ENDPOINTS
 export const authEndpoints = {
   SIGNUP: "/auth/signup",
   SENDOTP: "/auth/sendotp",
@@ -8,18 +8,21 @@ export const authEndpoints = {
   CHANGE_PASSWORD: "/auth/change-password",
 };
 
-//** PROFILE ENDPOINTS
+//* COURSE ENDPOINTS
+export const courseEndpoints = {};
+
+//* PROFILE ENDPOINTS
 export const profileEndpoints = {
   UPDATE_PROFILE: "/profile/update-profile",
   GET_ALL_COURSES: "/profile/get-enrolled-courses",
 };
 
-//** CATALOG PAGE ENDPOINTS
+//* CATALOG PAGE ENDPOINTS
 export const catalogData = {
   CATALOG_PAGE_API: "/course/get-all-category",
 };
 
-//** CONTACT US
+//* CONTACT US
 export const contactUsEndpoint = {
   CONTACT_US_API: "/contact-us",
 };

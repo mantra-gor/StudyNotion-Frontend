@@ -138,7 +138,7 @@ function SignupForm() {
             required
             name="phoneNo"
             id="phoneNo"
-            placeholder="Enter Email Address"
+            placeholder="Enter Phone Number"
             onChange={changeHandler}
             value={formData.phoneNo}
             className="w-full"
