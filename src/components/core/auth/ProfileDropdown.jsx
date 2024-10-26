@@ -5,6 +5,7 @@ import { FiLogOut } from "react-icons/fi";
 import { useContext } from "react";
 import useClickOutside from "../../../hooks/useClickOutside";
 import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
+import { AiOutlineLogout } from "react-icons/ai";
 
 function ProfileDropdown() {
   const [ref, open, setOpen] = useClickOutside();
@@ -37,7 +38,7 @@ function ProfileDropdown() {
               onClick={() => setOpen(false)}
             >
               <div className="flex items-center gap-2">
-                <VscAccount />
+                <VscAccount size={19} />
                 Dashboard
               </div>
             </Link>
@@ -49,7 +50,7 @@ function ProfileDropdown() {
               }}
             >
               <div className="flex items-center gap-2 cursor-pointer">
-                <FiLogOut />
+                <AiOutlineLogout size={19} />
                 Logout
               </div>
             </div>

@@ -75,26 +75,28 @@ export function signUp(
 export function login(email, password, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
-    await apiConnector("POST", LOGIN, {
-      email,
-      password,
-    })
-      .then((res) => {
-        if (res.success) {
-          toast.success(res.message);
-          dispatch(setToken(res.data.token));
-          dispatch(setUser(res.data));
-          localStorage.setItem("user", JSON.stringify(res.data));
-          localStorage.setItem("token", res.data.token);
-          navigate("/dashboard/my-profile");
-        } else {
-          throw new Error(res.message);
-        }
-      })
-      .catch((error) => {
-        console.log("Reset Password Token Failed: ", error);
+    try {
+      const res = await apiConnector("POST", LOGIN, {
+        email,
+        password,
       });
-    dispatch(setLoading(false));
+
+      if (res.success) {
+        toast.success(res.message);
+        dispatch(setToken(res.data.token));
+        dispatch(setUser(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("token", res.data.token);
+        navigate("/dashboard/my-profile");
+      } else {
+        toast.error(res.message);
+      }
+    } catch (error) {
+      console.error("Authentication Failed: ", error);
+      toast.error("Authentication failed. Please try again.");
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 }
 

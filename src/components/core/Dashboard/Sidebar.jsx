@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { sidebarLinks } from "../../../data/dashboard-links";
 import Spinner from "../../ui/spinner/Spinner";
 import SidebarLink from "./SidebarLink";
-import { FiLogOut } from "react-icons/fi";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
+import { AiOutlineLogout } from "react-icons/ai";
 
 function Sidebar() {
   const { setLogoutModalOpen } = useContext(LogoutConfirmationContext);
@@ -72,9 +72,9 @@ function Sidebar() {
         </div>
         <button
           onClick={() => setLogoutModalOpen(true)}
-          className="flex gap-2 justify-start items-center p-2 pl-4 text-richblack-300 transition-all duration-200"
+          className="flex gap-2 justify-start items-center p-2 pl-[0.9rem] text-richblack-300 transition-all duration-200"
         >
-          <FiLogOut size={21} />
+          <AiOutlineLogout size={26} />
           {!sidebarCollapsed && "Logout"}
         </button>
       </div>
