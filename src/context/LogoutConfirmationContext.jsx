@@ -12,6 +12,7 @@ export const LogoutConfirmationProvider = ({ children }) => {
 
   const logoutUser = () => {
     dispatch(logout(navigate));
+    setLogoutModalOpen(false);
   };
 
   const cancelLogout = () => {
