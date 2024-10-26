@@ -1,7 +1,7 @@
 import * as Icons from "react-icons/vsc";
 import { NavLink } from "react-router-dom";
 
-function SidebarLink({ data }) {
+function SidebarLink({ data, sidebarCollapsed }) {
   const Icon = Icons[data.icon];
   return (
     <NavLink
@@ -15,8 +15,8 @@ function SidebarLink({ data }) {
       }`
       }
     >
-      <div>{<Icon size={16} />}</div>
-      <div>{data?.name}</div>
+      <div>{<Icon size={21} />}</div>
+      {!sidebarCollapsed && <div>{data?.name}</div>}
     </NavLink>
   );
 }

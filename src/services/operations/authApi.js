@@ -148,6 +148,7 @@ export function getAllCategory(setSubLinks) {
       .then((res) => {
         if (res.success) {
           setSubLinks(res.data);
+          return res.data;
         } else {
           throw new Error(res.message);
         }

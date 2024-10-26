@@ -6,15 +6,14 @@ import { Outlet } from "react-router-dom";
 function Dashboard() {
   const { loading: authLoading } = useSelector((state) => state.auth);
   const { loading: profileLoading } = useSelector((state) => state.profile);
-
   if (authLoading || profileLoading) {
     return <Spinner />;
   }
 
   return (
-    <div className="w-full h-screen flex">
+    <div className="w-full h-full flex">
       <Sidebar />
-      <div className="h-full w-full overflow-x-hidden">
+      <div className="h-full w-full ml-[60px] md:ml-[232px] overflow-x-hidden">
         <div className="w-11/12 mx-auto max-w-[1000px] py-4">
           <Outlet />
         </div>
