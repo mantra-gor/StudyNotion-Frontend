@@ -1,5 +1,6 @@
-import { useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 import { lazy } from "react";
+import ProtectedRoute from "./ProtectedRoute";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -18,16 +19,17 @@ const Settings = lazy(() => import("../components/core/Dashboard/Settings"));
 const Cart = lazy(() => import("../components/core/Dashboard/Cart"));
 const AddCourse = lazy(() => import("../components/core/Dashboard/AddCourse"));
 const BlankLayout = lazy(() => import("../components/core/Layout/BlankLayout"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 const Router = () => {
   const routes = useRoutes([
     {
-      path: "*",
-      index: true,
+      path: "/",
       element: <BlankLayout />,
       children: [
         {
           path: "/",
+          index: true,
           element: <Home />,
         },
         {
@@ -60,33 +62,53 @@ const Router = () => {
         },
         {
           path: "/dashboard",
-          element: <Dashboard />,
+          element: (
+            <ProtectedRoute
+              allowedRole={["Admin", "Instructor", "Student"]}
+              element={<Dashboard />}
+            />
+          ),
           children: [
             {
-              path: "/my-profile",
+              path: "/dashboard/",
+              element: <Navigate to="/dashboard/my-profile" replace={true} />,
+            },
+            {
+              path: "/dashboard/my-profile",
               element: <MyProfile />,
             },
             {
-              path: "/enrolled-courses",
+              path: "dashboard/enrolled-courses",
               element: <EnrolledCourses />,
             },
             {
-              path: "/purchase-history",
+              path: "/dashboard/purchase-history",
               element: <EnrolledCourses />,
             },
             {
-              path: "/settings",
+              path: "/dashboard/settings",
               element: <Settings />,
             },
             {
-              path: "/cart",
-              element: <Cart />,
+              path: "/dashboard/cart",
+              element: (
+                <ProtectedRoute allowedRole={["Student"]} element={<Cart />} />
+              ),
             },
             {
-              path: "/add-course",
-              element: <AddCourse />,
+              path: "/dashboard/add-course",
+              element: (
+                <ProtectedRoute
+                  allowedRole={["Admin", "Instructor"]}
+                  element={<AddCourse />}
+                />
+              ),
             },
           ],
+        },
+        {
+          path: "*",
+          element: <NotFound />,
         },
       ],
     },

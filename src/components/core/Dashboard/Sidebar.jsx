@@ -1,16 +1,14 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useContext, useState } from "react";
+import { useSelector } from "react-redux";
 import { sidebarLinks } from "../../../data/dashboard-links";
 import Spinner from "../../ui/spinner/Spinner";
 import SidebarLink from "./SidebarLink";
 import { FiLogOut } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import ConfirmationModal from "../../common/ConfirmationModal";
-import { logout } from "../../../services/operations/authApi";
-import FocusLock from "react-focus-lock";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
+import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
 
-function Sidebar({ logoutModalOpen, setLogoutModalOpen }) {
+function Sidebar() {
+  const { setLogoutModalOpen } = useContext(LogoutConfirmationContext);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
     const isSidebarCollapsed =
       localStorage.getItem("sidebarCollapsed") === "true";

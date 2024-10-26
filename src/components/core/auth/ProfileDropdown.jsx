@@ -1,26 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { FiLogOut } from "react-icons/fi";
-import { useState } from "react";
-import FocusLock from "react-focus-lock";
-import ConfirmationModal from "../../common/ConfirmationModal";
-import { logout } from "../../../services/operations/authApi";
+import { useContext } from "react";
 import useClickOutside from "../../../hooks/useClickOutside";
+import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
 
 function ProfileDropdown() {
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [ref, open, setOpen] = useClickOutside();
   const { user } = useSelector((state) => state.profile);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const logoutUser = () => {
-    dispatch(logout(navigate));
-  };
-  const cancelLogout = () => {
-    setLogoutModalOpen(false);
-  };
+  const { setLogoutModalOpen } = useContext(LogoutConfirmationContext);
   return (
     <>
       <div className="w-full h-full relative">
@@ -67,18 +56,6 @@ function ProfileDropdown() {
           </div>
         )}
       </div>
-      {logoutModalOpen && (
-        <FocusLock returnFocus={{ preventScroll: false }}>
-          <ConfirmationModal
-            modalTitle="Are you sure ?"
-            modalText="You will be logged out of your account."
-            highlightedBtnText="Logout"
-            btnText="Cancel"
-            highlightedBtnOnClick={logoutUser}
-            btnOnclick={cancelLogout}
-          />
-        </FocusLock>
-      )}
     </>
   );
 }
