@@ -11,13 +11,13 @@ function ProfilePicture({ user }) {
   }, []);
   return (
     <div>
-      <div className=" bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <div className=" bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
         <div className="flex justify-between">
           <div className="flex items-center gap-8">
             <img
               src={user?.avatar}
               alt="Avatar"
-              className="w-16 rounded-full"
+              className="w-12 md:w-16 rounded-full"
             />
             <div>
               <p className="text-richblack-5 text-lg font-semibold">

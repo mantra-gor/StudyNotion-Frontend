@@ -19,7 +19,7 @@ function AddCourse() {
           <CourseStepper />
         </div>
       </div>
-      <div className="w-5/12 bg-richblack-800 border border-richblack-700 p-8 rounded-lg">
+      <div className="w-5/12 h-fit bg-richblack-800 border border-richblack-700 p-8 rounded-lg">
         <h3 className="text-xl font-semibold">Code Upload Tips</h3>
         <ul>
           {uploadTips?.map((tip, index) => (

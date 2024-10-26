@@ -36,9 +36,11 @@ function Settings() {
 
   return (
     <div className="w-full flex flex-col gap-8 mb-8">
-      <h1 className="text-3xl text-richblack-5 m-2">Edit Profile</h1>
+      <h1 className="text-2xl md:text-3xl text-richblack-5 m-2">
+        Edit Profile
+      </h1>
       <ProfilePicture user={user} />
-      <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md flex flex-col gap-4">
+      <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md flex flex-col gap-4">
         <About
           user={user}
           userDetails={userDetails}

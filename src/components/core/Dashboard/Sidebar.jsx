@@ -8,11 +8,14 @@ import { useNavigate } from "react-router-dom";
 import ConfirmationModal from "../../common/ConfirmationModal";
 import { logout } from "../../../services/operations/authApi";
 import FocusLock from "react-focus-lock";
+import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
-function Sidebar() {
-  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+function Sidebar({ logoutModalOpen, setLogoutModalOpen }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const isSidebarCollapsed =
+      localStorage.getItem("sidebarCollapsed") === "true";
+    return isSidebarCollapsed ?? window.innerWidth <= 768;
+  });
   const { user, loading: profileLoading } = useSelector(
     (state) => state.profile
   );
@@ -20,50 +23,63 @@ function Sidebar() {
   if (authLoading || profileLoading) {
     return <Spinner />;
   }
+
   const Settings = {
     name: "Settings",
     path: "/dashboard/settings",
     icon: "VscSettingsGear",
   };
 
-  const logoutUser = () => {
-    dispatch(logout(navigate));
+  const handleSidebarCollapse = () => {
+    setSidebarCollapsed((prev) => {
+      localStorage.setItem("sidebarCollapsed", !prev);
+      return !prev;
+    });
   };
-  const cancelLogout = () => {
-    setLogoutModalOpen(false);
-  };
+
   return (
-    <div className="bg-richblack-800/50">
-      <div className="flex min-w-[222px] h-full flex-col border-r border-r-richblack-700">
-        <div className="flex flex-col">
+    <div className="bg-richblack-800/50 backdrop-blur-lg fixed h-screen left-0">
+      <div
+        className={`flex h-full flex-col border-r border-r-richblack-700 relative ${
+          sidebarCollapsed ? "w-[60px]" : "w-[80vw] md:max-w-[232px]"
+        }`}
+      >
+        <button
+          className={` ${
+            sidebarCollapsed
+              ? "flex justify-center items-center h-8 w-8 mx-auto my-3 rotate-180"
+              : "absolute m-1"
+          } border-2 border-richblack-300 right-0 bg-richblack-700 hover:bg-yellow-100 rounded-full group opacity-30 hover:opacity-100 duration-200`}
+          onClick={handleSidebarCollapse}
+        >
+          <TbLayoutSidebarLeftCollapse
+            className="text-richblack-200 m-1 cursor-pointer group-hover:text-richblack-500"
+            size={21}
+          />
+        </button>
+        <div className="flex flex-col w-full">
           {sidebarLinks.map((link) => {
             if (link.type == user?.accountType || !link.type) {
-              return <SidebarLink key={link.id} data={link} />;
+              return (
+                <SidebarLink
+                  key={link.id}
+                  sidebarCollapsed={sidebarCollapsed}
+                  data={link}
+                />
+              );
             }
           })}
           <div className="w-10/12 mx-auto h-[1px] bg-richblack-700 my-4" />
-          <SidebarLink data={Settings} />
-          <button
-            onClick={() => setLogoutModalOpen(true)}
-            className="flex gap-2 justify-start items-center p-2 pl-4 text-richblack-300 transition-all duration-200"
-          >
-            <FiLogOut />
-            Logout
-          </button>
+          <SidebarLink data={Settings} sidebarCollapsed={sidebarCollapsed} />
         </div>
+        <button
+          onClick={() => setLogoutModalOpen(true)}
+          className="flex gap-2 justify-start items-center p-2 pl-4 text-richblack-300 transition-all duration-200"
+        >
+          <FiLogOut size={21} />
+          {!sidebarCollapsed && "Logout"}
+        </button>
       </div>
-      {logoutModalOpen && (
-        <FocusLock>
-          <ConfirmationModal
-            modalTitle="Are you sure ?"
-            modalText="You will be logged out of your account."
-            highlightedBtnText="Logout"
-            btnText="Cancel"
-            highlightedBtnOnClick={logoutUser}
-            btnOnclick={cancelLogout}
-          />
-        </FocusLock>
-      )}
     </div>
   );
 }

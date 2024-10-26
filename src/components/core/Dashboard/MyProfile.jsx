@@ -9,14 +9,14 @@ function MyProfile() {
   const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col gap-8 mb-8">
-      <h1 className="text-3xl text-richblack-5 m-2">My Profile</h1>
-      <div className=" bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <h1 className="text-2xl md:text-3xl text-richblack-5 m-2">My Profile</h1>
+      <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
         <div className="flex justify-between">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             <img
               src={user?.avatar}
               alt="Avatar"
-              className="w-16 rounded-full"
+              className="w-12 md:w-16 rounded-full"
             />
             <div>
               <p className="text-richblack-5 text-lg font-semibold">
@@ -30,7 +30,7 @@ function MyProfile() {
             onClick={() => {
               navigate("/dashboard/settings");
             }}
-            className="flex justify-center items-center gap-2 !w-[90px] !h-[40px] !p-5"
+            className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
           >
             <TbEdit size={28} />
             Edit
@@ -38,7 +38,7 @@ function MyProfile() {
         </div>
       </div>
 
-      <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
         <div className="flex justify-between items-center">
           <h2 className="text-richblack-5 text-lg font-semibold">About</h2>
           <Button
@@ -46,7 +46,7 @@ function MyProfile() {
             onClick={() => {
               navigate("/dashboard/settings");
             }}
-            className="flex justify-center items-center gap-2 !w-[90px] !h-[40px] !p-5"
+            className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
           >
             <TbEdit size={28} />
             Edit
@@ -56,19 +56,19 @@ function MyProfile() {
           <p className="text-richblack-100">
             {user.additionalDetails.about
               ? user?.additionalDetails?.about
-              : "Write Somwthing about Yourself."}
+              : "Write something about yourself."}
           </p>
         </div>
       </div>
 
-      <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+      <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
         <div className="flex justify-between items-center">
           <h2 className="text-richblack-5 text-lg font-semibold">
             Personal Details
           </h2>
           <Button
             active
-            className="flex justify-center items-center gap-2 !w-[90px] !h-[40px] !p-5"
+            className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
             onClick={() => {
               navigate("/dashboard/settings");
             }}

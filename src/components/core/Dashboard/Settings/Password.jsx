@@ -21,7 +21,6 @@ function Password() {
       ...prev,
       [name]: !prev[name],
     }));
-    console.log(passwordVisible);
   };
 
   const changePassword = (data) => {
@@ -31,15 +30,15 @@ function Password() {
   return (
     <div>
       <form onSubmit={handleSubmit(changePassword)}>
-        <div className="bg-richblack-800 border border-richblack-700 px-8 py-6 rounded-md">
+        <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 srounded-md">
           <div className="flex justify-between items-center">
             <h2 className="text-richblack-5 text-lg font-semibold">
               Change Password
             </h2>
           </div>
 
-          <div className="flex justify-between items-center">
-            <div className="mt-5 grid grid-cols-1 gap-8 w-6/12">
+          <div className="flex flex-col-reverse md:flex-row justify-between items-center">
+            <div className="mt-5 grid grid-cols-1 gap-8 w-full md:w-6/12">
               <div className="relative">
                 <label>
                   <p className="text-sm text-richblack-600 font-normal">
@@ -127,8 +126,8 @@ function Password() {
                 </label>
               </div>
             </div>
-            <div className="w-6/12 px-10">
-              <h3 className="text-xl font-semibold text-richblack-50">
+            <div className="w-full md:w-6/12 mt-4 md:px-10">
+              <h3 className="text-base md:text-lg font-semibold text-richblack-50">
                 New Password Requirements:
               </h3>
               <ul className="mt-8 text-richblack-100">

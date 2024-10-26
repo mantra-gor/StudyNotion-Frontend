@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../../../../services/operations/authApi";
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import TagsInput from "../../../../ui/form/TagsInput";
+import Upload from "../../../../ui/form/Upload";
 
 function CourseInformationForm() {
   const {
@@ -157,7 +158,8 @@ function CourseInformationForm() {
             </span>
           )}
         </div>
-        <TagsInput />
+        <TagsInput setValue={setValue} errors={errors} />
+        <Upload register={register} multiple={false} />
       </form>
     </div>
   );
