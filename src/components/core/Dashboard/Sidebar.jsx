@@ -74,7 +74,7 @@ function Sidebar() {
           onClick={() => setLogoutModalOpen(true)}
           className="flex gap-2 justify-start items-center p-2 pl-[0.9rem] text-richblack-300 transition-all duration-200"
         >
-          <AiOutlineLogout size={26} />
+          <AiOutlineLogout size={24} />
           {!sidebarCollapsed && "Logout"}
         </button>
       </div>

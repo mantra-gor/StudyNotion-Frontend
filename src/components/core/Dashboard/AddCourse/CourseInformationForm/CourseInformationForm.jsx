@@ -5,6 +5,7 @@ import { getAllCategory } from "../../../../../services/operations/authApi";
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import TagsInput from "../../../../ui/form/TagsInput";
 import Upload from "../../../../ui/form/Upload";
+import RequirementField from "./RequirementField";
 
 function CourseInformationForm() {
   const {
@@ -58,7 +59,7 @@ function CourseInformationForm() {
             id="courseTitle"
             name="courseTitle"
             placeholder="Enter Course Title"
-            className={`w-100 bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
+            className={`w-full bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
             style={{
               boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
             }}
@@ -80,8 +81,8 @@ function CourseInformationForm() {
             id="courseShortDesc"
             name="courseShortDesc"
             placeholder="Enter Course Short Description"
-            className={`w-100 bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
             rows={3}
+            className={`w-full bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
             style={{
               boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
             }}
@@ -160,6 +161,34 @@ function CourseInformationForm() {
         </div>
         <TagsInput setValue={setValue} errors={errors} />
         <Upload register={register} multiple={false} />
+        <div className="grid gap-y-1">
+          <label>
+            Benifits of the course{" "}
+            <sup className=" text-[0.725rem] text-pink-200">*</sup>
+          </label>
+          <textarea
+            name="courseBenifits"
+            id="courseBenifits"
+            placeholder="Enter Benifits of the course"
+            {...register("courseBenifits", { required: true })}
+            className={`w-full bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
+            style={{
+              boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
+            }}
+          ></textarea>
+          {errors.courseBenifits && (
+            <span className="text-pink-200 text-sm">
+              Course Benifits is required
+            </span>
+          )}
+        </div>
+        <RequirementField
+          name="courseRequirements"
+          label="Requirements/Instructions"
+          register={register}
+          setValue={setValue}
+          getValue={getValue}
+        />
       </form>
     </div>
   );
