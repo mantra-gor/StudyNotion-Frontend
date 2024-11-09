@@ -9,7 +9,9 @@ export const authEndpoints = {
 };
 
 //* COURSE ENDPOINTS
-export const courseEndpoints = {};
+export const courseEndpoints = {
+  ADD_COURSE: "/course/create-course",
+};
 
 //* PROFILE ENDPOINTS
 export const profileEndpoints = {

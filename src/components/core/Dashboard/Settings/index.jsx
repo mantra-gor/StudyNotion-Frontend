@@ -30,7 +30,6 @@ function Settings() {
   }, [user]);
 
   const handleSaveClick = () => {
-    console.log(userDetails);
     dispatch(updateProfile(userDetails));
   };
 

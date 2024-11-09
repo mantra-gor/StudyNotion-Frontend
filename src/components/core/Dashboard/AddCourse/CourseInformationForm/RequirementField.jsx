@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 
 function RequirementField({
@@ -7,10 +7,18 @@ function RequirementField({
   register,
   errors,
   setValue,
-  getValue,
+  getValues,
 }) {
   const [requirement, setRequirement] = useState("");
   const [requirementList, setRequirementList] = useState([]);
+
+  useEffect(() => {
+    register(name, { required: true, validate: (value) => value.length > 0 });
+  }, []);
+
+  useEffect(() => {
+    setValue(name, requirementList);
+  }, [requirementList]);
 
   const handleAddRequirement = (e) => {
     e.preventDefault();
@@ -33,14 +41,14 @@ function RequirementField({
 
   return (
     <div className="grid gap-y-1">
-      <label htmlFor="requirement">
+      <label htmlFor={name}>
         {label} <sup className="text-[0.725rem] text-pink-200">*</sup>
       </label>
       <div className="flex items-center justify-between gap-2">
         <input
           type="text"
-          name="requirement"
-          id="requirement"
+          name={name}
+          id={name}
           value={requirement}
           placeholder="Enter Requirements"
           onChange={handleChange}
@@ -60,7 +68,6 @@ function RequirementField({
         </button>
       </div>
       <ul className="grid gap-y-2 mt-1">
-        {console.log(requirementList)}
         {requirementList?.map((item, index) => (
           <li
             key={index}
@@ -73,6 +80,11 @@ function RequirementField({
           </li>
         ))}
       </ul>
+      {errors[name] && (
+        <span className="text-pink-200 text-sm">
+          Course Benifits is required
+        </span>
+      )}{" "}
     </div>
   );
 }

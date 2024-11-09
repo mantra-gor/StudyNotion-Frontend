@@ -1,4 +1,5 @@
 import CourseStepper from "./CourseStepper";
+import { MdOutlineTipsAndUpdates } from "react-icons/md";
 
 function AddCourse() {
   const uploadTips = [
@@ -20,8 +21,11 @@ function AddCourse() {
         </div>
       </div>
       <div className="w-5/12 h-fit bg-richblack-800 border border-richblack-700 p-8 rounded-lg">
-        <h3 className="text-xl font-semibold">Code Upload Tips</h3>
-        <ul>
+        <h3 className="text-xl font-semibold flex items-center gap-2 p-1">
+          <MdOutlineTipsAndUpdates className="text-yellow-200" size={26} />
+          Code Upload Tips
+        </h3>
+        <ul className="p-2">
           {uploadTips?.map((tip, index) => (
             <li className="m-2" key={index}>
               • {tip}

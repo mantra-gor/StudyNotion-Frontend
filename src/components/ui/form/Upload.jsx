@@ -1,7 +1,8 @@
 import { TbCloudUpload } from "react-icons/tb";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-function Upload({ register }) {
+function Upload({ register, name, setValue }) {
   const [dragActive, setDragActive] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const inputRef = useRef(null);
@@ -22,6 +23,13 @@ function Upload({ register }) {
     setDragActive(false);
 
     const files = e.dataTransfer.files;
+
+    if (files[0].type.split("/")[0] !== "image") {
+      return toast.error("Only Image are allowed!");
+    }
+    if (files[0].size > 6000000) {
+      return toast.error("File size is greated than 6Mb!");
+    }
     if (files.length > 0) {
       setFile(files[0]);
     }
@@ -35,13 +43,15 @@ function Upload({ register }) {
   };
 
   const setFile = (file) => {
+    console.log(file);
     setPreviewFile(URL.createObjectURL(file));
-    register("thumbnail").onChange({ target: { files: [file] } });
+    register(name).onChange({ target: { files: [file] } });
+    setValue(name, file);
   };
 
   const removeImage = () => {
     setPreviewFile(null);
-    register("thumbnail").onChange({ target: { files: [] } });
+    register(name).onChange({ target: { files: [] } });
   };
 
   return (
@@ -53,8 +63,8 @@ function Upload({ register }) {
       <input
         type="file"
         ref={inputRef}
-        name="fileUpload"
-        id="fileUpload"
+        name={name}
+        id={name}
         className="hidden"
         onChange={handleSelect}
         accept="image/*"
@@ -64,7 +74,7 @@ function Upload({ register }) {
         <div className="flex flex-col gap-6 justify-center">
           <img
             src={previewFile}
-            alt="thumbnail"
+            alt={name}
             className="h-[260px] object-cover rounded-lg"
           />
           <button
@@ -79,7 +89,7 @@ function Upload({ register }) {
         </div>
       ) : (
         <label
-          htmlFor="fileUpload"
+          htmlFor={name}
           onDragEnter={handleDrag}
           onDragLeave={handleDrag}
           onDragOver={handleDrag}
