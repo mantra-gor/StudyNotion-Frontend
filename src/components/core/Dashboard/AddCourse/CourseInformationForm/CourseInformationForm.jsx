@@ -5,15 +5,15 @@ import { getAllCategory } from "../../../../../services/operations/authApi";
 import { HiOutlineCurrencyRupee } from "react-icons/hi2";
 import TagsInput from "../../../../ui/form/TagsInput";
 import Upload from "../../../../ui/form/Upload";
-import RequirementField from "./RequirementField";
 import Button from "../../../../ui/Button";
-import { setCourse, setSteps } from "../../../../../redux/slices/courseSlice";
+import { setCourse, setStep } from "../../../../../redux/slices/courseSlice";
 import toast from "react-hot-toast";
 import { COURSES_STATUSES } from "../../../../../utils/constants";
 import {
   addCourse,
   updateCourse,
 } from "../../../../../services/operations/courseDetailsApi";
+import KeyFeatures from "./KeyFeatures";
 
 function CourseInformationForm() {
   const {
@@ -73,15 +73,15 @@ function CourseInformationForm() {
         JSON.stringify(currentValues[field]) !== JSON.stringify(course[field])
     );
   }, [getValues, course]);
+  console.log(editCourse);
 
   // Handle form submission
   const onSubmit = async (data) => {
     const formData = new FormData();
-    console.log(data, "data");
+    console.log(editCourse);
 
     if (editCourse) {
       if (!isFormUpdated()) return toast.error("No changes detected.");
-
       // Add only changed fields to FormData
       formData.append("courseId", course._id);
       Object.keys(data).forEach((key) => {
@@ -100,20 +100,15 @@ function CourseInformationForm() {
         formData.append(key, data[key]);
       });
       formData.append("status", COURSES_STATUSES.DRAFT);
-      // Append array fields with specific syntax
 
-      const keyFeaturesArray = Array.isArray(data.keyFeatures)
-        ? data.keyFeatures
-        : [data.keyFeatures];
-      keyFeaturesArray.forEach((feature) =>
-        formData.append("keyFeatures[]", feature)
+      // Append array fields to form data
+      data.tags.map((tag) => formData.append(`tags`, tag));
+      data.keyFeatures.map((keyFeature) =>
+        formData.append(`keyFeatures`, keyFeature)
       );
-
-      // data.tags.forEach((tag, i) => formData.append(`tags[]`, tag));
-      // data.keyFeatures.forEach((item, i) =>
-      //   formData.append(`keyFeatures[]`, item)
-      // );
     }
+
+    console.log(editCourse);
 
     setLoading(true);
     const result = editCourse
@@ -121,9 +116,16 @@ function CourseInformationForm() {
       : await addCourse(formData);
     setLoading(false);
 
+    console.log(result);
+
     if (result) {
+      // babbar's code
+      // setStep(2);
+      // dispatch(setCourse(result));
+
+      // my code
       dispatch(setCourse(result));
-      if (!editCourse) setSteps(2);
+      if (!editCourse) setStep(2);
     }
   };
 
@@ -291,7 +293,7 @@ function CourseInformationForm() {
             </span>
           )}
         </div> */}
-        <RequirementField
+        <KeyFeatures
           name="keyFeatures"
           label="Key Features (What you'll learn)"
           register={register}

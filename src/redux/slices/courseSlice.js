@@ -11,7 +11,7 @@ const courseSlice = createSlice({
   name: "course",
   initialState,
   reducers: {
-    setSteps: (state, action) => {
+    setStep: (state, action) => {
       state.step = action.payload;
     },
     setCourse: (state, action) => {
@@ -35,7 +35,7 @@ const courseSlice = createSlice({
 });
 
 export const {
-  setSteps,
+  setStep,
   setCourse,
   setEditCourse,
   setPaymentLoading,

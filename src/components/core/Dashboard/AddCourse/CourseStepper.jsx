@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { FaCheck } from "react-icons/fa6";
 import CourseInformationForm from "./CourseInformationForm/CourseInformationForm";
+import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
 
 function CourseStepper() {
   const { step } = useSelector((state) => state.course);
@@ -41,7 +42,9 @@ function CourseStepper() {
           </div>
         ))}
       </div>
-      <CourseInformationForm />
+      {console.log(step)}
+      {step === 1 && <CourseInformationForm />}
+      {step === 2 && <CourseBuilderForm />}
     </div>
   );
 }
