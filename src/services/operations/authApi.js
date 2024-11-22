@@ -5,14 +5,30 @@ import { authEndpoints, catalogData } from "../apiEndpoints";
 import { setUser } from "../../redux/slices/profileSlice";
 
 const {
-  SENDOTP,
-  SIGNUP,
   LOGIN,
-  FORGOTPASSWORD_API,
-  RESETPASSWORD_API,
+  SIGNUP,
+  SENDOTP,
+  AUTH_USER,
   CHANGE_PASSWORD,
+  RESETPASSWORD_API,
+  FORGOTPASSWORD_API,
 } = authEndpoints;
 const { CATALOG_PAGE_API } = catalogData;
+
+export function authUser() {
+  return async (dispatch) => {
+    try {
+      const res = await apiConnector("GET", AUTH_USER);
+      if (!res || !res.data || res.error) {
+        throw new Error("Failed to fetch user: Invalid response.");
+      }
+      dispatch(setUser(res.data));
+      localStorage.setItem("user", JSON.stringify(res.data));
+    } catch (error) {
+      return console.log("Failed to fetch authenticated user: ", error);
+    }
+  };
+}
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
@@ -83,10 +99,11 @@ export function login(email, password, navigate) {
 
       if (res.success) {
         toast.success(res.message);
-        dispatch(setToken(res.data.token));
+        dispatch(setToken(res.data.accessToken));
         dispatch(setUser(res.data));
         localStorage.setItem("user", JSON.stringify(res.data));
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
         navigate("/dashboard/my-profile");
       } else {
         toast.error(res.message);
@@ -121,11 +138,16 @@ export function getPasswordResetToken(email, setIsEmailSent) {
   };
 }
 
-export function resetPassword(newPassword, confirmPassword, token, navigate) {
+export function resetPassword(
+  newPassword,
+  confirmPassword,
+  accessToken,
+  navigate
+) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     await apiConnector("POST", RESETPASSWORD_API, {
-      token,
+      accessToken,
       password: newPassword,
       confirmPassword,
     })
@@ -181,7 +203,8 @@ export function logout(navigate) {
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUser(null));
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem("user");
     toast.success("Logged out successfully");
     navigate("/");

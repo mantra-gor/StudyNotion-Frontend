@@ -1,8 +1,10 @@
 //* AUTH ENDPOINTS
 export const authEndpoints = {
+  AUTH_USER: "/auth/user",
   SIGNUP: "/auth/signup",
   SENDOTP: "/auth/sendotp",
   LOGIN: "/auth/login",
+  REFRESH_TOKEN: "/auth/refresh-token",
   RESETPASSWORD_API: "/auth/reset-password",
   FORGOTPASSWORD_API: "/auth/forgot-password",
   CHANGE_PASSWORD: "/auth/change-password",

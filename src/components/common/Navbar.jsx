@@ -9,7 +9,7 @@ import ProfileDropdown from "../core/auth/ProfileDropdown";
 import { getAllCategory } from "../../services/operations/authApi";
 
 function Navbar() {
-  const { token } = useSelector((state) => state.auth);
+  const { accessToken } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalCartItems } = useSelector((state) => state.cart);
   const [subLinks, setSubLinks] = useState(null);
@@ -102,7 +102,7 @@ function Navbar() {
               )}
             </Link>
           )}
-          {token === null && (
+          {accessToken === null && (
             <div className=" flex gap-4">
               <Link
                 to="/login"
@@ -120,7 +120,7 @@ function Navbar() {
               </Link>
             </div>
           )}
-          {token !== null && <ProfileDropdown />}
+          {accessToken !== null && <ProfileDropdown />}
         </div>
       </div>
     </div>
