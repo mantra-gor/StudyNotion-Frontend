@@ -16,7 +16,7 @@ function CourseStepper() {
     },
     {
       id: 3,
-      title: "Publish",
+      title: "Publish Course",
     },
   ];
   return (
@@ -32,9 +32,15 @@ function CourseStepper() {
                 step === item.id
                   ? " bg-yellow-900 border-yellow-50 text-yellow-50"
                   : " border-richblack-100 bg-richblack-800 text-richblack-300 "
-              } w-10 h-10 rounded-full flex justify-center items-center border text-lg font-semibold`}
+              }
+              ${step > item.id && "bg-yellow-50 border-yellow-50"}
+               w-10 h-10 rounded-full flex justify-center items-center border text-lg font-semibold`}
             >
-              {step > item.id ? <FaCheck /> : item.id}
+              {step > item.id ? (
+                <FaCheck className="text-richblack-800" />
+              ) : (
+                item.id
+              )}
             </div>
             {/* Add Dashes ---------------------- */}
             {/* {item.id !== steps.length} */}
@@ -42,7 +48,6 @@ function CourseStepper() {
           </div>
         ))}
       </div>
-      {console.log(step)}
       {step === 1 && <CourseInformationForm />}
       {step === 2 && <CourseBuilderForm />}
     </div>

@@ -33,7 +33,7 @@ function CourseInformationForm() {
   useEffect(() => {
     const fetchCategories = async () => {
       setLoading(true);
-      await dispatch(getAllCategory(setCourseCategories));
+      dispatch(getAllCategory(setCourseCategories));
       setLoading(false);
     };
 
@@ -73,12 +73,10 @@ function CourseInformationForm() {
         JSON.stringify(currentValues[field]) !== JSON.stringify(course[field])
     );
   }, [getValues, course]);
-  console.log(editCourse);
 
   // Handle form submission
   const onSubmit = async (data) => {
     const formData = new FormData();
-    console.log(editCourse);
 
     if (editCourse) {
       if (!isFormUpdated()) return toast.error("No changes detected.");
@@ -102,13 +100,15 @@ function CourseInformationForm() {
       formData.append("status", COURSES_STATUSES.DRAFT);
 
       // Append array fields to form data
-      data.tags.map((tag) => formData.append(`tags`, tag));
-      data.keyFeatures.map((keyFeature) =>
-        formData.append(`keyFeatures`, keyFeature)
-      );
-    }
+      // data.tags.map((tag, index) => formData.append(`tags[${index}]`, tag));
 
-    console.log(editCourse);
+      // data.keyFeatures.map((keyFeature) =>
+      //   formData.append(`keyFeatures`, keyFeature)
+      // );
+
+      formData.append("keyFeatures", JSON.stringify(data.keyFeatures));
+      formData.append("tags", JSON.stringify(data.tags));
+    }
 
     setLoading(true);
     const result = editCourse
@@ -116,16 +116,9 @@ function CourseInformationForm() {
       : await addCourse(formData);
     setLoading(false);
 
-    console.log(result);
-
-    if (result) {
-      // babbar's code
-      // setStep(2);
-      // dispatch(setCourse(result));
-
-      // my code
+    if (result?.success) {
+      dispatch(setStep(2));
       dispatch(setCourse(result));
-      if (!editCourse) setStep(2);
     }
   };
 
@@ -135,6 +128,7 @@ function CourseInformationForm() {
         onSubmit={handleSubmit(onSubmit)}
         className="rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-5 mt-4"
       >
+        <h2 className="text-xl font-semibold">Course Information</h2>
         <div className="grid gap-y-1">
           <label htmlFor="title">
             Course Title <sup className=" text-[0.725rem] text-pink-200">*</sup>
@@ -271,6 +265,7 @@ function CourseInformationForm() {
           name="courseThumbnail"
           setValue={setValue}
           multiple={false}
+          errors={errors}
         />
         {/* <div className="grid gap-y-1">
           <label>
@@ -306,7 +301,7 @@ function CourseInformationForm() {
             <Button
               type="button"
               className="!bg-richblack-700 w-1/2"
-              onClick={() => dispatch(setSteps(2))}
+              onClick={() => dispatch(setStep(2))}
             >
               Continue without saving
             </Button>

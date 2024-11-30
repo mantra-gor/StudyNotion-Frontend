@@ -1,7 +1,6 @@
 import { useContext, useEffect } from "react";
 import Navbar from "../../common/Navbar";
 import { Outlet } from "react-router-dom";
-import FocusLock from "react-focus-lock";
 import ConfirmationModal from "../../common/ConfirmationModal";
 import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,16 +24,14 @@ function BlankLayout() {
       {!logoutModalOpen ? (
         <Navbar />
       ) : (
-        <FocusLock>
-          <ConfirmationModal
-            modalTitle="Are you sure ?"
-            modalText="You will be logged out of your account."
-            highlightedBtnText="Logout"
-            btnText="Cancel"
-            highlightedBtnOnClick={logoutUser}
-            btnOnclick={cancelLogout}
-          />
-        </FocusLock>
+        <ConfirmationModal
+          modalTitle="Are you sure ?"
+          modalText="You will be logged out of your account."
+          highlightedBtnText="Logout"
+          btnText="Cancel"
+          highlightedBtnOnClick={logoutUser}
+          btnOnclick={cancelLogout}
+        />
       )}
       <div className="mt-14">
         <Outlet />

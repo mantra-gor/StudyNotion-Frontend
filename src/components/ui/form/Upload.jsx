@@ -1,8 +1,9 @@
 import { TbCloudUpload } from "react-icons/tb";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { FILE_CONFIG } from "../../../utils/constants";
 
-function Upload({ register, name, setValue }) {
+function Upload({ register, name, setValue, errors = {} }) {
   const [dragActive, setDragActive] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const inputRef = useRef(null);
@@ -17,36 +18,49 @@ function Upload({ register, name, setValue }) {
     }
   };
 
+  const isFileValid = (file) => {
+    if (
+      file.type.split("/")[0] !== FILE_CONFIG.THUMBNAIL_SUPPORTED_MIME_TYPES
+    ) {
+      toast.error("Only Image are allowed!");
+      return false;
+    }
+    if (file.size > FILE_CONFIG.THUMBNAIL_MAX_FILE_SIZE) {
+      toast.error("File size is greated than 6MB!");
+      return false;
+    }
+    if (file.length < 0) {
+      toast.error("Please select a file!");
+      return false;
+    }
+    return true;
+  };
+
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
 
     const files = e.dataTransfer.files;
-
-    if (files[0].type.split("/")[0] !== "image") {
-      return toast.error("Only Image are allowed!");
-    }
-    if (files[0].size > 6000000) {
-      return toast.error("File size is greated than 6Mb!");
-    }
-    if (files.length > 0) {
+    if (isFileValid(files[0])) {
       setFile(files[0]);
     }
   };
 
   const handleSelect = (e) => {
     const files = e.target.files;
-    if (files.length > 0) {
+    if (isFileValid(files[0])) {
       setFile(files[0]);
     }
   };
 
   const setFile = (file) => {
     console.log(file);
+    if (previewFile) {
+      URL.revokeObjectURL(previewFile);
+    }
     setPreviewFile(URL.createObjectURL(file));
-    register(name).onChange({ target: { files: [file] } });
-    setValue(name, file);
+    setValue(name, file, { shouldValidate: true });
   };
 
   const removeImage = () => {
@@ -117,6 +131,9 @@ function Upload({ register, name, setValue }) {
             </ul>
           </div>
         </label>
+      )}
+      {errors?.[name] && (
+        <span className="text-pink-200 text-sm">Thumbnail is required</span>
       )}
     </div>
   );

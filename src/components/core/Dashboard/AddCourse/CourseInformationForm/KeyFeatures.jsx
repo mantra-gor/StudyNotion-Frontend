@@ -45,6 +45,11 @@ function KeyFeatures({ name, label, register, errors, setValue, getValues }) {
           value={feature}
           placeholder="Enter Requirements"
           onChange={handleChange}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddRequirement(e);
+            }
+          }}
           className={`w-full bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
           style={{
             boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
@@ -74,10 +79,8 @@ function KeyFeatures({ name, label, register, errors, setValue, getValues }) {
         ))}
       </ul>
       {errors[name] && (
-        <span className="text-pink-200 text-sm">
-          Course Benifits is required
-        </span>
-      )}{" "}
+        <span className="text-pink-200 text-sm">Key Features is required</span>
+      )}
     </div>
   );
 }

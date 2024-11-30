@@ -13,6 +13,8 @@ export const authEndpoints = {
 //* COURSE ENDPOINTS
 export const courseEndpoints = {
   ADD_COURSE: "/course/create-course",
+  ADD_SECTION: "/course/create-section",
+  UPDATE_SECTION: "/course/update-section",
 };
 
 //* PROFILE ENDPOINTS
