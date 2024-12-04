@@ -13,7 +13,7 @@ function ConfirmationModal({
   return (
     <FocusLock>
       <div
-        className={`fixed flex justify-center items-center top-0 bottom-0 right-0 left-0 transition-all duration-200 z-50 ${
+        className={`bg-black/30 fixed flex justify-center items-center top-0 bottom-0 right-0 left-0 transition-all duration-200 z-50 ${
           blur && " backdrop-blur-md"
         }`}
       >

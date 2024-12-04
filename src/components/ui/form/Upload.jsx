@@ -3,10 +3,18 @@ import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FILE_CONFIG } from "../../../utils/constants";
 
-function Upload({ register, name, setValue, errors = {} }) {
+function Upload({
+  allowedFileType = "image",
+  register,
+  name,
+  setValue,
+  label,
+  errors = {},
+}) {
   const [dragActive, setDragActive] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
   const inputRef = useRef(null);
+  const videoRef = useRef(null);
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -19,15 +27,27 @@ function Upload({ register, name, setValue, errors = {} }) {
   };
 
   const isFileValid = (file) => {
-    if (
-      file.type.split("/")[0] !== FILE_CONFIG.THUMBNAIL_SUPPORTED_MIME_TYPES
-    ) {
-      toast.error("Only Image are allowed!");
-      return false;
-    }
-    if (file.size > FILE_CONFIG.THUMBNAIL_MAX_FILE_SIZE) {
-      toast.error("File size is greated than 6MB!");
-      return false;
+    //validation for image
+    if (allowedFileType == "image") {
+      if (
+        file.type.split("/")[0] !== FILE_CONFIG.THUMBNAIL_SUPPORTED_MIME_TYPES
+      ) {
+        toast.error("Only Image are allowed!");
+        return false;
+      }
+      if (file.size > FILE_CONFIG.THUMBNAIL_MAX_FILE_SIZE) {
+        toast.error("File size is greated than 6MB!");
+        return false;
+      }
+    } else if (allowedFileType == "video") {
+      if (file.type.split("/")[0] !== FILE_CONFIG.COURSE_SUPPORTED_MIME_TYPES) {
+        toast.error("Only Image are allowed!");
+        return false;
+      }
+      if (file.size > FILE_CONFIG.COURSE_MAX_FILE_SIZE) {
+        toast.error("File size is greated than 400MB!");
+        return false;
+      }
     }
     if (file.length < 0) {
       toast.error("Please select a file!");
@@ -59,7 +79,8 @@ function Upload({ register, name, setValue, errors = {} }) {
     if (previewFile) {
       URL.revokeObjectURL(previewFile);
     }
-    setPreviewFile(URL.createObjectURL(file));
+    const objUrl = URL.createObjectURL(file);
+    setPreviewFile(objUrl);
     setValue(name, file, { shouldValidate: true });
   };
 
@@ -68,10 +89,19 @@ function Upload({ register, name, setValue, errors = {} }) {
     register(name).onChange({ target: { files: [] } });
   };
 
+  const handleLoadedMetadata = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    console.log(video);
+
+    console.log(`The video is ${video.duration} seconds long.`);
+  };
+
   return (
     <div className="grid gap-y-1">
       <p>
-        Course Thumbnails <sup className="text-[0.725rem] text-pink-200">*</sup>
+        {label}
+        <sup className="text-[0.725rem] text-pink-200">*</sup>
       </p>
 
       <input
@@ -81,16 +111,28 @@ function Upload({ register, name, setValue, errors = {} }) {
         id={name}
         className="hidden"
         onChange={handleSelect}
-        accept="image/*"
+        accept={`${allowedFileType === "video" ? "video/*" : "image/*"}`}
       />
 
       {previewFile ? (
         <div className="flex flex-col gap-6 justify-center">
-          <img
-            src={previewFile}
-            alt={name}
-            className="h-[260px] object-cover rounded-lg"
-          />
+          {allowedFileType == "image" ? (
+            <img
+              src={previewFile}
+              alt={name}
+              className="h-[260px] object-cover rounded-lg"
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              controls
+              src={previewFile}
+              alt={name}
+              onLoadedMetadataCapture={handleLoadedMetadata}
+              className="h-full object-cover rounded-lg"
+            />
+          )}
+
           <button
             style={{
               boxShadow: "-0.5px -1.5px 0px 0px rgba(0, 0, 0, 0.12) inset",
@@ -114,7 +156,7 @@ function Upload({ register, name, setValue, errors = {} }) {
               dragActive ? "bg-opacity-50 border-yellow-400 scale-95" : ""
             }`}
           >
-            <div className="bg-pure-greys-800 w-14 h-14 flex justify-center items-center rounded-full">
+            <div className="bg-pure-greys-800/60 w-14 h-14 flex justify-center items-center rounded-full">
               <TbCloudUpload size={25} className="text-yellow-50" />
             </div>
             <p className="px-14 text-center">
@@ -123,7 +165,9 @@ function Upload({ register, name, setValue, errors = {} }) {
                 {" "}
                 Browse{" "}
               </span>{" "}
-              Max 6MB each (12MB for videos)
+              {allowedFileType === "video"
+                ? "Max 400MB each videos"
+                : "Max 6MB for Image"}
             </p>
             <ul className="flex justify-around text-sm w-full">
               <li>• Aspect ratio 16:9</li>

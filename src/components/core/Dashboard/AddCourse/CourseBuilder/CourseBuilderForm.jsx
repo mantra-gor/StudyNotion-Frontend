@@ -63,14 +63,13 @@ function CourseBuilderForm() {
   };
 
   const submitHandler = async (data) => {
-    const formData = new FormData();
     let result;
 
     setLoading(true);
     if (editSectionName) {
       result = await updateSection({
         sectionName: data.sectionName,
-        sectionId: editSectionName,
+        sectionID: editSectionName,
         // courseId: course.data._id,
         courseID: "6749f080efe1477006517b5f", // !testing only
       });
@@ -148,10 +147,7 @@ function CourseBuilderForm() {
           )}
         </div>
       </form>
-      {console.log(Array.isArray(course?.courseContent))}
-      {console.log(course?.courseContent?.length)}
-      {console.log(course?.course)}
-      {course?.course?.courseContent?.length && (
+      {course?.course?.courseContent?.length >= 0 && (
         <NestedView handleChangeEditScetionName={handleChangeEditScetionName} />
       )}
       <div className="w-full flex gap-4 items-center justify-end">

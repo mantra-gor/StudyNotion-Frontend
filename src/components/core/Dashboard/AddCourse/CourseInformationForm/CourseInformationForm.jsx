@@ -261,6 +261,7 @@ function CourseInformationForm() {
         </div>
         <TagsInput setValue={setValue} errors={errors} />
         <Upload
+          label="Course Thumbnail"
           register={register}
           name="courseThumbnail"
           setValue={setValue}

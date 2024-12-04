@@ -15,6 +15,9 @@ export const courseEndpoints = {
   ADD_COURSE: "/course/create-course",
   ADD_SECTION: "/course/create-section",
   UPDATE_SECTION: "/course/update-section",
+  DELETE_SECTION: "/course/delete-section",
+  CREATE_SUBSECTION: "/course/create-subsection",
+  UPDATE_SUBSECTION: "/course/update-subsection",
 };
 
 //* PROFILE ENDPOINTS
