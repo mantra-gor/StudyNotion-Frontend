@@ -92,9 +92,8 @@ function Upload({
   const handleLoadedMetadata = () => {
     const video = videoRef.current;
     if (!video) return;
-    console.log(video);
-
-    console.log(`The video is ${video.duration} seconds long.`);
+    setValue("duration", video.duration);
+    // console.log(`The video is ${video.duration} seconds long.`);
   };
 
   return (

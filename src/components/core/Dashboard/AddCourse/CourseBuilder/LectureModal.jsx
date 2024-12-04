@@ -5,7 +5,10 @@ import {
   createSubSection,
   updateSubSection,
 } from "../../../../../services/operations/courseDetailsApi";
-import { setCourse } from "../../../../../redux/slices/courseSlice";
+import {
+  setCourse,
+  setSubSection,
+} from "../../../../../redux/slices/courseSlice";
 import { IoMdClose } from "react-icons/io";
 import Upload from "../../../../ui/form/Upload";
 import Button from "../../../../ui/Button";
@@ -75,6 +78,9 @@ function LectureModal({
     setLoading(true);
     const result = await updateSubSection(formData);
     if (result.success) {
+      const updatedCourse = course;
+      updatedCourse.courseContent[courseContentIndex] = result.data;
+      console.log(updatedCourse);
       dispatch(setCourse(result.data));
     }
     closeModal();
@@ -88,18 +94,25 @@ function LectureModal({
         handleEditSubSection();
       }
     }
-
+    const courseContentIndex = modalData.courseContentIndex;
     const formData = new FormData();
-    formData.append("sectionID", modalData);
+    formData.append("sectionID", modalData.sectionID);
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("videoFile", data.lectureVideo);
     // formData.append("duration", modalData );
 
+    console.log(courseContentIndex);
+
     setLoading(true);
     const result = await createSubSection(formData);
     if (result.success) {
-      dispatch(setCourse(result.data));
+      dispatch(
+        setSubSection({
+          courseContentIndex,
+          subsection: result.data,
+        })
+      );
     }
     closeModal();
   };

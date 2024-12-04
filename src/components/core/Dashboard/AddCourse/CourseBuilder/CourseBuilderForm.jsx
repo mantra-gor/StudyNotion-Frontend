@@ -89,13 +89,10 @@ function CourseBuilderForm() {
     setLoading(false);
   };
 
-  console.log(course);
-
   return (
     <div className="rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-5 mt-4">
       <form onSubmit={handleSubmit(submitHandler)} className="space-y-5">
         <h2 className="text-xl font-semibold">Course Builder</h2>
-
         <div className="grid gap-y-1">
           <label htmlFor="sectionName">
             Section Name <sup className="text-[0.725rem] text-pink-200">*</sup>

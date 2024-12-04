@@ -12,6 +12,7 @@ import { setCourse } from "../../../../../redux/slices/courseSlice";
 function NestedView({ handleChangeEditScetionName }) {
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
+  console.log(course);
 
   const [addSubSection, setAddSubSection] = useState(null);
   const [viewSubSection, setViewSubSection] = useState(null);
@@ -47,7 +48,7 @@ function NestedView({ handleChangeEditScetionName }) {
   return (
     <div>
       <div>
-        {course?.courseContent?.map((section) => (
+        {course?.courseContent?.map((section, index) => (
           <details key={section._id} className="text-richblack-50" open>
             <summary className="flex items-center justify-between gap-x-3 border-b-2 p-3">
               <div className="flex items-center gap-3">
@@ -78,7 +79,7 @@ function NestedView({ handleChangeEditScetionName }) {
               </div>
             </summary>
             <div>
-              {section.subSection?.map((data) => (
+              {section.subSection?.map((data, index) => (
                 <div
                   key={data._id}
                   onClick={() => setViewSubSection(data)}
@@ -91,7 +92,11 @@ function NestedView({ handleChangeEditScetionName }) {
                   <div className="flex items-center gap-x-3">
                     <button
                       onClick={() =>
-                        setEditSubSection({ ...data, sectionId: section._id })
+                        setEditSubSection({
+                          ...data,
+                          sectionId: section._id,
+                          courseContentIndex: index,
+                        })
                       }
                     >
                       <TbEdit />
@@ -107,7 +112,12 @@ function NestedView({ handleChangeEditScetionName }) {
                 </div>
               ))}
               <button
-                onClick={() => setAddSubSection(section._id)}
+                onClick={() =>
+                  setAddSubSection({
+                    sectionID: section._id,
+                    courseContentIndex: index,
+                  })
+                }
                 className="mt-4 flex items-center gap-x-3 text-yellow-50"
               >
                 <MdOutlineAdd size={24} />
