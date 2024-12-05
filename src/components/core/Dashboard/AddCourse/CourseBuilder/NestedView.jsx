@@ -50,7 +50,7 @@ function NestedView({ handleChangeEditScetionName }) {
       <div>
         {course?.courseContent?.map((section, index) => (
           <details key={section._id} className="text-richblack-50" open>
-            <summary className="flex items-center justify-between gap-x-3 border-b-2 p-3">
+            <summary className="flex items-center justify-between gap-x-3 border-b p-3">
               <div className="flex items-center gap-3">
                 <BsFillMenuButtonWideFill />
                 <h5 className="font-medium">{section.sectionName}</h5>
@@ -78,18 +78,18 @@ function NestedView({ handleChangeEditScetionName }) {
                 <FaCaretDown size={21} />
               </div>
             </summary>
-            <div>
+            <div className="flex flex-col items-end">
               {section.subSection?.map((data, index) => (
                 <div
                   key={data._id}
                   onClick={() => setViewSubSection(data)}
-                  className="flex items-center justify-between gap-x-3 border-b-2"
+                  className="flex items-center w-[98%] justify-between gap-x-3 border-b border-richblack-300 border-dashed p-3"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ">
                     <BsFillMenuButtonWideFill />
                     <hp className="">{data.title}</hp>
                   </div>
-                  <div className="flex items-center gap-x-3">
+                  <div className="flex items-center gap-x-1">
                     <button
                       onClick={() =>
                         setEditSubSection({
@@ -118,7 +118,7 @@ function NestedView({ handleChangeEditScetionName }) {
                     courseContentIndex: index,
                   })
                 }
-                className="mt-4 flex items-center gap-x-3 text-yellow-50"
+                className="mt-3 mb-4 flex items-center gap-x-3 text-yellow-50"
               >
                 <MdOutlineAdd size={24} />
                 Add Lecture
