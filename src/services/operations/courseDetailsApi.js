@@ -9,8 +9,10 @@ const {
   DELETE_SECTION,
   CREATE_SUBSECTION,
   UPDATE_SUBSECTION,
+  DELETE_SUBSECTION,
 } = courseEndpoints;
 
+//* Course APIs
 export async function addCourse(formData) {
   try {
     const res = await apiConnector("POST", ADD_COURSE, formData);
@@ -41,6 +43,7 @@ export async function updateCourse(formData) {
   }
 }
 
+//* Section APIs
 export async function createSection(data) {
   try {
     const res = await apiConnector("POST", ADD_SECTION, data);
@@ -104,7 +107,22 @@ export async function createSubSection(data) {
 
 export async function updateSubSection(data) {
   try {
-    const res = await apiConnector("POST", UPDATE_SUBSECTION, data);
+    const res = await apiConnector("PUT", UPDATE_SUBSECTION, data);
+    if (res.success) {
+      toast.success(res.message);
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to create course sub section: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function deleteSubSection(data) {
+  try {
+    const res = await apiConnector("DELETE", DELETE_SUBSECTION, data);
     if (res.success) {
       toast.success(res.message);
       return res;

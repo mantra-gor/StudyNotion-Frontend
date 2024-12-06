@@ -6,13 +6,15 @@ import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import { TbEdit } from "react-icons/tb";
 import { FaCaretDown } from "react-icons/fa";
 import LectureModal from "./LectureModal";
-import { deleteSection } from "../../../../../services/operations/courseDetailsApi";
+import {
+  deleteSection,
+  deleteSubSection,
+} from "../../../../../services/operations/courseDetailsApi";
 import { setCourse } from "../../../../../redux/slices/courseSlice";
 
 function NestedView({ handleChangeEditScetionName }) {
   const { course } = useSelector((state) => state.course);
   const dispatch = useDispatch();
-  console.log(course);
 
   const [addSubSection, setAddSubSection] = useState(null);
   const [viewSubSection, setViewSubSection] = useState(null);
@@ -25,7 +27,6 @@ function NestedView({ handleChangeEditScetionName }) {
       sectionID: deleteSectionData._id,
       courseID: course._id,
     });
-
     if (result.success) {
       dispatch(setCourse(result.data));
     }
@@ -33,6 +34,8 @@ function NestedView({ handleChangeEditScetionName }) {
   };
 
   const deleteSubSectionHandler = async () => {
+    console.log(viewSubSection);
+
     const result = await deleteSubSection({
       subSectionID: viewSubSection._id,
       courseID: course._id,
@@ -87,7 +90,7 @@ function NestedView({ handleChangeEditScetionName }) {
                 >
                   <div className="flex items-center gap-3 ">
                     <BsFillMenuButtonWideFill />
-                    <hp className="">{data.title}</hp>
+                    <h5 className="">{data.title}</h5>
                   </div>
                   <div className="flex items-center gap-x-1">
                     <button
@@ -153,7 +156,8 @@ function NestedView({ handleChangeEditScetionName }) {
       {showConfirmationModal && (
         <ConfirmationModal
           modalTitle="Are you sure ?"
-          modalText={`${deleteSectionData.sectionName} will be deleted!`}
+          // ${deleteSectionData.sectionName}
+          modalText={`This will be deleted!`}
           highlightedBtnText="Delete"
           btnText="Cancel"
           highlightedBtnOnClick={

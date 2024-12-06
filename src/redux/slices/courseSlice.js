@@ -17,7 +17,6 @@ const courseSlice = createSlice({
     },
     setSubSection: (state, action) => {
       const { courseContentIndex, subsection } = action.payload;
-
       state.course = {
         ...state.course,
         courseContent: state.course.courseContent.map((content, index) =>
@@ -25,7 +24,6 @@ const courseSlice = createSlice({
         ),
       };
     },
-
     setCourse: (state, action) => {
       state.course = action.payload;
     },

@@ -18,6 +18,7 @@ export const courseEndpoints = {
   DELETE_SECTION: "/course/delete-section",
   CREATE_SUBSECTION: "/course/create-subsection",
   UPDATE_SUBSECTION: "/course/update-subsection",
+  DELETE_SUBSECTION: "/course/delete-subsection",
 };
 
 //* PROFILE ENDPOINTS
