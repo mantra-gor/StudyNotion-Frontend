@@ -46,7 +46,7 @@ function CourseInformationForm() {
         "tags",
         "keyFeatures",
         "category",
-        "courseThumbnail",
+        "file",
         "language",
       ];
       fields.forEach((field) => setValue(field, course[field]));
@@ -66,7 +66,7 @@ function CourseInformationForm() {
       "tags",
       "keyFeatures",
       "category",
-      "courseThumbnail",
+      "file",
       "language",
     ].some(
       (field) =>
@@ -87,16 +87,11 @@ function CourseInformationForm() {
       });
     } else {
       // Populate FormData for new course creation
-      [
-        "title",
-        "description",
-        "price",
-        "category",
-        "courseThumbnail",
-        "language",
-      ].forEach((key) => {
-        formData.append(key, data[key]);
-      });
+      ["title", "description", "price", "category", "file", "language"].forEach(
+        (key) => {
+          formData.append(key, data[key]);
+        }
+      );
       formData.append("status", COURSES_STATUSES.DRAFT);
 
       // Append array fields to form data
@@ -263,7 +258,7 @@ function CourseInformationForm() {
         <Upload
           label="Course Thumbnail"
           register={register}
-          name="courseThumbnail"
+          name="file"
           setValue={setValue}
           multiple={false}
           errors={errors}
