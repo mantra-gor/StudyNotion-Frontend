@@ -32,6 +32,11 @@ export const catalogData = {
   CATALOG_PAGE_API: "/course/get-all-category",
 };
 
+//* AWS SERVICES ENDPOINTS
+export const awsServicesEndpoints = {
+  GET_S3_UPLOAD_URL: "/aws-services/generate-s3-upload-url",
+};
+
 //* CONTACT US
 export const contactUsEndpoint = {
   CONTACT_US_API: "/contact-us",

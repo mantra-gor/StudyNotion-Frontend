@@ -14,6 +14,7 @@ import {
   updateCourse,
 } from "../../../../../services/operations/courseDetailsApi";
 import KeyFeatures from "./KeyFeatures";
+import { uploadToS3 } from "../../../../../services/aws/s3Services";
 
 function CourseInformationForm() {
   const {
@@ -80,28 +81,36 @@ function CourseInformationForm() {
     if (!thumbnailMeta) {
       return toast.error("Please upload a thumbnail");
     }
-    console.log(data);
+
+    // upload file to s3
+    const { uploadResponse, fileKey } = await uploadToS3(
+      thumbnailMeta,
+      data.file
+    );
+    if (!uploadResponse.status) {
+      return toast.error("Failed to upload file!");
+    }
+
     const fileData = new FormData();
+
     let payload = {};
     if (editCourse) {
       if (!isFormUpdated()) return toast.error("No changes detected.");
-
       // Add only changed fields to FormData
     } else {
+      // eslint-disable-next-line no-unused-vars
       const { file, ...restOfData } = data;
       payload = {
         ...restOfData,
-        thumbnailMeta,
+        fileKey,
         status: COURSES_STATUSES.DRAFT,
       };
-      fileData.append("thumbnail", data.file);
     }
-    console.log(payload);
 
     setLoading(true);
     const result = editCourse
       ? await updateCourse(payload, fileData)
-      : await addCourse(payload, fileData);
+      : await addCourse(payload, payload);
     setLoading(false);
 
     if (result?.success) {
