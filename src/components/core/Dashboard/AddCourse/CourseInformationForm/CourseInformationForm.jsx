@@ -27,6 +27,7 @@ function CourseInformationForm() {
   const dispatch = useDispatch();
   const { course, editCourse } = useSelector((state) => state.course);
   const [loading, setLoading] = useState(false);
+  const [thumbnailMeta, setThumbnailMeta] = useState(null);
   const [courseCategories, setCourseCategories] = useState([]);
 
   // Fetch categories and set initial form values if editing
@@ -76,39 +77,31 @@ function CourseInformationForm() {
 
   // Handle form submission
   const onSubmit = async (data) => {
-    const formData = new FormData();
-
+    if (!thumbnailMeta) {
+      return toast.error("Please upload a thumbnail");
+    }
+    console.log(data);
+    const fileData = new FormData();
+    let payload = {};
     if (editCourse) {
       if (!isFormUpdated()) return toast.error("No changes detected.");
+
       // Add only changed fields to FormData
-      formData.append("courseId", course._id);
-      Object.keys(data).forEach((key) => {
-        if (data[key] !== course[key]) formData.append(key, data[key]);
-      });
     } else {
-      // Populate FormData for new course creation
-      ["title", "description", "price", "category", "file", "language"].forEach(
-        (key) => {
-          formData.append(key, data[key]);
-        }
-      );
-      formData.append("status", COURSES_STATUSES.DRAFT);
-
-      // Append array fields to form data
-      // data.tags.map((tag, index) => formData.append(`tags[${index}]`, tag));
-
-      // data.keyFeatures.map((keyFeature) =>
-      //   formData.append(`keyFeatures`, keyFeature)
-      // );
-
-      formData.append("keyFeatures", JSON.stringify(data.keyFeatures));
-      formData.append("tags", JSON.stringify(data.tags));
+      const { file, ...restOfData } = data;
+      payload = {
+        ...restOfData,
+        thumbnailMeta,
+        status: COURSES_STATUSES.DRAFT,
+      };
+      fileData.append("thumbnail", data.file);
     }
+    console.log(payload);
 
     setLoading(true);
     const result = editCourse
-      ? await updateCourse(formData)
-      : await addCourse(formData);
+      ? await updateCourse(payload, fileData)
+      : await addCourse(payload, fileData);
     setLoading(false);
 
     if (result?.success) {
@@ -262,6 +255,7 @@ function CourseInformationForm() {
           setValue={setValue}
           multiple={false}
           errors={errors}
+          fileState={setThumbnailMeta}
         />
         {/* <div className="grid gap-y-1">
           <label>

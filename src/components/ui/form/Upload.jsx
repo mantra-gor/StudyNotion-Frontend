@@ -5,11 +5,12 @@ import { FILE_CONFIG } from "../../../utils/constants";
 
 function Upload({
   allowedFileType = "image",
-  register,
-  name,
-  setValue,
-  label,
   errors = {},
+  fileState,
+  setValue,
+  register,
+  label,
+  name,
 }) {
   const [dragActive, setDragActive] = useState(false);
   const [previewFile, setPreviewFile] = useState(null);
@@ -63,19 +64,36 @@ function Upload({
 
     const files = e.dataTransfer.files;
     if (isFileValid(files[0])) {
-      setFile(files[0]);
+      const file = file[0];
+      setFile(file);
+
+      const fileMetadata = {
+        fileName: file.name,
+        size: file.size,
+        contentType: file.type,
+      };
+      fileState(fileMetadata);
     }
   };
 
   const handleSelect = (e) => {
     const files = e.target.files;
     if (isFileValid(files[0])) {
+      const file = files[0];
       setFile(files[0]);
+
+      const fileMetadata = {
+        fileName: file.name,
+        size: file.size,
+        contentType: file.type,
+      };
+      fileState(fileMetadata);
+
+      console.log(fileMetadata);
     }
   };
 
   const setFile = (file) => {
-    console.log(file);
     if (previewFile) {
       URL.revokeObjectURL(previewFile);
     }

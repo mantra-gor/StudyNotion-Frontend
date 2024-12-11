@@ -13,11 +13,12 @@ const {
 } = courseEndpoints;
 
 //* Course APIs
-export async function addCourse(formData) {
+export async function addCourse(data, fileData) {
   try {
-    const res = await apiConnector("POST", ADD_COURSE, formData);
+    const res = await apiConnector("POST", ADD_COURSE, data);
     if (res.success) {
       toast.success(res.message);
+      console.log(res);
       return res;
     } else {
       return toast.error(res.message);
