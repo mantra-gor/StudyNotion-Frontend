@@ -152,6 +152,7 @@ function LectureModal({
               register={register}
               setValue={setValue}
               errors={errors}
+              // fileState={}
               // viewData={view ? modalData.videoUrl : null}
               // editData={edit ? modalData.videoUrl : null}
             />

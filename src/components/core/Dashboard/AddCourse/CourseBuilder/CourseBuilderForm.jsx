@@ -71,13 +71,13 @@ function CourseBuilderForm() {
         sectionName: data.sectionName,
         sectionID: editSectionName,
         // courseId: course.data._id,
-        courseID: "6749f080efe1477006517b5f", // !testing only
+        courseID: "675b1fb8dfd7e72bf1cb9444", // !testing only
       });
     } else {
       result = await createSection({
         sectionName: data.sectionName,
         // courseId: course.data._id,
-        courseID: "6749f080efe1477006517b5f", // !testing only
+        courseID: "675b1fb8dfd7e72bf1cb9444", // !testing only
       });
     }
     // update the values
