@@ -87,7 +87,7 @@ function CourseInformationForm() {
       thumbnailMeta,
       data.file
     );
-    if (!uploadResponse.status) {
+    if (uploadResponse.status !== 200) {
       return toast.error("Failed to upload file!");
     }
 
@@ -289,7 +289,7 @@ function CourseInformationForm() {
         </div> */}
         <KeyFeatures
           name="keyFeatures"
-          label="Key Features (What you'll learn)"
+          label="Key Features"
           register={register}
           errors={errors}
           setValue={setValue}

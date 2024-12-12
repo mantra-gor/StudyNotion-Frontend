@@ -43,7 +43,7 @@ function KeyFeatures({ name, label, register, errors, setValue, getValues }) {
           name={name}
           id={name}
           value={feature}
-          placeholder="Enter Requirements"
+          placeholder="Enter what you'll learn"
           onChange={handleChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
