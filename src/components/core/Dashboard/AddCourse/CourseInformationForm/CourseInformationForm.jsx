@@ -34,10 +34,6 @@ function CourseInformationForm() {
 
   // Fetch categories and set initial form values if editing
   useEffect(() => {
-    // toast.success("Course created successfully!");
-    // toast.error("Error while creating the course!");
-    toast("Your have some notification!");
-
     const fetchCategories = async () => {
       setLoading(true);
       dispatch(getAllCategory(setCourseCategories));
