@@ -1,5 +1,5 @@
 import Lottie from "react-lottie";
-import animationData from "../assets/lottie/NotFound.json"; // Make sure you have a Lottie animation file for 404 error
+import animationData from "../assets/lottie/NotFound.json";
 import CTAButton from "../components/core/Homepage/CTAButton";
 
 const NotFound = () => {
