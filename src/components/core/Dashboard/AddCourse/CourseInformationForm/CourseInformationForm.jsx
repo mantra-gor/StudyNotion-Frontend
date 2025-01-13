@@ -32,10 +32,12 @@ function CourseInformationForm() {
   const [thumbnailMeta, setThumbnailMeta] = useState(null);
   const [courseCategories, setCourseCategories] = useState([]);
 
-  toast.error("ERROR");
-
   // Fetch categories and set initial form values if editing
   useEffect(() => {
+    // toast.success("Course created successfully!");
+    // toast.error("Error while creating the course!");
+    toast("Your have some notification!");
+
     const fetchCategories = async () => {
       setLoading(true);
       dispatch(getAllCategory(setCourseCategories));
