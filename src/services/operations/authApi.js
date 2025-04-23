@@ -138,16 +138,11 @@ export function getPasswordResetToken(email, setIsEmailSent) {
   };
 }
 
-export function resetPassword(
-  newPassword,
-  confirmPassword,
-  accessToken,
-  navigate
-) {
+export function resetPassword(newPassword, confirmPassword, token, navigate) {
   return async (dispatch) => {
     dispatch(setLoading(true));
     await apiConnector("POST", RESETPASSWORD_API, {
-      accessToken,
+      token,
       password: newPassword,
       confirmPassword,
     })

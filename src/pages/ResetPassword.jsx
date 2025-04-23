@@ -29,12 +29,12 @@ function ResetPassword() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const accessToken = location.pathname.split("/").at(-1);
+    const token = location.pathname.split("/").at(-1);
     dispatch(
       resetPassword(
         formData.newPassword,
         formData.confirmPassword,
-        accessToken,
+        token,
         navigate
       )
     );
