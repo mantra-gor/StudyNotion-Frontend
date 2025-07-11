@@ -4,12 +4,15 @@ import { courseEndpoints } from "../apiEndpoints";
 
 const {
   ADD_COURSE,
+  EDIT_COURSE,
+  DELETE_COURSE,
   ADD_SECTION,
   UPDATE_SECTION,
   DELETE_SECTION,
   CREATE_SUBSECTION,
   UPDATE_SUBSECTION,
   DELETE_SUBSECTION,
+  GET_COURSE_BY_INSTRUCTOR,
 } = courseEndpoints;
 
 //* Course APIs
@@ -18,7 +21,6 @@ export async function addCourse(data, fileData) {
     const res = await apiConnector("POST", ADD_COURSE, data);
     if (res.success) {
       toast.success(res.message);
-      console.log(res);
       return res;
     } else {
       return toast.error(res.message);
@@ -29,9 +31,9 @@ export async function addCourse(data, fileData) {
   }
 }
 
-export async function updateCourse(formData) {
+export async function updateCourse(data) {
   try {
-    const res = await apiConnector("POST", ADD_COURSE, formData);
+    const res = await apiConnector("PUT", EDIT_COURSE, data);
     if (res.success) {
       toast.success(res.message);
       return res;
@@ -40,6 +42,36 @@ export async function updateCourse(formData) {
     }
   } catch (error) {
     console.error("Failed to update course: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function fetchInstructorCourses() {
+  try {
+    const res = await apiConnector("GET", GET_COURSE_BY_INSTRUCTOR);
+    if (res.success) {
+      toast.success(res.message);
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to update course: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function deleteCourse(courseID) {
+  try {
+    const res = await apiConnector("DELETE", `${DELETE_COURSE}/${courseID}`);
+    if (res.success) {
+      toast.success(res.message);
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to delete course: ", error);
     return toast.error(error.response.data.message);
   }
 }
@@ -132,6 +164,7 @@ export async function deleteSubSection(data) {
     }
   } catch (error) {
     console.error("Failed to create course sub section: ", error);
-    return toast.error(error.response.data.message);
+    toast.error(error.response.data.message);
+    return error.response.data;
   }
 }

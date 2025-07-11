@@ -12,6 +12,8 @@ import {
 import { IoMdClose } from "react-icons/io";
 import Upload from "../../../../ui/form/Upload";
 import Button from "../../../../ui/Button";
+import { uploadToS3 } from "../../../../../services/aws/s3Services";
+import toast from "react-hot-toast";
 
 function LectureModal({
   modalData,
@@ -30,7 +32,10 @@ function LectureModal({
 
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [videoMeta, setVideoMeta] = useState(null);
   const { course } = useSelector((state) => state.course);
+
+  const courseContentIndex = modalData.courseContentIndex;
 
   useEffect(() => {
     if (view || edit) {
@@ -49,63 +54,137 @@ function LectureModal({
     ) {
       return true;
     } else {
+      console.log("Form not updated");
+      toast.error("Form not updated");
       return false;
     }
   };
 
+  // const handleEditSubSection = async () => {
+  //   const currentValues = getValues();
+  //   const formData = new FormData();
+
+  //   console.log(modalData);
+
+  //   // subSectionID, title, description, duration videoFile
+  //   formData.append("subSectionID", modalData._id);
+  //   formData.append("title", modalData.title);
+  //   formData.append("description", modalData.description);
+  //   formData.append("videoFile", modalData._id);
+  //   // formData.append("duration", modalData._id);
+
+  //   if (currentValues.lectureTitle !== modalData.title) {
+  //     formData.append("title", modalData._id);
+  //   }
+  //   if (currentValues.lectureDesc !== modalData.description) {
+  //     formData.append("description", modalData.description);
+  //   }
+  //   if (currentValues.lectureVideo !== modalData.videoFile) {
+  //     formData.append("videoFile", modalData.videoFile);
+  //   }
+  //   // if (currentValues.lectureTitle !== modalData.duration) {
+  //   //   formData.append("duration", modalData.duration);
+  //   // }
+
+  //   setLoading(true);
+  //   const result = await updateSubSection(formData);
+  //   if (result.success) {
+  //     const updatedCourse = course;
+  //     updatedCourse.courseContent[courseContentIndex] = result.data;
+  //     console.log(updatedCourse);
+  //     dispatch(setCourse(result.data));
+  //   }
+  //   closeModal();
+  // };
+
   const handleEditSubSection = async () => {
-    const currentValues = getValues();
-    const formData = new FormData();
-    // subSectionID, title, description, duration videoFile
-    formData.append("subSectionID", modalData._id);
-    formData.append("description", modalData._id);
-    formData.append("duration", modalData._id);
-    formData.append("videoFile", modalData._id);
+    try {
+      const currentValues = getValues();
+      const payload = {
+        sectionID: modalData.sectionID,
+        subSectionID: modalData._id,
+        title: modalData.title,
+        description: modalData.description,
+      };
 
-    if (currentValues.lectureTitle !== modalData.title) {
-      formData.append("title", modalData._id);
-    }
-    if (currentValues.lectureDesc !== modalData.description) {
-      formData.append("description", modalData.description);
-    }
-    if (currentValues.lectureTitle !== modalData.duration) {
-      formData.append("duration", modalData.duration);
-    }
-    if (currentValues.lectureVideo !== modalData.videoFile) {
-      formData.append("videoFile", modalData.videoFile);
-    }
+      // Only include fields if they have changed
+      if (currentValues.lectureTitle !== modalData.title) {
+        payload.title = currentValues.lectureTitle;
+      }
+      if (currentValues.lectureDesc !== modalData.description) {
+        payload.description = currentValues.lectureDesc;
+      }
+      if (
+        currentValues.lectureVideo &&
+        currentValues.lectureVideo !== modalData.videoFile
+      ) {
+        payload.videoFile = currentValues.lectureVideo; // Make sure this is correct
+      }
+      if (
+        currentValues.lectureDuration &&
+        currentValues.lectureDuration !== modalData.duration
+      ) {
+        payload.duration = currentValues.lectureDuration;
+      }
 
-    setLoading(true);
-    const result = await updateSubSection(formData);
-    if (result.success) {
-      const updatedCourse = course;
-      updatedCourse.courseContent[courseContentIndex] = result.data;
-      console.log(updatedCourse);
-      dispatch(setCourse(result.data));
+      setLoading(true);
+
+      const result = await updateSubSection(payload);
+
+      if (result.success) {
+        // Update the course content in the Redux store
+        const updatedCourseContent = course.courseContent.map((section) =>
+          section._id === modalData.sectionID ? result.data : section
+        );
+        const updatedCourse = {
+          ...course,
+          courseContent: updatedCourseContent,
+        };
+        dispatch(setCourse(updatedCourse));
+      }
+    } catch (error) {
+      console.error("Failed to edit subsection:", error);
+    } finally {
+      setLoading(false);
+      closeModal();
     }
-    closeModal();
   };
 
   const submitHandler = async (data) => {
+    // handle view
     if (view) return;
+
+    // handle edit
     if (edit) {
       if (!isFormUpdated) return;
       else {
         handleEditSubSection();
+        return;
       }
     }
-    const courseContentIndex = modalData.courseContentIndex;
-    const formData = new FormData();
-    formData.append("sectionID", modalData.sectionID);
-    formData.append("title", data.title);
-    formData.append("description", data.description);
-    formData.append("videoFile", data.lectureVideo);
-    // formData.append("duration", modalData );
 
-    console.log(courseContentIndex);
+    // handle add
 
+    // upload file to s3
     setLoading(true);
-    const result = await createSubSection(formData);
+    const { uploadResponse, fileKey } = await uploadToS3(
+      videoMeta,
+      data.lectureVideo,
+      "course"
+    );
+    if (uploadResponse.status !== 200) {
+      return toast.error("Failed to upload file!");
+    }
+
+    // now adding the data without the formdata
+    const payload = {
+      sectionID: modalData.sectionID,
+      title: data.lectureTitle,
+      description: data.lectureDesc,
+      fileKey: fileKey,
+    };
+
+    const result = await createSubSection(payload);
     if (result.success) {
       dispatch(
         setSubSection({
@@ -152,7 +231,7 @@ function LectureModal({
               register={register}
               setValue={setValue}
               errors={errors}
-              // fileState={}
+              fileState={setVideoMeta}
               // viewData={view ? modalData.videoUrl : null}
               // editData={edit ? modalData.videoUrl : null}
             />

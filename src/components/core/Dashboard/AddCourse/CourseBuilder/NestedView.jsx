@@ -20,9 +20,13 @@ function NestedView({ handleChangeEditScetionName }) {
   const [viewSubSection, setViewSubSection] = useState(null);
   const [editSubSection, setEditSubSection] = useState(null);
   const [deleteSectionData, setDeleteSectionData] = useState(null);
+  const [deleteSubSectionData, setDeleteSubSectionData] = useState(null);
   const [showConfirmationModal, setShowConfirmationModal] = useState(null);
+  const [isDeletingSubSection, setIsDeletingSubSection] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const deleteSectionHandler = async () => {
+    setLoading(true);
     const result = await deleteSection({
       sectionID: deleteSectionData._id,
       courseID: course._id,
@@ -30,21 +34,29 @@ function NestedView({ handleChangeEditScetionName }) {
     if (result.success) {
       dispatch(setCourse(result.data));
     }
+    setLoading(false);
     setShowConfirmationModal(false);
   };
 
-  const deleteSubSectionHandler = async () => {
-    console.log(viewSubSection);
+  const deleteSubSectionHandler = async (sectionId) => {
+    setLoading(true);
 
     const result = await deleteSubSection({
-      subSectionID: viewSubSection._id,
+      subSectionID: deleteSubSectionData._id,
       courseID: course._id,
     });
 
-    if (result) {
+    if (result.success) {
       dispatch(setCourse(result.data));
-    }
 
+      // TODO => ::Optimization Posible:: By getting only section data from the backend
+      // const updatedCourseContent = course.courseContent.map((section) =>
+      //   section._id === sectionID ? result : section
+      // );
+      // const updatedCourse = { ...course, courseContent: updatedCourseContent };
+      // dispatch(setCourse(updatedCourse));
+    }
+    setLoading(false);
     setShowConfirmationModal(false);
   };
 
@@ -60,6 +72,7 @@ function NestedView({ handleChangeEditScetionName }) {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  className="p-1 hover:bg-richblack-600 rounded-full transition-all duration-200"
                   onClick={() =>
                     handleChangeEditScetionName(
                       section._id,
@@ -70,7 +83,9 @@ function NestedView({ handleChangeEditScetionName }) {
                   <TbEdit size={21} />
                 </button>
                 <button
+                  className="p-1 hover:bg-richblack-600 rounded-full transition-all duration-200"
                   onClick={() => {
+                    setIsDeletingSubSection(false);
                     setShowConfirmationModal(true);
                     setDeleteSectionData(section);
                   }}
@@ -78,26 +93,35 @@ function NestedView({ handleChangeEditScetionName }) {
                   <MdOutlineDelete size={21} />
                 </button>
                 <span>|</span>
-                <FaCaretDown size={21} />
+                <div className="p-1 hover:bg-richblack-600 rounded-full transition-all duration-200 cursor-pointer">
+                  <FaCaretDown size={21} />
+                </div>
               </div>
             </summary>
             <div className="flex flex-col items-end">
+              {/* {console.log("sub section", section.subSection)}
+              {console.log("section", section)} */}
               {section.subSection?.map((data, index) => (
                 <div
                   key={data._id}
                   onClick={() => setViewSubSection(data)}
                   className="flex items-center w-[98%] justify-between gap-x-3 border-b border-richblack-300 border-dashed p-3"
                 >
-                  <div className="flex items-center gap-3 ">
+                  <div className="flex items-center gap-3">
                     <BsFillMenuButtonWideFill />
                     <h5 className="">{data.title}</h5>
                   </div>
-                  <div className="flex items-center gap-x-1">
+                  <div
+                    className="flex items-center gap-x-1"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
                     <button
                       onClick={() =>
                         setEditSubSection({
                           ...data,
-                          sectionId: section._id,
+                          sectionID: section._id,
                           courseContentIndex: index,
                         })
                       }
@@ -106,6 +130,8 @@ function NestedView({ handleChangeEditScetionName }) {
                     </button>
                     <button
                       onClick={() => {
+                        setDeleteSubSectionData(data);
+                        setIsDeletingSubSection(true);
                         setShowConfirmationModal(true);
                       }}
                     >
@@ -155,13 +181,16 @@ function NestedView({ handleChangeEditScetionName }) {
       </div>
       {showConfirmationModal && (
         <ConfirmationModal
+          processing={loading}
           modalTitle="Are you sure ?"
           // ${deleteSectionData.sectionName}
           modalText={`This will be deleted!`}
           highlightedBtnText="Delete"
           btnText="Cancel"
           highlightedBtnOnClick={
-            viewSubSection ? deleteSubSectionHandler : deleteSectionHandler
+            isDeletingSubSection
+              ? deleteSubSectionHandler
+              : deleteSectionHandler
           }
           btnOnclick={() => setShowConfirmationModal(false)}
         />

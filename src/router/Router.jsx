@@ -1,6 +1,8 @@
 import { Navigate, useRoutes } from "react-router-dom";
 import { lazy } from "react";
 import ProtectedRoute from "./ProtectedRoute";
+import MyCourses from "../components/core/Dashboard/MyCourses";
+import EditCourse from "../components/core/Dashboard/EditCourse";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -76,6 +78,14 @@ const Router = () => {
             {
               path: "/dashboard/my-profile",
               element: <MyProfile />,
+            },
+            {
+              path: "/dashboard/my-courses",
+              element: <MyCourses />,
+            },
+            {
+              path: "/dashboard/edit-course/:courseID",
+              element: <EditCourse />,
             },
             {
               path: "dashboard/enrolled-courses",

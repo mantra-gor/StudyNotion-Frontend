@@ -41,15 +41,16 @@ function CourseBuilderForm() {
   };
 
   const goNext = () => {
-    if (course.courseContent.length === 0) {
+    if (course.course.courseContent.length === 0) {
       return toast.error("Please add atleast one section");
     }
     if (
-      course.courseContent.some((section) => section.subSection.length) === 0
+      course.course.courseContent.some(
+        (section) => section.subSection.length === 0
+      )
     ) {
       return toast.error("Please add atleast one lecture in each section");
     }
-
     dispatch(setStep(3));
   };
 
@@ -64,20 +65,21 @@ function CourseBuilderForm() {
 
   const submitHandler = async (data) => {
     let result;
+    console.log(course);
 
     setLoading(true);
     if (editSectionName) {
       result = await updateSection({
         sectionName: data.sectionName,
         sectionID: editSectionName,
-        // courseId: course.data._id,
-        courseID: "675b1fb8dfd7e72bf1cb9444", // !testing only
+        courseID: course.course._id,
+        // courseID: "68091bdde2485bf4f17f5fbe", // !testing only
       });
     } else {
       result = await createSection({
         sectionName: data.sectionName,
-        // courseId: course.data._id,
-        courseID: "675b1fb8dfd7e72bf1cb9444", // !testing only
+        courseID: course.course._id,
+        // courseID: "68091bdde2485bf4f17f5fbe", // !testing only
       });
     }
     // update the values

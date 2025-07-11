@@ -82,9 +82,9 @@ function CourseInformationForm() {
     setLoading(true);
     try {
       if (!thumbnailMeta) {
-        return toast.error("Please upload a thumbnail");
+        return toast.error("Please upload a thumbnail!");
       }
-
+      //! asset type needs to follow best practices by creating a constant -- pending
       // upload file to s3
       const { uploadResponse, fileKey } = await uploadToS3(
         thumbnailMeta,
@@ -118,7 +118,7 @@ function CourseInformationForm() {
 
       if (result?.success) {
         dispatch(setStep(2));
-        dispatch(setCourse(result));
+        dispatch(setCourse(result.data));
       }
     } catch (error) {
       console.log(error);

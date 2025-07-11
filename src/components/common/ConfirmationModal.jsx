@@ -9,6 +9,7 @@ function ConfirmationModal({
   btnText,
   btnOnclick,
   blur = true,
+  processing = false,
 }) {
   return (
     <FocusLock>
@@ -23,10 +24,18 @@ function ConfirmationModal({
           </h2>
           <p className="text-richblack-100">{modalText}</p>
           <div className="flex justify-between items-center gap-6">
-            <Button active onClick={highlightedBtnOnClick}>
+            <Button
+              active
+              onClick={highlightedBtnOnClick}
+              disabled={processing}
+            >
               {highlightedBtnText}
             </Button>
-            <Button className="text-richblack-25" onClick={btnOnclick}>
+            <Button
+              className="text-richblack-25"
+              disabled={processing}
+              onClick={btnOnclick}
+            >
               {btnText}
             </Button>
           </div>
@@ -37,3 +46,5 @@ function ConfirmationModal({
 }
 
 export default ConfirmationModal;
+
+// disabled css is pending
