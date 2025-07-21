@@ -3,11 +3,14 @@ import { tokenRefresh } from "./jwt/jwtConfig";
 
 // Get the base URL from environment variables
 const localBaseUrl = import.meta.env.VITE_LOCAL_BASE_URL;
-// const liveBaseUrl = import.meta.env.VITE_LIVE_BASE_URL;
+const liveBaseUrl = import.meta.env.VITE_LIVE_BASE_URL;
+
+// Determine the mode (development or production)
+const mode = import.meta.env.MODE;
 
 // Create an axios instance with the base URL
 const axiosInstance = axios.create({
-  baseURL: localBaseUrl,
+  baseURL: mode === "development" ? localBaseUrl : liveBaseUrl,
 });
 
 // Axios Request Interceptors

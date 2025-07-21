@@ -7,13 +7,8 @@ import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 import { LogoutConfirmationContext } from "../../../context/LogoutConfirmationContext";
 import { AiOutlineLogout } from "react-icons/ai";
 
-function Sidebar() {
+function Sidebar({ sidebarCollapsed, setSidebarCollapsed }) {
   const { setLogoutModalOpen } = useContext(LogoutConfirmationContext);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
-    const isSidebarCollapsed =
-      localStorage.getItem("sidebarCollapsed") === "true";
-    return isSidebarCollapsed ?? window.innerWidth <= 768;
-  });
   const { user, loading: profileLoading } = useSelector(
     (state) => state.profile
   );

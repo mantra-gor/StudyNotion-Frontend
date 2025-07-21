@@ -5,6 +5,8 @@ import { FILE_CONFIG } from "../../../utils/constants";
 
 function Upload({
   allowedFileType = "image",
+  editData = null,
+  viewData = null,
   errors = {},
   fileState,
   setValue,
@@ -13,7 +15,9 @@ function Upload({
   name,
 }) {
   const [dragActive, setDragActive] = useState(false);
-  const [previewFile, setPreviewFile] = useState(null);
+  const [previewFile, setPreviewFile] = useState(
+    viewData ? viewData : editData ? editData : ""
+  );
   const inputRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -89,7 +93,7 @@ function Upload({
       };
       fileState(fileMetadata);
 
-      console.log(fileMetadata);
+      // console.log(fileMetadata);
     }
   };
 

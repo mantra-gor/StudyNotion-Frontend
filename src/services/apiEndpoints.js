@@ -15,6 +15,7 @@ export const courseEndpoints = {
   ADD_COURSE: "/course/create-course",
   EDIT_COURSE: "/course/edit-course",
   DELETE_COURSE: "/course/delete-course",
+  GET_COURSE_DETAILS: "/course/get-course-details",
   ADD_SECTION: "/course/create-section",
   UPDATE_SECTION: "/course/update-section",
   DELETE_SECTION: "/course/delete-section",

@@ -1,11 +1,18 @@
 import { useEffect, useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 function KeyFeatures({ name, label, register, errors, setValue, getValues }) {
   const [feature, setFeature] = useState("");
   const [featuresList, setFeaturesList] = useState([]);
 
+  const { editCourse, course } = useSelector((state) => state.course);
+
   useEffect(() => {
+    if (editCourse) {
+      setFeaturesList(course?.keyFeatures);
+    }
+
     register(name, { required: true, validate: (value) => value.length > 0 });
   }, []);
 

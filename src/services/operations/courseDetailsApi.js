@@ -6,6 +6,7 @@ const {
   ADD_COURSE,
   EDIT_COURSE,
   DELETE_COURSE,
+  GET_COURSE_DETAILS,
   ADD_SECTION,
   UPDATE_SECTION,
   DELETE_SECTION,
@@ -72,6 +73,21 @@ export async function deleteCourse(courseID) {
     }
   } catch (error) {
     console.error("Failed to delete course: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function getFullDetailsOfCourse(courseID) {
+  try {
+    const res = await apiConnector("GET", `${GET_COURSE_DETAILS}/${courseID}`);
+    if (res.success) {
+      toast.success(res.message);
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to get course details: ", error);
     return toast.error(error.response.data.message);
   }
 }

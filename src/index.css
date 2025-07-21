@@ -38,3 +38,27 @@ body{
   order: 4;
   flex-grow: 0;
 }
+
+
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+} */
+
+@media (max-width: 768px) {
+  .flex-justify-between {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}

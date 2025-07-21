@@ -1,8 +1,12 @@
+import { useDispatch } from "react-redux";
 import { uploadTips } from "../../../../utils/constants";
 import CourseStepper from "./CourseStepper";
 import { MdOutlineTipsAndUpdates } from "react-icons/md";
+import { setEditCourse } from "../../../../redux/slices/courseSlice";
 
 function AddCourse() {
+  const dispatch = useDispatch();
+  dispatch(setEditCourse(false));
   return (
     <div className="text-richblack-5 flex justify-between">
       <div className="w-6/12">

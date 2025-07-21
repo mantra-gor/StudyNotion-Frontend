@@ -217,7 +217,7 @@ function LectureModal({
           </button>
         </header>
         <div
-          className="w-full p-8 bg-richblack-800 overflow-y-auto"
+          className="w-full p-5 bg-richblack-800 overflow-y-auto"
           style={{ maxHeight: "80vh" }} // Constrain height for scrollable content
         >
           <form

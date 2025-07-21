@@ -79,7 +79,7 @@ function CourseBuilderForm() {
       result = await createSection({
         sectionName: data.sectionName,
         courseID: course.course._id,
-        // courseID: "68091bdde2485bf4f17f5fbe", // !testing only
+        // courseID: "687df608067b9db620be19da", // !testing only
       });
     }
     // update the values

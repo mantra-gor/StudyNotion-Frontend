@@ -40,6 +40,20 @@ function CourseInformationForm() {
       setLoading(false);
     };
 
+    // if form is in edit mode
+    if (editCourse) {
+      // console.log("data populated", editCourse);
+      // console.log(course);
+
+      setValue("courseTitle", course.courseName);
+      setValue("courseShortDesc", course.courseDescription);
+      setValue("coursePrice", course.price);
+      setValue("tags", course.tags);
+      setValue("category", course.category);
+      setValue("keyFeatures", course.keyFeatures);
+      setValue("courseImage", course.thumbnailInfo.objectUrl);
+    }
+
     const initializeFormValues = () => {
       if (!editCourse) return;
       const fields = [
@@ -79,6 +93,8 @@ function CourseInformationForm() {
 
   // Handle form submission
   const onSubmit = async (data) => {
+    console.log("HERE", data);
+
     setLoading(true);
     try {
       if (!thumbnailMeta) {
@@ -270,7 +286,16 @@ function CourseInformationForm() {
               </span>
             )}
           </div>
-          <TagsInput setValue={setValue} errors={errors} />
+          {/* <TagsInput setValue={setValue} errors={errors} /> */}
+          <TagsInput
+            label="Tags"
+            name="tags"
+            placeholder="Enter Tags and press Enter"
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            getValues={getValues}
+          />
           <Upload
             label="Course Thumbnail"
             register={register}
@@ -279,6 +304,7 @@ function CourseInformationForm() {
             multiple={false}
             errors={errors}
             fileState={setThumbnailMeta}
+            editData={editCourse ? course?.thumbnailInfo.objectUrl : null}
           />
           {/* <div className="grid gap-y-1">
           <label>

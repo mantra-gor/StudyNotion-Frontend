@@ -2,7 +2,7 @@ function Button({
   children,
   onClick,
   active,
-  disabled,
+  disabled = false,
   type = "",
   className = "",
 }) {

@@ -141,6 +141,7 @@ function CoursesTable({ courses, setCourses }) {
               src={course.thumbnailInfo.objectUrl}
               alt={course.title}
               className="h-48 w-full object-cover"
+              loading="lazy"
             />
             <div className="absolute top-3 right-3">
               {course.status === COURSES_STATUSES.DRAFT ? (
