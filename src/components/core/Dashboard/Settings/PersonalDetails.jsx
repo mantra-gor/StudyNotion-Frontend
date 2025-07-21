@@ -6,7 +6,6 @@ import moment from "moment";
 function PersonalDetails({ user, userDetails, setUserDetails }) {
   const handleUserDetailsChange = (e) => {
     const { name, value } = e.target;
-    console.log(value);
     setUserDetails((prev) => ({
       ...prev,
       [name]: value,

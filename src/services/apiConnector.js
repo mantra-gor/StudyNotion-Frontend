@@ -1,20 +1,24 @@
 import axios from "axios";
+import { tokenRefresh } from "./jwt/jwtConfig";
 
 // Get the base URL from environment variables
 const localBaseUrl = import.meta.env.VITE_LOCAL_BASE_URL;
-// const liveBaseUrl = import.meta.env.VITE_LIVE_BASE_URL;
+const liveBaseUrl = import.meta.env.VITE_LIVE_BASE_URL;
+
+// Determine the mode (development or production)
+const mode = import.meta.env.MODE;
 
 // Create an axios instance with the base URL
 const axiosInstance = axios.create({
-  baseURL: localBaseUrl,
+  baseURL: mode === "development" ? localBaseUrl : liveBaseUrl,
 });
 
 // Axios Request Interceptors
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
@@ -28,9 +32,10 @@ axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
-  (error) => {
+  async (error) => {
     if (error.response.status === 401) {
-      console.log("Invalid Token!");
+      console.log("Invalid or Expired Token!");
+      await tokenRefresh();
     }
     return Promise.reject(error);
   }

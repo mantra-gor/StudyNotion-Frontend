@@ -19,7 +19,28 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <LogoutConfirmationProvider>
           <App />
-          <Toaster position="top-right" reverseOrder={false} />
+          <Toaster
+            position="top-right"
+            reverseOrder={false}
+            toastOptions={{
+              style: {
+                background: "#E5E4E2",
+                color: "#343434",
+              },
+              success: {
+                style: {
+                  background: "#01321F",
+                  color: "#F1F2FF",
+                },
+              },
+              error: {
+                style: {
+                  color: "#F1F2FF",
+                  background: "#4F0A25",
+                },
+              },
+            }}
+          />
         </LogoutConfirmationProvider>
       </BrowserRouter>
     </Provider>

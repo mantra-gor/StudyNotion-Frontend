@@ -5,14 +5,24 @@ const initialState = {
   course: null,
   editCourse: false,
   paymentLoading: false,
+  courseContentIndex: 0,
 };
 
 const courseSlice = createSlice({
   name: "course",
   initialState,
   reducers: {
-    setSteps: (state, action) => {
+    setStep: (state, action) => {
       state.step = action.payload;
+    },
+    setSubSection: (state, action) => {
+      const { courseContentIndex, subsection } = action.payload;
+      state.course = {
+        ...state.course,
+        courseContent: state.course.courseContent.map((content, index) =>
+          index === courseContentIndex ? subsection : content
+        ),
+      };
     },
     setCourse: (state, action) => {
       state.course = action.payload;
@@ -35,11 +45,12 @@ const courseSlice = createSlice({
 });
 
 export const {
-  setSteps,
+  setStep,
   setCourse,
   setEditCourse,
-  setPaymentLoading,
+  setSubSection,
   resetCourseState,
+  setPaymentLoading,
 } = courseSlice.actions;
 
 export default courseSlice.reducer;
