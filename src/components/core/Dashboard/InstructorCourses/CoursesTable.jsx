@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { Table, Tbody, Td, Th, Thead, Tr } from "react-super-responsive-table";
-import { formattedDate } from "../../../../utils/dateFormatter";
+import { formatDate } from "../../../../utils/dateFormatter";
 import { COURSES_STATUSES } from "../../../../utils/constants";
 import { GoCheckCircleFill, GoClockFill } from "react-icons/go";
 import {
@@ -136,6 +136,8 @@ function CoursesTable({ courses, setCourses }) {
           key={course._id}
           className="bg-richblack-800 rounded-xl border border-richblack-700 overflow-hidden hover:border-richblack-600 transition-all duration-300 hover:shadow-lg"
         >
+          {console.log(course)}
+
           <div className="relative">
             <img
               src={course.thumbnailInfo.objectUrl}
@@ -165,10 +167,9 @@ function CoursesTable({ courses, setCourses }) {
             <p className="text-sm text-richblack-200 mb-4 line-clamp-3">
               {course.description}
             </p>
-
             <div className="flex items-center justify-between mb-4">
               <div className="text-xs text-richblack-300">
-                Created: {formattedDate()}
+                Created: {formatDate(course.createdAt)}
               </div>
               <div className="text-right">
                 {course.price === 0 ? (
@@ -432,7 +433,7 @@ function CoursesTable({ courses, setCourses }) {
                                 d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                               />
                             </svg>
-                            Created: {formattedDate()}
+                            Created: {formatDate(course.createdAt)}
                           </div>
                         </div>
                       </div>
