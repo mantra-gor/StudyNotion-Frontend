@@ -3,6 +3,8 @@ import { lazy } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import MyCourses from "../components/core/Dashboard/MyCourses";
 import EditCourse from "../components/core/Dashboard/EditCourse";
+import Catalog from "../pages/Catalog";
+import CourseDetails from "../pages/CourseDetails";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -55,6 +57,14 @@ const Router = () => {
           element: <VerifyEmail />,
         },
         {
+          path: "/catalog/:catalogName",
+          element: <Catalog />,
+        },
+        {
+          path: "/course/:courseID",
+          element: <CourseDetails />,
+        },
+        {
           path: "/about",
           element: <AboutUs />,
         },
@@ -88,7 +98,7 @@ const Router = () => {
               element: <EditCourse />,
             },
             {
-              path: "dashboard/enrolled-courses",
+              path: "/dashboard/enrolled-courses",
               element: <EnrolledCourses />,
             },
             {

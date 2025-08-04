@@ -22,18 +22,20 @@ export const courseEndpoints = {
   CREATE_SUBSECTION: "/course/create-subsection",
   UPDATE_SUBSECTION: "/course/update-subsection",
   DELETE_SUBSECTION: "/course/delete-subsection",
+  GET_ENROLLED_COURSES: "/course/get-enrolled-courses",
   GET_COURSE_BY_INSTRUCTOR: "/course/get-courses-by-instructor",
 };
 
 //* PROFILE ENDPOINTS
 export const profileEndpoints = {
   UPDATE_PROFILE: "/profile/update-profile",
-  GET_ALL_COURSES: "/profile/get-enrolled-courses",
+  UPDATE_PROFILE_PICTURE: "/profile/update-profile-picture",
 };
 
 //* CATALOG PAGE ENDPOINTS
 export const catalogData = {
   CATALOG_PAGE_API: "/course/get-all-category",
+  CATALOG_DATA_API: "/course/category-page-details",
 };
 
 //* AWS SERVICES ENDPOINTS
@@ -44,4 +46,11 @@ export const awsServicesEndpoints = {
 //* CONTACT US
 export const contactUsEndpoint = {
   CONTACT_US_API: "/contact-us",
+};
+
+//* PAYMENT ENDPOINTS
+export const paymentEndpoints = {
+  CAPTURE_PAYMENT: "/payment/capture-payment",
+  VERIFY_PAYMENT: "/payment/verify-payment",
+  SEND_SUCCESS_MAIL: "/payment/send-success-mail",
 };

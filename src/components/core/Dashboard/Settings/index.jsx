@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../../ui/Button";
-// import { TbEdit } from "react-icons/tb";
 import ProfilePicture from "./ProfilePicture";
 import About from "./About";
 import PersonalDetails from "./PersonalDetails";
@@ -8,6 +7,7 @@ import Password from "./Password";
 import AccountDeletion from "./AccountDeletion";
 import { useEffect, useState } from "react";
 import { updateProfile } from "../../../../services/operations/dashboardApi";
+import { setUser } from "../../../../redux/slices/profileSlice";
 
 function Settings() {
   const { user } = useSelector((state) => state.profile);
@@ -29,15 +29,18 @@ function Settings() {
     });
   }, [user]);
 
-  const handleSaveClick = () => {
-    dispatch(updateProfile(userDetails));
+  const handleSaveClick = async () => {
+    const response = await updateProfile(userDetails);
+
+    // Update the redux state
+    if (response.success) {
+      dispatch(setUser({ ...user, additionalDetails: response.data }));
+    }
   };
 
   return (
-    <div className="w-full flex flex-col gap-8 mb-8">
-      <h1 className="text-2xl md:text-3xl text-richblack-5 m-2">
-        Edit Profile
-      </h1>
+    <div className="w-full flex flex-col gap-8 p-6">
+      <h1 className="text-2xl font-bold text-richblack-5">Edit Profile</h1>
       <ProfilePicture user={user} />
       <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md flex flex-col gap-4">
         <About

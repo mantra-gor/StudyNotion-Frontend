@@ -65,7 +65,7 @@ function CourseBuilderForm() {
 
   const submitHandler = async (data) => {
     let result;
-    console.log(course);
+    // console.log(course);
 
     setLoading(true);
     if (editSectionName) {

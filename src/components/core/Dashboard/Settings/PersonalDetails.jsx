@@ -98,15 +98,13 @@ function PersonalDetails({ user, userDetails, setUserDetails }) {
               options={{ dateFormat: "d-m-Y", maxDate: new Date() }}
               placeholder="Choose Date"
               className=" rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack text-sm font-medium !bg-richblack-700 w-full"
-              value={userDetails?.dob}
+              value={moment(userDetails?.dob).toISOString()}
               style={{
                 boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
               }}
               onChange={(date) => {
-                console.log(moment(date[0]).toISOString());
                 setUserDetails((prev) => ({
                   ...prev,
-                  // dob: date[0].toISOString(),
                   dob: moment(date[0]).toISOString(),
                 }));
               }}

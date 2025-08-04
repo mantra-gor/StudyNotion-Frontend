@@ -19,8 +19,8 @@ function Input({
       disabled={disabled}
       required={required}
       onChange={onChange}
-      className={`${className} bg-richblack-800 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack ${
-        disabled && " !bg-richblack-700/40"
+      className={`${className} bg-richblack-800 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack disabled:cursor-not-allowed ${
+        disabled && "!bg-richblack-700/40"
       }`}
       style={{
         boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",

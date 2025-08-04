@@ -1,58 +1,67 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import Spinner from "../../ui/spinner/Spinner";
-import { getUserEnrolledCourses } from "../../../services/operations/dashboardApi";
-import ProgressBar from "@ramonak/react-progress-bar";
+import { fetchEnrolledCourses } from "../../../services/operations/courseDetailsApi";
+import { Link } from "react-router-dom";
+import { FaGraduationCap } from "react-icons/fa";
+import EnrolledCoursesTable from "./EnrolledCoursesTable";
 
 function EnrolledCourses() {
-  const dispatch = useDispatch();
-  const [enrolledCourses, setEnrolledCourses] = useState(null);
+  const [enrolledData, setEnrolledData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const request = async () => {
-    dispatch(await getUserEnrolledCourses(setEnrolledCourses));
-  };
   useEffect(() => {
+    const request = async () => {
+      try {
+        setLoading(true);
+        const res = await fetchEnrolledCourses();
+        setEnrolledData(res.data);
+      } catch (error) {
+        console.error("Error fetching enrolled courses:", error);
+        setEnrolledData({ courses: [], courseProgress: [] });
+      } finally {
+        setLoading(false);
+      }
+    };
     request();
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-richblack-900 flex flex-col justify-center items-center">
+        <Spinner />
+        <p className="text-richblack-200 text-lg mt-4">
+          Loading your enrolled courses...
+        </p>
+      </div>
+    );
+  }
+
+  const courses = enrolledData?.courses || [];
+
   return (
-    <div className=" text-richblack-5">
-      <div>Enrolled Courses</div>
-      {!enrolledCourses ? (
-        <div className="w-full h-screen flex justify-center items-center">
-          <Spinner />
-        </div>
-      ) : !enrolledCourses.length ? (
-        <p>You have not enrolled in any course yet!</p>
-      ) : (
-        <div>
-          <div>
-            <p>Course Name</p>
-            <p>Durations</p>
-            <p>Progress</p>
+    <div className="min-h-screen bg-richblack-900 text-richblack-5 p-6">
+      <h1 className="text-2xl font-bold mb-6">Enrolled Courses</h1>
+      {courses.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <div className="w-32 h-32 bg-richblack-800 rounded-full flex items-center justify-center mb-8 border-4 border-richblack-700">
+            <FaGraduationCap className="w-16 h-16 text-richblack-400" />
           </div>
-          {/* Cards */}
-          {enrolledCourses.map((course) => {
-            <div key={course._id}>
-              <div>
-                <img src={course.thumbnail} alt="thumbnail" />
-                <div>
-                  <p>{course.title}</p>
-                  <p>{course.description}</p>
-                </div>
-              </div>
-              <div>{course?.totalDuration}</div>
-              <div>
-                <p>Progress: {course.progressPercentage || 0}</p>
-                <ProgressBar
-                  completed={course.progressPercentage || 0}
-                  height="8px"
-                  isLabelVisible={false}
-                />
-              </div>
-            </div>;
-          })}
+          <h2 className="text-3xl font-bold text-white mb-4">
+            No Enrolled Courses
+          </h2>
+          <p className="text-richblack-300 text-lg mb-8 text-center max-w-md">
+            You haven't enrolled in any courses yet. Start your learning journey
+            by exploring our course catalog.
+          </p>
+          <Link
+            to="/catalog"
+            className="bg-gradient-to-r from-blue-600 to-caribbeangreen-600 hover:from-blue-500 hover:to-caribbeangreen-500 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg text-lg"
+          >
+            Explore Courses
+          </Link>
         </div>
+      ) : (
+        <EnrolledCoursesTable enrolledData={enrolledData} />
       )}
     </div>
   );

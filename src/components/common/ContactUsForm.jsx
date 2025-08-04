@@ -32,7 +32,7 @@ function ContactUsForm() {
     setLoading(true);
     await apiConnector("POST", contactUsEndpoint.CONTACT_US_API, data)
       .then((res) => {
-        console.log(res);
+        toast.success("Your request has successfully sent to the team.");
       })
       .catch((error) => {
         console.error("Failed to send mail of contact us:", error);

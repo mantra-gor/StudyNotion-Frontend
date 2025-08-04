@@ -93,8 +93,6 @@ function CourseInformationForm() {
 
   // Handle form submission
   const onSubmit = async (data) => {
-    console.log("HERE", data);
-
     setLoading(true);
     try {
       if (!thumbnailMeta) {

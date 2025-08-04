@@ -39,6 +39,15 @@ body{
   flex-grow: 0;
 }
 
+/* Override Swiper pagination bullet colors */
+.swiper-pagination-bullet {
+  background-color: theme('colors.richblack.500');
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background-color: theme('colors.yellow.200');
+}
+
 
 /* @keyframes fadeIn {
   from {

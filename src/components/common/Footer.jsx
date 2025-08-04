@@ -172,7 +172,7 @@ function Footer() {
             <FooterItem
               newTab="_blank"
               className="hover:text-richblack-200 transition-all duration-200"
-              linkTo="https://www.mantragor.tech/"
+              linkTo="https://www.mantragor.com/"
             >
               © {currentYear} Mantra Gor. All rights reserved.
             </FooterItem>

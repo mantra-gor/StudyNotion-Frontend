@@ -8,8 +8,8 @@ function MyProfile() {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
   return (
-    <div className="w-full flex flex-col gap-8 mb-8">
-      <h1 className="text-2xl md:text-3xl text-richblack-5 m-2">My Profile</h1>
+    <div className="w-full flex flex-col gap-8 p-6">
+      <h1 className="text-2xl font-bold text-richblack-5">My Profile</h1>
       <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
         <div className="flex justify-between">
           <div className="flex items-center gap-4 md:gap-8">
@@ -53,11 +53,13 @@ function MyProfile() {
           </Button>
         </div>
         <div className="mt-5">
-          <p className="text-richblack-100">
-            {user.additionalDetails.about
-              ? user?.additionalDetails?.about
-              : "Write something about yourself."}
-          </p>
+          <div className="text-richblack-100">
+            {user.additionalDetails.about ? (
+              <p>{user?.additionalDetails?.about}</p>
+            ) : (
+              <p className="italic">Write something about yourself.</p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -124,7 +126,9 @@ function MyProfile() {
                 Date Of Birth
               </p>
               <p className="text-sm text-richblack-5 font-medium">
-                {moment(user?.additionalDetails?.dob).format("DD-MMM-YYYY")}
+                {user.additionalDetails.dob
+                  ? moment(user.additionalDetails.dob).format("DD-MMM-YYYY")
+                  : "Not Provided"}
               </p>
             </div>
           </div>

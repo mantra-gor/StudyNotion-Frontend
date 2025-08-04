@@ -8,10 +8,12 @@ import {
 } from "../../../../../redux/slices/courseSlice";
 import { COURSES_STATUSES } from "../../../../../utils/constants";
 import { updateCourse } from "../../../../../services/operations/courseDetailsApi";
+import { useNavigate } from "react-router-dom";
 
 function PublishCourse() {
   const { register, handleSubmit, setValue, getValues } = useForm();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { course } = useSelector((state) => state.course);
   const [loading, setLoading] = useState(false);
 
@@ -31,6 +33,7 @@ function PublishCourse() {
   };
 
   const submitHandler = async (data) => {
+    // TODO: Check this condition is having bug or not
     if (
       (course?.status === COURSES_STATUSES.PUBLISHED &&
         getValues("public") === true) ||

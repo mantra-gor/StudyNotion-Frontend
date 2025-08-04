@@ -59,9 +59,9 @@ function Navbar() {
                       <FaAngleDown />
 
                       <div
-                        className="invisible md:w-[300px] -left-8 absolute top-[50px] flex flex-col rounded-md 
-                    bg-richblack-800 p-2 text-richblack-50 opacity-0 transition-all duration-200 
-                    group-hover:visible group-hover:opacity-100 drop-shadow-white-lg z-30"
+                        className="invisible md:w-[300px] -left-8 absolute top-[50px] flex flex-col rounded-md
+                    bg-richblack-800 p-2 text-richblack-50 opacity-0 transition-all duration-200
+                    group-hover:visible group-hover:opacity-100 drop-shadow-white-lg z-30 "
                       >
                         {subLinks?.length ? (
                           subLinks.map((category, _id) => {
@@ -71,8 +71,8 @@ function Navbar() {
                             return (
                               <Link
                                 key={_id}
-                                className="p-3 hover:bg-richblack-700 rounded-md"
-                                to={linkPath}
+                                className="p-3 hover:bg-richblack-700 rounded-md !cursor-pointer"
+                                to={`/catalog/${linkPath}`}
                               >
                                 <div>{category?.name}</div>
                               </Link>

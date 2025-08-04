@@ -15,7 +15,7 @@ function SidebarLink({ data, sidebarCollapsed }) {
       }`
       }
     >
-      <div>{<Icon size={21} />}</div>
+      <div>{<Icon size={22} />}</div>
       {!sidebarCollapsed && <div>{data?.name}</div>}
     </NavLink>
   );

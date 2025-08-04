@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function About({ user, userDetails, setUserDetails }) {
   const handleAboutChange = (e) => {
     setUserDetails((prev) => ({ ...prev, about: e.target.value }));

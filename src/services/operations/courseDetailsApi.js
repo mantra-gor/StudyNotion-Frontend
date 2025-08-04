@@ -1,6 +1,6 @@
-import toast from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
 import { courseEndpoints } from "../apiEndpoints";
+// import toast from "react-hot-toast";
 
 const {
   ADD_COURSE,
@@ -13,6 +13,7 @@ const {
   CREATE_SUBSECTION,
   UPDATE_SUBSECTION,
   DELETE_SUBSECTION,
+  GET_ENROLLED_COURSES,
   GET_COURSE_BY_INSTRUCTOR,
 } = courseEndpoints;
 
@@ -21,7 +22,6 @@ export async function addCourse(data, fileData) {
   try {
     const res = await apiConnector("POST", ADD_COURSE, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -36,7 +36,6 @@ export async function updateCourse(data) {
   try {
     const res = await apiConnector("PUT", EDIT_COURSE, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -51,7 +50,6 @@ export async function fetchInstructorCourses() {
   try {
     const res = await apiConnector("GET", GET_COURSE_BY_INSTRUCTOR);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -62,11 +60,24 @@ export async function fetchInstructorCourses() {
   }
 }
 
+export async function fetchEnrolledCourses() {
+  try {
+    const res = await apiConnector("GET", GET_ENROLLED_COURSES);
+    if (res.success) {
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to fetch enrolled courses: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
 export async function deleteCourse(courseID) {
   try {
     const res = await apiConnector("DELETE", `${DELETE_COURSE}/${courseID}`);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -81,7 +92,6 @@ export async function getFullDetailsOfCourse(courseID) {
   try {
     const res = await apiConnector("GET", `${GET_COURSE_DETAILS}/${courseID}`);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -97,7 +107,6 @@ export async function createSection(data) {
   try {
     const res = await apiConnector("POST", ADD_SECTION, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -112,7 +121,6 @@ export async function updateSection(data) {
   try {
     const res = await apiConnector("PUT", UPDATE_SECTION, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -127,7 +135,6 @@ export async function deleteSection(data) {
   try {
     const res = await apiConnector("DELETE", DELETE_SECTION, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -143,7 +150,6 @@ export async function createSubSection(data) {
   try {
     const res = await apiConnector("POST", CREATE_SUBSECTION, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -158,7 +164,6 @@ export async function updateSubSection(data) {
   try {
     const res = await apiConnector("PUT", UPDATE_SUBSECTION, data);
     if (res.success) {
-      toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);
@@ -173,7 +178,7 @@ export async function deleteSubSection(data) {
   try {
     const res = await apiConnector("DELETE", DELETE_SUBSECTION, data);
     if (res.success) {
-      toast.success(res.message);
+      // toast.success(res.message);
       return res;
     } else {
       return toast.error(res.message);

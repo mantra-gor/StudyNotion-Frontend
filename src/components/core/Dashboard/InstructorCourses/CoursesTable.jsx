@@ -9,12 +9,7 @@ import {
   TbSortAscending,
   TbSortDescending,
 } from "react-icons/tb";
-import {
-  MdOutlineDelete,
-  MdFilterList,
-  MdViewModule,
-  MdViewList,
-} from "react-icons/md";
+import { MdOutlineDelete, MdViewModule, MdViewList } from "react-icons/md";
 import ConfirmationModal from "../../../common/ConfirmationModal";
 import {
   deleteCourse,
@@ -136,8 +131,6 @@ function CoursesTable({ courses, setCourses }) {
           key={course._id}
           className="bg-richblack-800 rounded-xl border border-richblack-700 overflow-hidden hover:border-richblack-600 transition-all duration-300 hover:shadow-lg"
         >
-          {console.log(course)}
-
           <div className="relative">
             <img
               src={course.thumbnailInfo.objectUrl}
