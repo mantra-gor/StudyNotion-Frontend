@@ -26,6 +26,7 @@ import { formatDate } from "../utils/dateFormatter";
 import { IoMdSchool } from "react-icons/io";
 import toast from "react-hot-toast";
 import Footer from "../components/common/Footer";
+import useAuth from "../hooks/useAuth";
 
 function CourseDetails() {
   const { user } = useSelector((state) => state.profile);
@@ -36,6 +37,8 @@ function CourseDetails() {
   const [activeTab, setActiveTab] = useState("overview");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { isLoggedin } = useAuth();
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -50,6 +53,10 @@ function CourseDetails() {
   }, [courseID]);
 
   const handlePurchase = () => {
+    if (!isLoggedin) {
+      toast("Please login to enroll the course.");
+      return navigate("/login");
+    }
     buyCourse({
       courses: [courseID],
       userDetails: user,
