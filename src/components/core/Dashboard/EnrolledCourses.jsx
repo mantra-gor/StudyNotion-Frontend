@@ -43,13 +43,13 @@ function EnrolledCourses() {
       <h1 className="text-2xl font-bold mb-6">Enrolled Courses</h1>
       {courses.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20">
-          <div className="w-32 h-32 bg-richblack-800 rounded-full flex items-center justify-center mb-8 border-4 border-richblack-700">
-            <FaGraduationCap className="w-16 h-16 text-richblack-400" />
+          <div className="w-24 h-24 bg-richblack-800 rounded-full flex items-center justify-center mb-8 border-4 border-richblack-700">
+            <FaGraduationCap size={46} className="text-richblack-400" />
           </div>
-          <h2 className="text-3xl font-bold text-white mb-4">
+          <h2 className="text-2xl font-bold text-white mb-4">
             No Enrolled Courses
           </h2>
-          <p className="text-richblack-300 text-lg mb-8 text-center max-w-md">
+          <p className="text-richblack-300 mb-8 text-center max-w-md">
             You haven't enrolled in any courses yet. Start your learning journey
             by exploring our course catalog.
           </p>

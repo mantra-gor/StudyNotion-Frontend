@@ -28,7 +28,7 @@ function Dashboard() {
           sidebarCollapsed ? "ml-[60px]" : "ml-[232px]"
         }`}
       >
-        <div className="w-11/12 mx-auto max-w-[1000px] py-4">
+        <div className="w-11/12 mx-auto max-w-[1000px]. py-4">
           <Outlet />
         </div>
       </div>

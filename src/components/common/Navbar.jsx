@@ -11,7 +11,7 @@ import { getAllCategory } from "../../services/operations/authApi";
 function Navbar() {
   const { accessToken } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
-  const { totalCartItems } = useSelector((state) => state.cart);
+  const { totalItems } = useSelector((state) => state.cart);
   const [subLinks, setSubLinks] = useState(null);
   const dispatch = useDispatch();
 
@@ -95,9 +95,9 @@ function Navbar() {
           {user && user?.accountType === "Student" && (
             <Link className="relative" to="/dashboard/cart">
               <AiOutlineShoppingCart size={27} />
-              {totalCartItems > 0 && (
+              {totalItems > 0 && (
                 <span className="absolute -top-1 -right-2 bg-caribbeangreen-400 px-[5px] py-[1px] font-bold text-richblack-5 rounded-full animate-bounce text-xs">
-                  {totalCartItems}
+                  {totalItems}
                 </span>
               )}
             </Link>

@@ -27,6 +27,7 @@ import { IoMdSchool } from "react-icons/io";
 import toast from "react-hot-toast";
 import Footer from "../components/common/Footer";
 import useAuth from "../hooks/useAuth";
+import { addToCart } from "../redux/slices/cartSlice";
 
 function CourseDetails() {
   const { user } = useSelector((state) => state.profile);
@@ -38,7 +39,7 @@ function CourseDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoggedin } = useAuth();
+  const { isLoggedin, isInstructor } = useAuth();
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
@@ -63,6 +64,10 @@ function CourseDetails() {
       navigate,
       dispatch,
     });
+  };
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(courseData));
   };
 
   const shareLink = () => {
@@ -167,6 +172,8 @@ function CourseDetails() {
   };
 
   const isEnrolled = () => {
+    console.log(courseData);
+
     return courseData?.studentsEnrolled?.includes(user?._id);
   };
 
@@ -393,37 +400,43 @@ function CourseDetails() {
 
                     {/* Action Buttons */}
                     <div className="space-y-4">
-                      {isEnrolled() ? (
-                        <Button
-                          className="!rounded-xl flex items-center justify-center w-full bg-gradient-to-r 
-                          from-caribbeangreen-500 
-                          to-caribbeangreen-400 hover:from-caribbeangreen-400 hover:to-caribbeangreen-300 text-richblack-900 
-
-                          font-bold py-4 shadow-lg text-base hover:shadow-caribbeangreen-500/25 transition-all duration-300"
-                          onClick={() => navigate(`/view-course/${courseID}`)}
-                        >
-                          <BiPlay className="mr-2" size={24} />
-                          Continue Learning
-                        </Button>
-                      ) : (
-                        <div className="flex gap-5">
-                          <Button
-                            active
-                            className="!rounded-xl flex items-center justify-center w-full font-bold py-4 text-base shadow-lg transition-all
-                          duration-300 transform hover:-translate-y-0.5"
-                            onClick={handlePurchase}
-                          >
-                            <MdOutlinePayments className="mr-2" size={24} />
-                            Enroll Now
-                          </Button>
-                          <Button
-                            className="!rounded-xl flex items-center justify-center w-full font-bold py-4 text-base shadow-lg transition-all
-                          duration-300 transform hover:-translate-y-0.5"
-                          >
-                            <BiCartAdd className="mr-2" size={24} />
-                            Add to cart
-                          </Button>
-                        </div>
+                      {console.log(isEnrolled())}
+                      {!isInstructor && (
+                        <>
+                          {isEnrolled() ? (
+                            <Button
+                              className="!rounded-xl flex items-center justify-center w-full bg-gradient-to-r from-caribbeangreen-500 to-caribbeangreen-400 
+                              hover:from-caribbeangreen-400 hover:to-caribbeangreen-300 text-richblack-900 font-bold py-4 shadow-lg text-base 
+                              hover:shadow-caribbeangreen-500/25 transition-all duration-300"
+                              onClick={() =>
+                                navigate(`/view-course/${courseID}`)
+                              }
+                            >
+                              <BiPlay className="mr-2" size={24} />
+                              Continue Learning
+                            </Button>
+                          ) : (
+                            <div className="flex gap-5">
+                              <Button
+                                active
+                                className="!rounded-xl flex items-center justify-center w-full font-bold py-4 text-base shadow-lg transition-all
+                                duration-300 transform hover:-translate-y-0.5"
+                                onClick={handlePurchase}
+                              >
+                                <MdOutlinePayments className="mr-2" size={24} />
+                                Enroll Now
+                              </Button>
+                              <Button
+                                onClick={addToCartHandler}
+                                className="!rounded-xl flex items-center justify-center w-full font-bold py-4 text-base shadow-lg transition-all
+                                duration-300 transform hover:-translate-y-0.5"
+                              >
+                                <BiCartAdd className="mr-2" size={24} />
+                                Add to cart
+                              </Button>
+                            </div>
+                          )}
+                        </>
                       )}
 
                       <div className="flex items-center justify-center space-x-4">
