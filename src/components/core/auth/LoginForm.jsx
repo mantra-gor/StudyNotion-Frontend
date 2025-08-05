@@ -116,11 +116,11 @@ function LoginForm() {
 
       {/* Dummy Acounts */}
       <div className=" flex w-full items-center my-4 gap-x-2">
-        <div className="h-[1px] w-full bg-richblack-700" />
-        <p className=" text-richblack-700 font-medium leading-[1.375rem] text-nowrap">
+        <div className="h-[1px] w-full bg-richblack-500" />
+        <p className=" text-richblack-500 font-medium leading-[1.375rem] text-nowrap">
           DUMMY ACCOUNTS
         </p>
-        <div className="h-[1px] w-full bg-richblack-700" />
+        <div className="h-[1px] w-full bg-richblack-500" />
       </div>
       <div className="grid w-full items-center my-4 gap-4 text-richblack-5 opacity-100">
         <Button
