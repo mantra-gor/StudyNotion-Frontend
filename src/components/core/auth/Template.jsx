@@ -29,21 +29,20 @@ function Template({ title, desc1, desc2, image, formtype }) {
 
             {formtype === "signup" ? <SignupForm /> : <LoginForm />}
 
-            <div className=" flex w-full items-center my-4 gap-x-2">
+            {/* Google Login //TODO: Pending */}
+            {/* <div className=" flex w-full items-center my-4 gap-x-2">
               <div className="h-[1px] w-full bg-richblack-700" />
               <p className=" text-richblack-700 font-medium leading-[1.375rem]">
                 OR
               </p>
               <div className="h-[1px] w-full bg-richblack-700" />
-            </div>
-
-            <button
-              className="w-full flex gap-3 items-center justify-center rounded-[8px] 
-        font-medium text-richblack-100 border border-richblack-700 px-[12px] py-[8px]"
+            </div> */}
+            {/* <button
+              className="w-full flex gap-3 items-center justify-center rounded-[8px] font-medium text-richblack-100 border border-richblack-700 px-[12px] py-[8px]"
             >
               <FcGoogle className=" text-xl" />
               <p>Sign In with Google</p>
-            </button>
+            </button> */}
           </div>
 
           <div className="flex flex-col justify-center relative w-11/12 max-w-[450px] mx-auto md:mx-0">
