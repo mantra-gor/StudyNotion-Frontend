@@ -5,6 +5,8 @@ import MyCourses from "../components/core/Dashboard/MyCourses";
 import EditCourse from "../components/core/Dashboard/EditCourse";
 import Catalog from "../pages/Catalog";
 import CourseDetails from "../pages/CourseDetails";
+import ViewCourse from "../pages/ViewCourse";
+import VideoContainer from "../components/core/ViewCourse/VideoContainer";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -71,6 +73,22 @@ const Router = () => {
         {
           path: "/contact",
           element: <ContactUs />,
+        },
+        {
+          path: "/view-course/:courseID",
+          element: (
+            <ProtectedRoute
+              allowedRole={["Admin", "Student"]}
+              element={<ViewCourse />}
+            />
+          ),
+          children: [
+            {
+              index: true,
+              path: "/view-course/:courseID/section/:sectionID/subSection/:subSectionID",
+              element: <VideoContainer />,
+            },
+          ],
         },
         {
           path: "/dashboard",

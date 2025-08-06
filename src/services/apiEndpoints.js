@@ -24,6 +24,8 @@ export const courseEndpoints = {
   DELETE_SUBSECTION: "/course/delete-subsection",
   GET_ENROLLED_COURSES: "/course/get-enrolled-courses",
   GET_COURSE_BY_INSTRUCTOR: "/course/get-courses-by-instructor",
+  GET_AUTHORIZED_COURSE_CONTENT: "/course/get-authorized-course-content",
+  GENERATE_LECTURE_URL: "/course/generate-lecture-url",
 };
 
 //* PROFILE ENDPOINTS

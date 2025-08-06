@@ -13,8 +13,10 @@ const {
   CREATE_SUBSECTION,
   UPDATE_SUBSECTION,
   DELETE_SUBSECTION,
+  GENERATE_LECTURE_URL,
   GET_ENROLLED_COURSES,
   GET_COURSE_BY_INSTRUCTOR,
+  GET_AUTHORIZED_COURSE_CONTENT,
 } = courseEndpoints;
 
 //* Course APIs
@@ -91,6 +93,40 @@ export async function deleteCourse(courseID) {
 export async function getFullDetailsOfCourse(courseID) {
   try {
     const res = await apiConnector("GET", `${GET_COURSE_DETAILS}/${courseID}`);
+    if (res.success) {
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to get course details: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function fetchCourseWithContent(courseID) {
+  try {
+    const res = await apiConnector(
+      "GET",
+      `${GET_AUTHORIZED_COURSE_CONTENT}/${courseID}`
+    );
+    if (res.success) {
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to get course details: ", error);
+    return toast.error(error.response.data.message);
+  }
+}
+
+export async function fetchLecturePresignedURL(videoKey, courseID) {
+  try {
+    const res = await apiConnector("POST", GENERATE_LECTURE_URL, {
+      videoKey,
+      courseID,
+    });
     if (res.success) {
       return res;
     } else {

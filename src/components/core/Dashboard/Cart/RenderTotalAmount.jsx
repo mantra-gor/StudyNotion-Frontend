@@ -16,8 +16,6 @@ function RenderTotalAmount() {
 
   const handleBuyCourse = () => {
     const courseIds = cart.map((course) => course._id);
-    console.log("Purchasing courses:", courseIds);
-
     // if user is not logged in redirect to login page
     if (!isLoggedin) {
       toast("Please login to enroll the course.");

@@ -140,7 +140,6 @@ function EnrolledCoursesTable({ enrolledData }) {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {paginatedCourses.map((course) => {
         const progress = getProgressForCourse(course._id);
-
         return (
           <div
             key={course._id}
@@ -474,7 +473,7 @@ function EnrolledCoursesTable({ enrolledData }) {
                       <Td className="py-6 px-6">
                         <div className="flex items-center space-x-3">
                           <Link
-                            to={`/view-course/${course._id}`}
+                            to={`/view-course/${course._id}/section/${course.courseContent[0]._id}/subSection/${course.courseContent[0].subSection[0]}`}
                             className="inline-flex items-center px-3 py-2 
                             hover:brightness-105 active:brightness-110 transition-all duration-200 bg-yellow-50 text-black rounded-lg 
                             text-sm font-semibold"

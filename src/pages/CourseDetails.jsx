@@ -172,8 +172,6 @@ function CourseDetails() {
   };
 
   const isEnrolled = () => {
-    console.log(courseData);
-
     return courseData?.studentsEnrolled?.includes(user?._id);
   };
 
@@ -400,7 +398,6 @@ function CourseDetails() {
 
                     {/* Action Buttons */}
                     <div className="space-y-4">
-                      {console.log(isEnrolled())}
                       {!isInstructor && (
                         <>
                           {isEnrolled() ? (
@@ -409,7 +406,9 @@ function CourseDetails() {
                               hover:from-caribbeangreen-400 hover:to-caribbeangreen-300 text-richblack-900 font-bold py-4 shadow-lg text-base 
                               hover:shadow-caribbeangreen-500/25 transition-all duration-300"
                               onClick={() =>
-                                navigate(`/view-course/${courseID}`)
+                                navigate(
+                                  `/view-course/${courseData._id}/section/${courseData.courseContent[0]._id}/subSection/${courseData.courseContent[0].subSection[0]._id}`
+                                )
                               }
                             >
                               <BiPlay className="mr-2" size={24} />
