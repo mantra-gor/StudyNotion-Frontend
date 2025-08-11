@@ -5,10 +5,15 @@ import { FaPlay } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { setCurrentVideoKey } from "../../../redux/slices/viewCourseSlice";
+import { BsArrowLeftCircle } from "react-icons/bs";
 
-function VideoDetailsSidebar() {
-  const { courseSectionData, totalNoOfLectures, completedLectures } =
-    useSelector((state) => state.viewCourse);
+function VideoDetailsSidebar({ setReviewModal }) {
+  const {
+    courseEntireData,
+    courseSectionData,
+    totalNoOfLectures,
+    completedLectures,
+  } = useSelector((state) => state.viewCourse);
   const { sectionID, subSectionID } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,22 +39,18 @@ function VideoDetailsSidebar() {
   };
 
   const isVideoCompleted = (videoId) => {
-    // Add your logic to check if video is completed
-    // This would typically come from your Redux state or API
-    return false; // Placeholder
+    return completedLectures.includes(videoId);
   };
 
   const isCurrentVideo = (videoId) => {
     return subSectionID === videoId;
   };
 
-  const handleVideoChange = (subSection) => {
+  const handleVideoChange = (sectionId, subSection) => {
     dispatch(setCurrentVideoKey(subSection.videoInfo.key));
-    const path = location.pathname.split("/");
-    // Replace last segment (subSection ID)
-    path[path.length - 1] = subSection._id;
-    const newPath = path.join("/");
-    navigate(newPath);
+    navigate(
+      `/view-course/${courseEntireData?._id}/section/${sectionId}/subSection/${subSection._id}`
+    );
   };
 
   return (
@@ -57,9 +58,23 @@ function VideoDetailsSidebar() {
       <div className="flex h-full flex-col w-[380px]">
         {/* Header */}
         <div className="p-6 border-b border-richblack-700">
-          <div className="flex items-center justify-between mb-4.">
-            <h2 className="text-xl font-bold text-white">Course Content</h2>
-            <Button className="!w-fit !px-3 !py-1" active>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div
+                onClick={() => navigate("/dashboard/enrolled-courses")}
+                className="text-richblack-5 hover:text-yellow-50 cursor-pointer transition-all duration-300"
+              >
+                <BsArrowLeftCircle size={23} />
+              </div>
+              <h2 className="text-xl font-bold text-white">Course Content</h2>
+            </div>
+            <Button
+              className="!w-fit !px-3 !py-1"
+              active
+              onClick={() => {
+                setReviewModal(true);
+              }}
+            >
               Review
             </Button>
           </div>
@@ -69,12 +84,14 @@ function VideoDetailsSidebar() {
         <div className="flex-1 overflow-y-auto">
           <div className="p-2 space-y-3">
             {courseSectionData?.map((section, sectionIndex) => {
-              const sectionProgress = section.subSection
+              {
+                /* const sectionProgress = section.subSection
                 ? (section.subSection.filter((sub) => isVideoCompleted(sub._id))
                     .length /
                     section.subSection.length) *
                   100
-                : 0;
+                : 0; */
+              }
 
               return (
                 <div
@@ -133,7 +150,7 @@ function VideoDetailsSidebar() {
                                 : ""
                             }`}
                             onClick={() => {
-                              handleVideoChange(subSection);
+                              handleVideoChange(section._id, subSection);
                             }}
                           >
                             <div className="flex items-start space-x-4">

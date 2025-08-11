@@ -4,16 +4,20 @@ import { useSelector } from "react-redux";
 import { FaPlay } from "react-icons/fa";
 import { BiLoader } from "react-icons/bi";
 import Button from "../../ui/Button";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function VideoContainer() {
-  const { currentVideoKey, courseEntireData, currentVideo } = useSelector(
+  const { currentVideoKey, courseEntireData, courseSectionData } = useSelector(
     (state) => state.viewCourse
   );
-
+  const { courseID, sectionID, subSectionID } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!currentVideoKey) {
@@ -45,6 +49,69 @@ function VideoContainer() {
     setVideoLoaded(true);
   };
 
+  const getIndexesOfSectionAndSubSection = () => {
+    const currentSectionIndex = courseSectionData.findIndex(
+      (data) => data._id === sectionID
+    );
+
+    const currentSubSectionIndex = courseSectionData[
+      currentSectionIndex
+    ]?.subSection.findIndex((data) => data._id === subSectionID);
+
+    const noOfSubSections =
+      courseSectionData[currentSectionIndex]?.subSection.length;
+
+    return { currentSectionIndex, currentSubSectionIndex, noOfSubSections };
+  };
+
+  const isLastVideo = () => {
+    const { currentSectionIndex, currentSubSectionIndex, noOfSubSections } =
+      getIndexesOfSectionAndSubSection();
+
+    if (
+      currentSectionIndex === courseSectionData.length - 1 &&
+      currentSubSectionIndex === noOfSubSections - 1
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const goToNextVideo = () => {
+    if (isLastVideo())
+      return toast.success("Congratulations! You have completed the course.");
+
+    const { currentSectionIndex, currentSubSectionIndex, noOfSubSections } =
+      getIndexesOfSectionAndSubSection();
+
+    if (currentSubSectionIndex !== noOfSubSections - 1) {
+      // it means next video is in same section
+      const nextSubSectionId =
+        courseSectionData[currentSectionIndex].subSection[
+          currentSubSectionIndex + 1
+        ]._id;
+
+      navigate(
+        `/view-course/${courseID}/section/${sectionID}/subSection/${nextSubSectionId}`
+      );
+    } else {
+      // else next video will be the first video of the next section
+      const nextSectionId = courseSectionData[currentSectionIndex + 1]._id;
+      const nextSubSectionId =
+        courseSectionData[currentSectionIndex + 1].subSection[0]._id;
+      navigate(
+        `/view-course/${courseID}/section/${nextSectionId}/subSection/${nextSubSectionId}`
+      );
+    }
+  };
+
+  const handleLectureComplete = async () => {
+    // mark the lecture completed
+
+    goToNextVideo();
+  };
+
   return (
     <div className="h-full bg-richblack-900 text-richblack-5">
       <div className="flex flex-col h-full">
@@ -56,8 +123,12 @@ function VideoContainer() {
             </h1>
 
             <div>
-              <Button className="!bg-caribbeangreen-500">
+              <Button
+                onClick={handleLectureComplete}
+                className="!bg-caribbeangreen-500 flex items-center justify-between"
+              >
                 Mark as completed
+                <MdKeyboardArrowRight size={22} className="ml-1" />
               </Button>
             </div>
           </div>

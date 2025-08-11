@@ -28,6 +28,12 @@ export const courseEndpoints = {
   GENERATE_LECTURE_URL: "/course/generate-lecture-url",
 };
 
+//* RATING AND REVIEW ENDPOINTS
+export const ratingAndReviewEndpoints = {
+  REVIEW_COURSE: "/course/review-course",
+  MY_REVIEW: "/course/my-review",
+};
+
 //* PROFILE ENDPOINTS
 export const profileEndpoints = {
   UPDATE_PROFILE: "/profile/update-profile",

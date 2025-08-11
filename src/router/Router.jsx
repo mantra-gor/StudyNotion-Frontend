@@ -6,7 +6,6 @@ import EditCourse from "../components/core/Dashboard/EditCourse";
 import Catalog from "../pages/Catalog";
 import CourseDetails from "../pages/CourseDetails";
 import ViewCourse from "../pages/ViewCourse";
-import VideoContainer from "../components/core/ViewCourse/VideoContainer";
 
 const Home = lazy(() => import("../pages/Home"));
 const Login = lazy(() => import("../pages/Login"));
@@ -20,6 +19,9 @@ const Dashboard = lazy(() => import("../pages/Dashboard"));
 const MyProfile = lazy(() => import("../components/core/Dashboard/MyProfile"));
 const EnrolledCourses = lazy(() =>
   import("../components/core/Dashboard/EnrolledCourses")
+);
+const VideoContainer = lazy(() =>
+  import("../components/core/ViewCourse/VideoContainer")
 );
 const Settings = lazy(() => import("../components/core/Dashboard/Settings"));
 const Cart = lazy(() => import("../components/core/Dashboard/Cart"));

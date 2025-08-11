@@ -1,5 +1,6 @@
+import toast from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
-import { courseEndpoints } from "../apiEndpoints";
+import { courseEndpoints, ratingAndReviewEndpoints } from "../apiEndpoints";
 // import toast from "react-hot-toast";
 
 const {
@@ -18,6 +19,8 @@ const {
   GET_COURSE_BY_INSTRUCTOR,
   GET_AUTHORIZED_COURSE_CONTENT,
 } = courseEndpoints;
+
+const { REVIEW_COURSE, MY_REVIEW } = ratingAndReviewEndpoints;
 
 //* Course APIs
 export async function addCourse(data, fileData) {
@@ -222,6 +225,37 @@ export async function deleteSubSection(data) {
   } catch (error) {
     console.error("Failed to create course sub section: ", error);
     toast.error(error.response.data.message);
+    return error.response.data;
+  }
+}
+
+//* Rating and Review of Course APIs
+export async function createRating(data) {
+  try {
+    const res = await apiConnector("POST", REVIEW_COURSE, data);
+    if (res.success) {
+      // toast.success(res.message);
+      return res;
+    } else {
+      return toast.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to rating the course: ", error);
+    toast.error(error.response.data.message);
+    return error.response.data;
+  }
+}
+
+export async function fetchMyReview(data) {
+  try {
+    const res = await apiConnector("POST", MY_REVIEW, data);
+    if (res.success) {
+      return res;
+    } else {
+      return console.error(res.message);
+    }
+  } catch (error) {
+    console.error("Failed to rating the course: ", error);
     return error.response.data;
   }
 }
