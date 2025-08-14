@@ -17,6 +17,9 @@ const AboutUs = lazy(() => import("../pages/AboutUs"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const MyProfile = lazy(() => import("../components/core/Dashboard/MyProfile"));
+const InstructorDashboard = lazy(() =>
+  import("../components/core/Dashboard/InstructorDashboard")
+);
 const EnrolledCourses = lazy(() =>
   import("../components/core/Dashboard/EnrolledCourses")
 );
@@ -104,6 +107,15 @@ const Router = () => {
             {
               path: "/dashboard/",
               element: <Navigate to="/dashboard/my-profile" replace={true} />,
+            },
+            {
+              path: "/dashboard/instructor",
+              element: (
+                <ProtectedRoute
+                  allowedRole={["Instructor", "Admin"]}
+                  element={<InstructorDashboard />}
+                />
+              ),
             },
             {
               path: "/dashboard/my-profile",

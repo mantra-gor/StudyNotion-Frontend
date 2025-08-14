@@ -45,6 +45,7 @@ export const courseProgressEndpoints = {
 export const profileEndpoints = {
   UPDATE_PROFILE: "/profile/update-profile",
   UPDATE_PROFILE_PICTURE: "/profile/update-profile-picture",
+  INSTRUCTOR_DASHBOARD: "/profile/instructor-dashboard",
 };
 
 //* CATALOG PAGE ENDPOINTS
