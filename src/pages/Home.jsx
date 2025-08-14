@@ -10,6 +10,7 @@ import TimelineImage from "../assets/Images/TimelineImage.png";
 import InstructorSection from "../components/core/Homepage/InstructorSection";
 import ExploreMore from "../components/core/Homepage/ExploreMore";
 import Footer from "../components/common/Footer";
+import ReviewSlider from "../components/common/ReviewSlider";
 
 function Home() {
   return (
@@ -258,10 +259,11 @@ function Home() {
       <div className="w-11/12 flex flex-col mx-auto items-center justify-between gap-8 bg-richblack-900 text-white">
         <InstructorSection />
 
-        <h2 className="md:text-center text-4xl font-semibold mt-10">
+        {/* <h2 className="md:text-center text-4xl font-semibold mt-10">
           Reviews from other Learners
-        </h2>
+        </h2> */}
         {/* Review Carousel */}
+        <ReviewSlider />
       </div>
 
       {/* Footer */}

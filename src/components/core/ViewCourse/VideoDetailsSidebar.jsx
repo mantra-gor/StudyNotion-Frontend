@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { MdArrowDropDown, MdArrowDropUp, MdCheck } from "react-icons/md";
 import { FaPlay } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { setCurrentVideoKey } from "../../../redux/slices/viewCourseSlice";
 import { BsArrowLeftCircle } from "react-icons/bs";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 function VideoDetailsSidebar({ setReviewModal }) {
   const {
@@ -39,7 +40,7 @@ function VideoDetailsSidebar({ setReviewModal }) {
   };
 
   const isVideoCompleted = (videoId) => {
-    return completedLectures.includes(videoId);
+    return completedLectures?.includes(videoId);
   };
 
   const isCurrentVideo = (videoId) => {
@@ -52,6 +53,17 @@ function VideoDetailsSidebar({ setReviewModal }) {
       `/view-course/${courseEntireData?._id}/section/${sectionId}/subSection/${subSection._id}`
     );
   };
+
+  const getProgressForCourse = () => {
+    const noOfLecturesCompleted = completedLectures.length;
+
+    const progressPercentage =
+      (noOfLecturesCompleted * 100) / totalNoOfLectures;
+
+    return progressPercentage;
+  };
+
+  const progress = getProgressForCourse();
 
   return (
     <div className="bg-richblack-900 h-full border-r border-richblack-700">
@@ -221,17 +233,26 @@ function VideoDetailsSidebar({ setReviewModal }) {
             <h4 className="text-white font-semibold mb-1">Course Progress</h4>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-richblack-300">Completed</span>
+                <span className="mb-1 text-richblack-300 text-nowrap">
+                  {progress === 100
+                    ? "Complete"
+                    : progress > 0
+                    ? "In Progress"
+                    : "Not Started"}
+                </span>
                 <span className="text-richblack-200">
-                  {completedLectures.length} of {totalNoOfLectures}
+                  {completedLectures?.length} of {totalNoOfLectures}
                 </span>
               </div>
-              <div className="w-full bg-richblack-600 rounded-full h-2">
-                <div
-                  className="bg-caribbeangreen-400 h-2 rounded-full"
-                  style={{ width: "0%" }}
-                ></div>
-              </div>
+              <ProgressBar
+                completed={progress}
+                height="8px"
+                isLabelVisible={false}
+                bgColor={progress === 100 ? "#06D6A0" : "#118AB2"}
+                baseBgColor="#2C333F"
+                borderRadius="4px"
+                animateOnRender={true}
+              />
             </div>
           </div>
         </div>

@@ -19,13 +19,18 @@ function EnrolledCoursesTable({ enrolledData }) {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [viewMode, setViewMode] = useState("table"); // table or grid
 
-  const courses = enrolledData?.courses || [];
+  const courses = enrolledData || [];
 
-  const getProgressForCourse = (courseId) => {
-    const progress = enrolledData?.courseProgress?.find(
-      (p) => p.courseId === courseId
-    );
-    return progress?.progressPercentage || 0;
+  const getProgressForCourse = (course) => {
+    const noOfLecturesCompleted = course.courseProgress?.completedVideos.length;
+    const totalLectures =
+      course?.courseContent?.reduce((total, section) => {
+        return total + (section?.subSection?.length || 0);
+      }, 0) || 0;
+
+    const progressPercentage = (noOfLecturesCompleted * 100) / totalLectures;
+
+    return progressPercentage;
   };
 
   // Sorting function
@@ -44,7 +49,7 @@ function EnrolledCoursesTable({ enrolledData }) {
         course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const progress = getProgressForCourse(course._id);
+      const progress = getProgressForCourse(course);
       const matchesProgress =
         progressFilter === "all" ||
         (progressFilter === "completed" && progress === 100) ||
@@ -65,8 +70,8 @@ function EnrolledCoursesTable({ enrolledData }) {
         let aValue, bValue;
 
         if (sortConfig.key === "progress") {
-          aValue = getProgressForCourse(a._id);
-          bValue = getProgressForCourse(b._id);
+          aValue = getProgressForCourse(a);
+          bValue = getProgressForCourse(b);
         } else {
           aValue = a[sortConfig.key];
           bValue = b[sortConfig.key];
@@ -139,7 +144,7 @@ function EnrolledCoursesTable({ enrolledData }) {
   const renderGridView = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {paginatedCourses.map((course) => {
-        const progress = getProgressForCourse(course._id);
+        const progress = getProgressForCourse(course);
         return (
           <div
             key={course._id}
@@ -388,8 +393,7 @@ function EnrolledCoursesTable({ enrolledData }) {
                 </Tr>
               ) : (
                 paginatedCourses.map((course) => {
-                  const progress = getProgressForCourse(course._id);
-
+                  const progress = getProgressForCourse(course);
                   return (
                     <Tr
                       key={course._id}
@@ -442,13 +446,13 @@ function EnrolledCoursesTable({ enrolledData }) {
                         </div>
                       </Td>
 
-                      <Td className="py-6 px-6">
+                      <Td className="py-6 px-4">
                         <div className="space-y-2">
                           <div className="flex items-center justify-between mb-1">
                             <span className="text-sm font-medium text-richblack-200">
                               {progress}%
                             </span>
-                            <span className="text-xs text-richblack-400">
+                            <span className="text-xs text-richblack-400 text-nowrap">
                               {progress === 100
                                 ? "Complete"
                                 : progress > 0

@@ -1,7 +1,10 @@
 import toast from "react-hot-toast";
 import { apiConnector } from "../apiConnector";
-import { courseEndpoints, ratingAndReviewEndpoints } from "../apiEndpoints";
-// import toast from "react-hot-toast";
+import {
+  courseEndpoints,
+  ratingAndReviewEndpoints,
+  courseProgressEndpoints,
+} from "../apiEndpoints";
 
 const {
   ADD_COURSE,
@@ -20,7 +23,8 @@ const {
   GET_AUTHORIZED_COURSE_CONTENT,
 } = courseEndpoints;
 
-const { REVIEW_COURSE, MY_REVIEW } = ratingAndReviewEndpoints;
+const { GET_ALL_REVIEWS, REVIEW_COURSE, MY_REVIEW } = ratingAndReviewEndpoints;
+const { GET_COURSE_PROGRESS, UPDATE_COURSE_PROGRESS } = courseProgressEndpoints;
 
 //* Course APIs
 export async function addCourse(data, fileData) {
@@ -75,7 +79,6 @@ export async function fetchEnrolledCourses() {
     }
   } catch (error) {
     console.error("Failed to fetch enrolled courses: ", error);
-    return toast.error(error.response.data.message);
   }
 }
 
@@ -255,6 +258,53 @@ export async function fetchMyReview(data) {
       return console.error(res.message);
     }
   } catch (error) {
+    console.error("Failed to rating the course: ", error);
+    return error.response.data;
+  }
+}
+
+export async function fetchAllReviews() {
+  try {
+    const res = await apiConnector("GET", GET_ALL_REVIEWS);
+
+    if (res.success) {
+      return res;
+    } else {
+      return console.error(res.message);
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
+    console.error("Failed to rating the course: ", error);
+    return error.response.data;
+  }
+}
+
+//* Course Progress APIs
+export async function updateCourseProgress(data) {
+  try {
+    const res = await apiConnector("POST", UPDATE_COURSE_PROGRESS, data);
+    if (res.success) {
+      return res;
+    } else {
+      return console.error(res.message);
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
+    console.error("Failed to rating the course: ", error);
+    return error.response.data;
+  }
+}
+
+export async function getCourseProgress(courseID) {
+  try {
+    const res = await apiConnector("GET", GET_COURSE_PROGRESS + `/${courseID}`);
+    if (res.success) {
+      return res;
+    } else {
+      return console.error(res.message);
+    }
+  } catch (error) {
+    toast.error(error.response.data.message);
     console.error("Failed to rating the course: ", error);
     return error.response.data;
   }

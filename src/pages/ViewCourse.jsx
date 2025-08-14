@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, useParams } from "react-router-dom";
-import { fetchCourseWithContent } from "../services/operations/courseDetailsApi";
+import {
+  fetchCourseWithContent,
+  getCourseProgress,
+} from "../services/operations/courseDetailsApi";
 import {
   setEntireCourseData,
   setCourseSectionData,
@@ -20,6 +23,7 @@ function ViewCourse() {
   useEffect(() => {
     const setCourseSpecificData = async () => {
       const courseData = await fetchCourseWithContent(courseID);
+      const courseProgressData = await getCourseProgress(courseID);
 
       dispatch(setCourseSectionData(courseData.data.courseContent));
       dispatch(setEntireCourseData(courseData.data));
@@ -28,7 +32,7 @@ function ViewCourse() {
           courseData?.data?.courseContent[0]?.subSection[0]?.videoInfo.key
         )
       );
-      // dispatch(setCompletedLectures());
+      dispatch(setCompletedLectures(courseProgressData?.data.completedVideos));
 
       const lectures =
         courseData?.data?.courseContent?.reduce((total, section) => {

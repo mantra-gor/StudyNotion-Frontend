@@ -8,7 +8,6 @@ export async function tokenRefresh() {
     const token = { token: localStorage.getItem("refreshToken") };
     const response = await apiConnector("POST", REFRESH_TOKEN, token);
     const { accessToken, refreshToken } = response.data;
-    console.log(response);
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
   } catch (error) {

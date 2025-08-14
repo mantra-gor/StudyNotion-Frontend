@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { fetchLecturePresignedURL } from "../../../services/operations/courseDetailsApi";
-import { useSelector } from "react-redux";
+import {
+  fetchLecturePresignedURL,
+  updateCourseProgress,
+} from "../../../services/operations/courseDetailsApi";
+import { useDispatch, useSelector } from "react-redux";
 import { FaPlay } from "react-icons/fa";
 import { BiLoader } from "react-icons/bi";
 import Button from "../../ui/Button";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { updateCompletedLectures } from "../../../redux/slices/viewCourseSlice";
 
 function VideoContainer() {
   const { currentVideoKey, courseEntireData, courseSectionData } = useSelector(
     (state) => state.viewCourse
   );
+  const dispatch = useDispatch();
   const { courseID, sectionID, subSectionID } = useParams();
   const [videoUrl, setVideoUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -107,9 +112,13 @@ function VideoContainer() {
   };
 
   const handleLectureComplete = async () => {
-    // mark the lecture completed
+    // call api to mark the lecture completed
+    const response = await updateCourseProgress({ courseID, subSectionID });
 
-    goToNextVideo();
+    if (response.success) {
+      dispatch(updateCompletedLectures(subSectionID));
+      goToNextVideo();
+    }
   };
 
   return (

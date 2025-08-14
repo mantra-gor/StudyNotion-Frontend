@@ -17,7 +17,7 @@ function EnrolledCourses() {
         setEnrolledData(res.data);
       } catch (error) {
         console.error("Error fetching enrolled courses:", error);
-        setEnrolledData({ courses: [], courseProgress: [] });
+        setEnrolledData([]);
       } finally {
         setLoading(false);
       }
@@ -36,7 +36,7 @@ function EnrolledCourses() {
     );
   }
 
-  const courses = enrolledData?.courses || [];
+  const courses = enrolledData || [];
 
   return (
     <div className="min-h-screen bg-richblack-900 text-richblack-5 p-6">

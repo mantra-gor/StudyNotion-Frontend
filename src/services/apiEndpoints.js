@@ -30,8 +30,15 @@ export const courseEndpoints = {
 
 //* RATING AND REVIEW ENDPOINTS
 export const ratingAndReviewEndpoints = {
+  GET_ALL_REVIEWS: "/course/get-all-ratings-and-reviews",
   REVIEW_COURSE: "/course/review-course",
   MY_REVIEW: "/course/my-review",
+};
+
+//* COURSE PROGRESS ENDPOINTS
+export const courseProgressEndpoints = {
+  GET_COURSE_PROGRESS: "/course/get-course-progress",
+  UPDATE_COURSE_PROGRESS: "/course/update-course-progress",
 };
 
 //* PROFILE ENDPOINTS

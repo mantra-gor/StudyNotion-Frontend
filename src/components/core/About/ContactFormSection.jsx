@@ -2,7 +2,7 @@ import ContactUsForm from "../../common/ContactUsForm";
 
 function ContactFormSection() {
   return (
-    <div className="md:w-5/12 w-full mx-auto">
+    <div className="md:w-5/12 w-full mx-auto border border-richblack-600 p-8 rounded-xl">
       <h3 className="text-richblack-5 text-4xl font-semibold text-center">
         Get in Touch
       </h3>
