@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createSubSection,
+  fetchLecturePresignedURL,
   updateSubSection,
 } from "../../../../../services/operations/courseDetailsApi";
 import {
@@ -14,6 +15,7 @@ import Upload from "../../../../ui/form/Upload";
 import Button from "../../../../ui/Button";
 import { uploadToS3 } from "../../../../../services/aws/s3Services";
 import toast from "react-hot-toast";
+import { ASSET_TYPES } from "../../../../../utils/constants";
 
 function LectureModal({
   modalData,
@@ -34,6 +36,7 @@ function LectureModal({
   const [loading, setLoading] = useState(false);
   const [videoMeta, setVideoMeta] = useState(null);
   const { course } = useSelector((state) => state.course);
+  const [videoUrl, setVideoUrl] = useState("");
 
   const courseContentIndex = modalData.courseContentIndex;
 
@@ -41,7 +44,17 @@ function LectureModal({
     if (view || edit) {
       setValue("lectureTitle", modalData.title);
       setValue("lectureDesc", modalData.description);
-      setValue("lectureVideo", modalData.videoUrl);
+
+      const setVideoURL = async () => {
+        const response = await fetchLecturePresignedURL(
+          modalData.videoInfo.key,
+          course._id
+        );
+        setVideoUrl(response.data);
+        setValue("lectureVideo", response.data);
+      };
+
+      setVideoURL();
     }
   }, []);
 
@@ -97,7 +110,8 @@ function LectureModal({
   //   closeModal();
   // };
 
-  const handleEditSubSection = async () => {
+  const handleEditSubSection = async (data) => {
+    setLoading(true);
     try {
       const currentValues = getValues();
       const payload = {
@@ -114,11 +128,18 @@ function LectureModal({
       if (currentValues.lectureDesc !== modalData.description) {
         payload.description = currentValues.lectureDesc;
       }
-      if (
-        currentValues.lectureVideo &&
-        currentValues.lectureVideo !== modalData.videoFile
-      ) {
-        payload.videoFile = currentValues.lectureVideo; // Make sure this is correct
+      if (videoMeta) {
+        const { uploadResponse, fileKey } = await uploadToS3(
+          videoMeta,
+          data.lectureVideo,
+          ASSET_TYPES.COURSE
+        );
+        if (uploadResponse.status !== 200) {
+          toast.error("Failed to upload file!");
+          throw new Error("Failed to upload video.");
+        }
+
+        payload.fileKey = fileKey;
       }
       if (
         currentValues.lectureDuration &&
@@ -158,19 +179,18 @@ function LectureModal({
     if (edit) {
       if (!isFormUpdated) return;
       else {
-        handleEditSubSection();
+        handleEditSubSection(data);
         return;
       }
     }
 
     // handle add
-
     // upload file to s3
     setLoading(true);
     const { uploadResponse, fileKey } = await uploadToS3(
       videoMeta,
       data.lectureVideo,
-      "course"
+      ASSET_TYPES.COURSE
     );
     if (uploadResponse.status !== 200) {
       return toast.error("Failed to upload file!");
@@ -224,17 +244,28 @@ function LectureModal({
             onSubmit={handleSubmit(submitHandler)}
             className="grid gap-y-4 p-1"
           >
-            <Upload
-              allowedFileType="video"
-              label="Lecture Video"
-              name="lectureVideo"
-              register={register}
-              setValue={setValue}
-              errors={errors}
-              fileState={setVideoMeta}
-              // viewData={view ? modalData.videoUrl : null}
-              // editData={edit ? modalData.videoUrl : null}
-            />
+            {view && (
+              <div>
+                <video
+                  controls
+                  src={videoUrl}
+                  className="w-full h-fit rounded-lg"
+                ></video>
+              </div>
+            )}
+            {(add || edit) && (
+              <Upload
+                allowedFileType="video"
+                label="Lecture Video"
+                name="lectureVideo"
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                fileState={setVideoMeta}
+                editData={edit ? videoUrl : null}
+              />
+            )}
+
             <div>
               <label htmlFor="lectureTitle">
                 Lecture Title
@@ -282,7 +313,12 @@ function LectureModal({
               )}
             </div>
             {!view && (
-              <Button type="submit" active={true} disabled={loading}>
+              <Button
+                type="submit"
+                active={true}
+                disabled={loading}
+                loading={loading}
+              >
                 {edit ? "Save Changes" : "Save"}
               </Button>
             )}

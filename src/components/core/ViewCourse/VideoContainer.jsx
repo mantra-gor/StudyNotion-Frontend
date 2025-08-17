@@ -134,6 +134,8 @@ function VideoContainer() {
             <div>
               <Button
                 onClick={handleLectureComplete}
+                loading={loading}
+                disabled={loading}
                 className="!bg-caribbeangreen-500 flex items-center justify-between"
               >
                 Mark as completed

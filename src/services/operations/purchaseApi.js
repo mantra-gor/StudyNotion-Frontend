@@ -10,6 +10,7 @@ const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY;
 
 export async function buyCourse({ courses, userDetails, navigate, dispatch }) {
   try {
+    dispatch(setPaymentLoading(true));
     // load the Razorpay script
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
@@ -67,6 +68,8 @@ export async function buyCourse({ courses, userDetails, navigate, dispatch }) {
   } catch (error) {
     console.error("Error capturing payment:", error);
     toast.error("Failed to make payment");
+  } finally {
+    dispatch(setPaymentLoading(false));
   }
 }
 
@@ -104,8 +107,9 @@ async function verifyPayment(response, navigate, dispatch) {
     console.error("Error verifying payment:", error);
     toast.error("Payment verification failed");
     navigate("/dashboard/enrolled-courses");
+  } finally {
+    dispatch(setPaymentLoading(false));
   }
-  dispatch(setPaymentLoading(false));
 }
 
 function loadScript(src) {

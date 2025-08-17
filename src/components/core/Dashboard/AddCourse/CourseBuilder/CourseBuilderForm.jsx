@@ -65,7 +65,6 @@ function CourseBuilderForm() {
 
   const submitHandler = async (data) => {
     let result;
-    // console.log(course);
 
     setLoading(true);
     if (editSectionName) {
@@ -152,6 +151,7 @@ function CourseBuilderForm() {
       <div className="w-full flex gap-4 items-center justify-end">
         <Button
           type="button"
+          loading={loading}
           className="!bg-richblack-700 w-1/5"
           onClick={goBack}
         >
@@ -159,6 +159,7 @@ function CourseBuilderForm() {
         </Button>
         <Button
           active={true}
+          loading={loading}
           onClick={goNext}
           className="w-1/5 flex items-center justify-center gap-2 !px-3"
         >

@@ -33,7 +33,6 @@ function PublishCourse() {
   };
 
   const submitHandler = async (data) => {
-    // TODO: Check this condition is having bug or not
     if (
       (course?.status === COURSES_STATUSES.PUBLISHED &&
         getValues("public") === true) ||
@@ -46,7 +45,7 @@ function PublishCourse() {
 
     // if course is updated
     const payload = {
-      courseID: course._id,
+      courseID: course?._id,
       status: getValues("public")
         ? COURSES_STATUSES.PUBLISHED
         : COURSES_STATUSES.DRAFT,
@@ -55,6 +54,9 @@ function PublishCourse() {
     setLoading(true);
 
     const result = await updateCourse(payload);
+    if (result.success) {
+      goToCourses();
+    }
     setLoading(false);
   };
 
@@ -87,7 +89,8 @@ function PublishCourse() {
             <Button
               active
               type="submit"
-              //   disabled={loading}
+              disabled={loading}
+              loading={loading}
               className="w-1/5 flex items-center justify-center gap-2 !px-3"
             >
               Publish

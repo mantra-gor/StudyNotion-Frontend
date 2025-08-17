@@ -1,67 +1,3 @@
-// import { useSelector } from "react-redux";
-// import { FaCheck } from "react-icons/fa6";
-// import CourseInformationForm from "./CourseInformationForm/CourseInformationForm";
-// import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm";
-// import PublishCourse from "./CourseBuilder/PublishCourse";
-
-// function CourseStepper() {
-//   const { step } = useSelector((state) => state.course);
-//   // const step = 2; //! !testing only
-
-//   const steps = [
-//     {
-//       id: 1,
-//       title: "Course Information",
-//     },
-//     {
-//       id: 2,
-//       title: "Course Builder",
-//     },
-//     {
-//       id: 3,
-//       title: "Publish Course",
-//     },
-//   ];
-//   return (
-//     <div>
-//       <div className="flex justify-between items-center">
-//         {steps.map((item) => (
-//           <div
-//             key={item.id}
-//             className="flex flex-col justify-evenly items-center gap-3"
-//           >
-//             <div
-//               className={`${
-//                 step === item.id
-//                   ? " bg-yellow-900 border-yellow-50 text-yellow-50"
-//                   : " border-richblack-100 bg-richblack-800 text-richblack-300 "
-//               }
-//               ${step > item.id && "bg-yellow-50 border-yellow-50"}
-//                w-10 h-10 rounded-full flex justify-center items-center border text-lg font-semibold`}
-//             >
-//               {step > item.id ? (
-//                 <FaCheck className="text-richblack-800" />
-//               ) : (
-//                 item.id
-//               )}
-//             </div>
-//             {/* Add Dashes ---------------------- */}
-//             {/* {item.id !== steps.length} */}
-//             <div className="text-sm">{item.title}</div>
-//           </div>
-//         ))}
-//       </div>
-//       {step === 1 && <CourseInformationForm />}
-//       {step === 2 && <CourseBuilderForm />}
-//       {step === 3 && <PublishCourse />}
-//     </div>
-//   );
-// }
-
-// export default CourseStepper;
-
-// ?
-
 import { useSelector } from "react-redux";
 import { FaCheck, FaBookOpen, FaHammer, FaRocket } from "react-icons/fa6";
 import CourseInformationForm from "./CourseInformationForm/CourseInformationForm";
@@ -76,19 +12,16 @@ function CourseStepper() {
     {
       id: 1,
       title: "Course Information",
-      subtitle: "Basic details and overview",
       icon: FaBookOpen,
     },
     {
       id: 2,
       title: "Course Builder",
-      subtitle: "Structure and content",
       icon: FaHammer,
     },
     {
       id: 3,
       title: "Publish Course",
-      subtitle: "Review and launch",
       icon: FaRocket,
     },
   ];
@@ -176,22 +109,6 @@ function CourseStepper() {
                   >
                     {item.title}
                   </div>
-
-                  {/* Subtitle */}
-                  {/* <div
-                    className={`
-                    text-xs transition-all duration-300 leading-tight
-                    ${
-                      isActive
-                        ? "text-yellow-50/80"
-                        : isCompleted
-                        ? "text-yellow-50/60"
-                        : "text-richblack-400 group-hover:text-richblack-300"
-                    }
-                  `}
-                  >
-                    {item.subtitle}
-                  </div> */}
 
                   {/* Step Number Indicator */}
                   <div

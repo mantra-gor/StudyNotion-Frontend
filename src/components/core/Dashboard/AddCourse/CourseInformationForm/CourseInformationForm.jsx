@@ -8,7 +8,7 @@ import Upload from "../../../../ui/form/Upload";
 import Button from "../../../../ui/Button";
 import { setCourse, setStep } from "../../../../../redux/slices/courseSlice";
 import toast from "react-hot-toast";
-import { COURSES_STATUSES } from "../../../../../utils/constants";
+import { ASSET_TYPES, COURSES_STATUSES } from "../../../../../utils/constants";
 import {
   addCourse,
   updateCourse,
@@ -32,26 +32,27 @@ function CourseInformationForm() {
   const [thumbnailMeta, setThumbnailMeta] = useState(null);
   const [courseCategories, setCourseCategories] = useState([]);
 
+  const fetchCategories = async () => {
+    setLoading(true);
+    dispatch(getAllCategory(setCourseCategories));
+    setLoading(false);
+  };
+
   // Fetch categories and set initial form values if editing
   useEffect(() => {
-    const fetchCategories = async () => {
-      setLoading(true);
-      dispatch(getAllCategory(setCourseCategories));
-      setLoading(false);
-    };
+    fetchCategories();
 
     // if form is in edit mode
     if (editCourse) {
-      // console.log("data populated", editCourse);
-      // console.log(course);
-
-      setValue("courseTitle", course.courseName);
-      setValue("courseShortDesc", course.courseDescription);
-      setValue("coursePrice", course.price);
+      setValue("title", course.title);
+      setValue("description", course.description);
+      setValue("price", course.price);
+      setValue("language", course.language);
+      setValue("category", course.category._id);
       setValue("tags", course.tags);
-      setValue("category", course.category);
-      setValue("keyFeatures", course.keyFeatures);
       setValue("courseImage", course.thumbnailInfo.objectUrl);
+      setValue("keyFeatures", course.keyFeatures);
+      return;
     }
 
     const initializeFormValues = () => {
@@ -69,7 +70,6 @@ function CourseInformationForm() {
       fields.forEach((field) => setValue(field, course[field]));
     };
 
-    fetchCategories();
     initializeFormValues();
   }, [dispatch, editCourse, setValue, course]);
 
@@ -94,29 +94,37 @@ function CourseInformationForm() {
   // Handle form submission
   const onSubmit = async (data) => {
     setLoading(true);
+
     try {
-      if (!thumbnailMeta) {
+      if (!editCourse && !thumbnailMeta) {
         return toast.error("Please upload a thumbnail!");
       }
-      //! asset type needs to follow best practices by creating a constant -- pending
-      // upload file to s3
-      const { uploadResponse, fileKey } = await uploadToS3(
-        thumbnailMeta,
-        data.file,
-        "thumbnail"
-      );
-      if (uploadResponse.status !== 200) {
-        return toast.error("Failed to upload file!");
-      }
 
-      const fileData = new FormData();
+      if (data.file) {
+        //! asset type needs to follow best practices by creating a constant -- pending
+        // upload file to s3
+        var { uploadResponse, fileKey } = await uploadToS3(
+          thumbnailMeta,
+          data.file,
+          ASSET_TYPES.THUMBNAIL
+        );
+        if (uploadResponse.status !== 200) {
+          return toast.error("Failed to upload file!");
+        }
+      }
 
       let payload = {};
       if (editCourse) {
-        if (!isFormUpdated()) return toast.error("No changes detected.");
         // Add only changed fields to FormData
+        if (!isFormUpdated()) return toast.error("No changes detected.");
+        const { file, ...restOfData } = data;
+        payload = {
+          ...restOfData,
+          courseID: course._id,
+          fileKey,
+          status: COURSES_STATUSES.DRAFT,
+        };
       } else {
-        // eslint-disable-next-line no-unused-vars
         const { file, ...restOfData } = data;
         payload = {
           ...restOfData,
@@ -126,7 +134,7 @@ function CourseInformationForm() {
       }
 
       const result = editCourse
-        ? await updateCourse(payload, fileData)
+        ? await updateCourse(payload)
         : await addCourse(payload, payload);
       setLoading(false);
 
@@ -136,6 +144,8 @@ function CourseInformationForm() {
       }
     } catch (error) {
       console.log(error);
+      setLoading(false);
+    } finally {
       setLoading(false);
     }
   };
@@ -284,7 +294,6 @@ function CourseInformationForm() {
               </span>
             )}
           </div>
-          {/* <TagsInput setValue={setValue} errors={errors} /> */}
           <TagsInput
             label="Tags"
             name="tags"
@@ -304,27 +313,6 @@ function CourseInformationForm() {
             fileState={setThumbnailMeta}
             editData={editCourse ? course?.thumbnailInfo.objectUrl : null}
           />
-          {/* <div className="grid gap-y-1">
-          <label>
-            Benifits of the course{" "}
-            <sup className=" text-[0.725rem] text-pink-200">*</sup>
-          </label>
-          <textarea
-            name="keyFeatures"
-            id="keyFeatures"
-            placeholder="Enter Benifits of the course"
-            {...register("keyFeatures", { required: true })}
-            className={`w-full bg-richblack-700 rounded-[0.5rem] text-richblack-5 p-[12px] shadow-richblack`}
-            style={{
-              boxShadow: " 0px -1px 0px 0px rgba(255, 255, 255, 0.18) inset",
-            }}
-          ></textarea>
-          {errors.keyFeatures && (
-            <span className="text-pink-200 text-sm">
-              Course Benifits is required
-            </span>
-          )}
-        </div> */}
           <KeyFeatures
             name="keyFeatures"
             label="Key Features"

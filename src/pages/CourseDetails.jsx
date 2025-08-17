@@ -28,11 +28,13 @@ import toast from "react-hot-toast";
 import Footer from "../components/common/Footer";
 import useAuth from "../hooks/useAuth";
 import { addToCart } from "../redux/slices/cartSlice";
+import { setPaymentLoading } from "../redux/slices/courseSlice";
 
 function CourseDetails() {
   const { user } = useSelector((state) => state.profile);
   const { courseID } = useParams();
   const [loading, setLoading] = useState(false);
+  const { paymentLoading } = useSelector((state) => state.course);
   const [courseData, setCourseData] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
   const [activeTab, setActiveTab] = useState("overview");
@@ -53,17 +55,20 @@ function CourseDetails() {
     fetchCourseDetails();
   }, [courseID]);
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (!isLoggedin) {
       toast("Please login to enroll the course.");
       return navigate("/login");
     }
-    buyCourse({
+
+    setPaymentLoading(true);
+    await buyCourse({
       courses: [courseID],
       userDetails: user,
       navigate,
       dispatch,
     });
+    setPaymentLoading(false);
   };
 
   const addToCartHandler = () => {
@@ -421,6 +426,8 @@ function CourseDetails() {
                                 className="!rounded-xl flex items-center justify-center w-full font-bold py-4 text-base shadow-lg transition-all
                                 duration-300 transform hover:-translate-y-0.5"
                                 onClick={handlePurchase}
+                                disabled={paymentLoading}
+                                loading={paymentLoading}
                               >
                                 <MdOutlinePayments className="mr-2" size={24} />
                                 Enroll Now
@@ -749,9 +756,18 @@ function CourseDetails() {
                       >
                         <div className="flex items-start space-x-6">
                           <div className="flex-shrink-0">
-                            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-caribbeangreen-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
-                              {review.user?.firstName?.charAt(0) || "U"}
-                            </div>
+                            {review.user?.avatar ? (
+                              <div className="w-14 h-14 rounded-full overflow-clip flex items-center justify-center">
+                                <img
+                                  src={review.user?.avatar}
+                                  alt={review.user?.firstName}
+                                />
+                              </div>
+                            ) : (
+                              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-caribbeangreen-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                U
+                              </div>
+                            )}
                           </div>
                           <div className="flex-1 space-y-3">
                             <div className="flex items-center justify-between">

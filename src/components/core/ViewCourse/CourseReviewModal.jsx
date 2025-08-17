@@ -145,7 +145,12 @@ function CourseReviewModal({ setReviewModal }) {
                 )}
               </div>
               {!isRatingLocked && (
-                <Button type="submit" active={true} disabled={loading}>
+                <Button
+                  type="submit"
+                  active={true}
+                  loading={loading}
+                  disabled={loading}
+                >
                   Submit
                 </Button>
               )}

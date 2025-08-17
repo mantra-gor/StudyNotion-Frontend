@@ -31,16 +31,9 @@ const courseSlice = createSlice({
       state.editCourse = action.payload;
     },
     setPaymentLoading: (state, action) => {
-      state.editCourse = action.payload;
+      state.paymentLoading = action.payload;
     },
-    resetCourseState: (state) => {
-      state.editCourse = {
-        step: 1,
-        course: null,
-        editCourse: false,
-        paymentLoading: false,
-      };
-    },
+    resetCourseState: () => initialState,
   },
 });
 

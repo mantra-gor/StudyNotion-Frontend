@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { updateProfilePicture } from "../../../../services/operations/dashboardApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../../redux/slices/profileSlice";
+import { ASSET_TYPES } from "../../../../utils/constants";
 
 function ProfilePicture({ user }) {
   const inputRef = useRef(null);
@@ -28,7 +29,7 @@ function ProfilePicture({ user }) {
       const { uploadResponse, fileKey } = await uploadToS3(
         fileMetadata,
         file,
-        "profile-picture"
+        ASSET_TYPES.PROFILE_PICTURE
       );
       if (uploadResponse.status !== 200) {
         return toast.error("Failed to upload file!");

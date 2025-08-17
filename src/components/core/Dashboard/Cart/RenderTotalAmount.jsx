@@ -6,6 +6,8 @@ import useAuth from "../../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { buyCourse } from "../../../../services/operations/purchaseApi";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { setPaymentLoading } from "../../../../redux/slices/courseSlice";
 
 function RenderTotalAmount() {
   const { total, cart, totalItems } = useSelector((state) => state.cart);
@@ -13,20 +15,24 @@ function RenderTotalAmount() {
   const { isLoggedin } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { paymentLoading } = useSelector((state) => state.course);
 
-  const handleBuyCourse = () => {
+  const handleBuyCourse = async () => {
     const courseIds = cart.map((course) => course._id);
     // if user is not logged in redirect to login page
     if (!isLoggedin) {
       toast("Please login to enroll the course.");
       return navigate("/login");
     }
-    buyCourse({
+
+    setPaymentLoading(true);
+    await buyCourse({
       courses: courseIds,
       userDetails: user,
       navigate,
       dispatch,
     });
+    setPaymentLoading(false);
   };
 
   return (
@@ -61,6 +67,8 @@ function RenderTotalAmount() {
           <Button
             active
             onClick={handleBuyCourse}
+            disabled={paymentLoading}
+            loading={paymentLoading}
             className="w-full text-base font-semibold flex items-center justify-center space-x-2"
           >
             <FaLock size={16} />

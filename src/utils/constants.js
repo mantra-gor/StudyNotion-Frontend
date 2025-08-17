@@ -4,6 +4,12 @@ export const ACCOUNT_TYPE = {
   INSTRUCTOR: "Instructor",
 };
 
+export const ASSET_TYPES = {
+  THUMBNAIL: "thumbnail",
+  COURSE: "course",
+  PROFILE_PICTURE: "profile-picture",
+};
+
 export const COURSES_STATUSES = {
   DRAFT: "Draft",
   PUBLISHED: "Published",

@@ -1,5 +1,5 @@
 import { TbCloudUpload } from "react-icons/tb";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { FILE_CONFIG } from "../../../utils/constants";
 
@@ -15,11 +15,13 @@ function Upload({
   name,
 }) {
   const [dragActive, setDragActive] = useState(false);
-  const [previewFile, setPreviewFile] = useState(
-    viewData ? viewData : editData ? editData : ""
-  );
+  const [previewFile, setPreviewFile] = useState(editData ? editData : "");
   const inputRef = useRef(null);
   const videoRef = useRef(null);
+
+  useEffect(() => {
+    setPreviewFile(editData);
+  }, [editData]);
 
   const handleDrag = (e) => {
     e.preventDefault();

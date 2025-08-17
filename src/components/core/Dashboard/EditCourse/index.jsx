@@ -28,14 +28,14 @@ function EditCourse() {
   }, []);
 
   return (
-    <div className="text-richblack-5 ">
+    <div className="text-richblack-5 w-full">
       {loading ? (
         <div className="w-full min-h-[80vh] overscroll-none flex items-center">
           <Spinner />
         </div>
       ) : (
-        <div className="flex justify-between">
-          <div className="w-6/12">
+        <div className="flex w-full justify-between">
+          <div className="w-6/12 max-w-full">
             <h1 className="text-2xl font-semibold">Edit Course</h1>
             <div className="mt-6">
               <div>
@@ -43,7 +43,7 @@ function EditCourse() {
               </div>
             </div>
           </div>
-          <div className="w-5/12 h-fit bg-richblack-800 border border-richblack-700 p-8 rounded-lg">
+          <div className="w-5/12 max-w-[440px] h-fit bg-richblack-800 border border-richblack-700 p-8 rounded-lg">
             <h3 className="text-xl font-semibold flex items-center gap-2 p-1">
               <MdOutlineTipsAndUpdates className="text-yellow-200" size={26} />
               Course Upload Tips

@@ -34,6 +34,7 @@ function ConfirmationModal({
             <Button
               className="text-richblack-25"
               disabled={processing}
+              loading={processing}
               onClick={btnOnclick}
             >
               {btnText}
