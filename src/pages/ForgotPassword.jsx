@@ -51,9 +51,13 @@ function ForgotPassword() {
             )}
             <div>
               {!isEmailSent ? (
-                <Button active={true}>Reset Password</Button>
+                <Button type="submit" active={true}>
+                  Reset Password
+                </Button>
               ) : (
-                <Button active={true}>Resend Email</Button>
+                <Button type="submit" active={true}>
+                  Resend Email
+                </Button>
               )}
             </div>
           </form>
