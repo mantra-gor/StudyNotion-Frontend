@@ -111,7 +111,9 @@ function ResetPassword() {
               </span>
             </div>
             <div className="mt-7">
-              <Button active={true}>Reset Password</Button>
+              <Button type="submit" active={true}>
+                Reset Password
+              </Button>
             </div>
           </form>
           <Link to="/login">

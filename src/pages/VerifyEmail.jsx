@@ -77,7 +77,9 @@ function VerifyEmail() {
                 />
               )}
             />
-            <Button active={true}>Verify Email</Button>
+            <Button type="submit" active={true}>
+              Verify Email
+            </Button>
           </form>
           <div className="flex items-center justify-between">
             <Link to="/signup">
