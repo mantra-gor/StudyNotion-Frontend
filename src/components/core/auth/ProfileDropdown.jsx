@@ -27,8 +27,7 @@ function ProfileDropdown() {
         {open && (
           <div
             ref={ref}
-            className=" md:w-[200px] -left-4 absolute top-[45px] flex flex-col rounded-md 
-        bg-richblack-800 p-1 text-richblack-50 transition-all duration-200 
+            className=" md:w-[200px] -left-4 absolute top-[45px] flex flex-col rounded-md bg-richblack-800 p-1 text-richblack-50 transition-all duration-200 
            drop-shadow-white-lg z-30"
             //  group-hover:visible group-hover:opacity-100
           >

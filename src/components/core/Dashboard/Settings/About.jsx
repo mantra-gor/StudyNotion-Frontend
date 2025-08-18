@@ -1,4 +1,4 @@
-function About({ user, userDetails, setUserDetails }) {
+function About({ userDetails, setUserDetails }) {
   const handleAboutChange = (e) => {
     setUserDetails((prev) => ({ ...prev, about: e.target.value }));
   };

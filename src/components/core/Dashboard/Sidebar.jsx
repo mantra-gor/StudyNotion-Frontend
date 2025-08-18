@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useSelector } from "react-redux";
 import { sidebarLinks } from "../../../data/dashboard-links";
 import Spinner from "../../ui/spinner/Spinner";

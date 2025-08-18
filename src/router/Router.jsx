@@ -3,7 +3,6 @@ import { lazy } from "react";
 import ProtectedRoute from "./ProtectedRoute";
 import MyCourses from "../components/core/Dashboard/MyCourses";
 import EditCourse from "../components/core/Dashboard/EditCourse";
-import Catalog from "../pages/Catalog";
 import CourseDetails from "../pages/CourseDetails";
 import ViewCourse from "../pages/ViewCourse";
 
@@ -23,10 +22,15 @@ const InstructorDashboard = lazy(() =>
 const EnrolledCourses = lazy(() =>
   import("../components/core/Dashboard/EnrolledCourses")
 );
+const PurchaseHistory = lazy(() =>
+  import("../components/core/Dashboard/PurchaseHistory")
+);
 const VideoContainer = lazy(() =>
   import("../components/core/ViewCourse/VideoContainer")
 );
 const Settings = lazy(() => import("../components/core/Dashboard/Settings"));
+const CategoryPage = lazy(() => import("../pages/CategoryPage"));
+const Catalog = lazy(() => import("../pages/Catalog"));
 const Cart = lazy(() => import("../components/core/Dashboard/Cart"));
 const AddCourse = lazy(() => import("../components/core/Dashboard/AddCourse"));
 const BlankLayout = lazy(() => import("../components/core/Layout/BlankLayout"));
@@ -64,8 +68,12 @@ const Router = () => {
           element: <VerifyEmail />,
         },
         {
-          path: "/catalog/:catalogName",
+          path: "/catalog/",
           element: <Catalog />,
+        },
+        {
+          path: "/catalog/:catalogName",
+          element: <CategoryPage />,
         },
         {
           path: "/course/:courseID",
@@ -135,7 +143,7 @@ const Router = () => {
             },
             {
               path: "/dashboard/purchase-history",
-              element: <EnrolledCourses />,
+              element: <PurchaseHistory />,
             },
             {
               path: "/dashboard/settings",

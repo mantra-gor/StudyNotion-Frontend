@@ -235,9 +235,12 @@ function CourseDetails() {
             <div className="lg:col-span-3 space-y-8">
               {/* Breadcrumb with better styling */}
               <nav className="flex items-center space-x-2 text-sm">
-                <span className="text-richblack-300 hover:text-yellow-200 transition-colors duration-200 cursor-pointer">
+                <Link
+                  to={`/catalog`}
+                  className="text-richblack-300 hover:text-yellow-200 transition-colors duration-200 cursor-pointer"
+                >
                   Catalog
-                </span>
+                </Link>
                 <FaChevronRight className="text-richblack-500" size={12} />
                 <Link
                   to={`/catalog/${linkPath}`}

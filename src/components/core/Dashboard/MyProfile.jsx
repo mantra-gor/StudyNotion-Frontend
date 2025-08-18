@@ -11,30 +11,57 @@ function MyProfile() {
     <div className="w-full flex flex-col gap-8 p-6">
       <h1 className="text-2xl font-bold text-richblack-5">My Profile</h1>
       <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4 md:gap-8">
+        <div className="md:hidden">
+          <div className="flex justify-between">
             <img
               src={user?.avatar}
               alt="Avatar"
               className="w-12 md:w-16 rounded-full"
             />
-            <div>
-              <p className="text-richblack-5 text-lg font-semibold">
-                {user.firstName + " " + user.lastName}
-              </p>
-              <p className="text-richblack-100">{user.email}</p>
-            </div>
+            <Button
+              active
+              onClick={() => {
+                navigate("/dashboard/settings");
+              }}
+              className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
+            >
+              <TbEdit size={28} />
+              Edit
+            </Button>
           </div>
-          <Button
-            active
-            onClick={() => {
-              navigate("/dashboard/settings");
-            }}
-            className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
-          >
-            <TbEdit size={28} />
-            Edit
-          </Button>
+          <div className="mt-3">
+            <p className="text-richblack-5 text-lg font-semibold">
+              {user.firstName + " " + user.lastName}
+            </p>
+            <p className="text-richblack-100">{user.email}</p>
+          </div>
+        </div>
+        <div className="hidden md:block">
+          <div className="flex justify-between">
+            <div className="flex items-center gap-4 md:gap-8">
+              <img
+                src={user?.avatar}
+                alt="Avatar"
+                className="w-12 md:w-16 rounded-full"
+              />
+              <div>
+                <p className="text-richblack-5 text-lg font-semibold">
+                  {user.firstName + " " + user.lastName}
+                </p>
+                <p className="text-richblack-100">{user.email}</p>
+              </div>
+            </div>
+            <Button
+              active
+              onClick={() => {
+                navigate("/dashboard/settings");
+              }}
+              className="flex justify-center items-center gap-2 !w-[65px] !h-[38px] !p-2"
+            >
+              <TbEdit size={28} />
+              Edit
+            </Button>
+          </div>
         </div>
       </div>
 
