@@ -59,15 +59,15 @@ function Navbar() {
                     {item.title}
                   </NavLink>
                 ) : (
-                  <NavLink
-                    to={item.path}
-                    className="flex items-center justify-center relative gap-1 group"
+                  <div
+                    className="flex items-center gap-1 cursor-pointer"
                     onMouseEnter={() => setActiveDropdown(true)}
                     onMouseLeave={() => setActiveDropdown(false)}
                   >
-                    {item.title}
+                    <span>{item.title}</span>
                     <FaAngleDown />
-                    {/* Catalog Dropdown */}
+
+                    {/* Dropdown */}
                     <div
                       className={`absolute top-[50px] -left-8 md:w-[280px] bg-richblack-800 border border-richblack-700 rounded-md shadow-lg text-sm transition-all duration-200 ${
                         activeDropdown
@@ -80,6 +80,7 @@ function Navbar() {
                           const linkPath = category?.name
                             ?.toLowerCase()
                             ?.replace(/ /g, "-");
+
                           return (
                             <Link
                               key={_id}
@@ -96,7 +97,7 @@ function Navbar() {
                         </div>
                       )}
                     </div>
-                  </NavLink>
+                  </div>
                 )}
                 <div className="mt-3 absolute bg-yellow-100 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-all duration-200" />
               </li>

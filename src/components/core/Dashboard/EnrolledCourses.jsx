@@ -3,6 +3,7 @@ import Spinner from "../../ui/spinner/Spinner";
 import { fetchEnrolledCourses } from "../../../services/operations/courseDetailsApi";
 import { Link } from "react-router-dom";
 import { FaGraduationCap } from "react-icons/fa";
+// import EnrolledCoursesTable from "./EnrolledCoursesTable";
 import EnrolledCoursesTable from "./EnrolledCoursesTable";
 
 function EnrolledCourses() {

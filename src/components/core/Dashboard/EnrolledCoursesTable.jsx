@@ -5,9 +5,11 @@ import { GoCheckCircleFill, GoClockFill } from "react-icons/go";
 import { TbSearch, TbSortAscending, TbSortDescending } from "react-icons/tb";
 import { MdViewModule, MdViewList } from "react-icons/md";
 import { FaPlay, FaBookOpen, FaUsers, FaTags } from "react-icons/fa";
-import ProgressBar from "@ramonak/react-progress-bar";
+import ProgressBarModule from "@ramonak/react-progress-bar";
 import { Link } from "react-router-dom";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+
+const ProgressBar = ProgressBarModule.default;
 
 function EnrolledCoursesTable({ enrolledData }) {
   // Enhanced state for new features
@@ -103,7 +105,7 @@ function EnrolledCoursesTable({ enrolledData }) {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedCourses = filteredAndSortedCourses.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + itemsPerPage,
   );
 
   const getSortIcon = (key) => {
@@ -448,18 +450,6 @@ function EnrolledCoursesTable({ enrolledData }) {
 
                       <Td className="py-6 px-4">
                         <div className="space-y-2">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm font-medium text-richblack-200">
-                              {progress}%
-                            </span>
-                            <span className="text-xs text-richblack-400 text-nowrap">
-                              {progress === 100
-                                ? "Complete"
-                                : progress > 0
-                                ? "In Progress"
-                                : "Not Started"}
-                            </span>
-                          </div>
                           <ProgressBar
                             completed={progress}
                             height="8px"
@@ -469,6 +459,11 @@ function EnrolledCoursesTable({ enrolledData }) {
                             borderRadius="4px"
                             animateOnRender={true}
                           />
+                          <div className="flex items-center justify-center mb-1">
+                            <span className="text-sm font-medium text-richblack-200">
+                              {progress}%
+                            </span>
+                          </div>
                         </div>
                       </Td>
 
