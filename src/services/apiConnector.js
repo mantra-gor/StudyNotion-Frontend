@@ -1,10 +1,6 @@
 import axios from "axios";
 import { tokenRefresh } from "./jwt/jwtConfig";
 
-// Get the base URL from environment variables
-const localBaseUrl = import.meta.env.VITE_LOCAL_BASE_URL;
-const liveBaseUrl = import.meta.env.VITE_LIVE_BASE_URL;
-
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 if (!BASE_URL) {
