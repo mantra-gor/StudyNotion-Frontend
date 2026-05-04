@@ -30,7 +30,7 @@ function Password() {
   return (
     <div>
       <form onSubmit={handleSubmit(changePassword)}>
-        <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 srounded-md">
+        <div className="bg-richblack-800 border border-richblack-700 p-4 md:px-8 md:py-6 rounded-md">
           <div className="flex justify-between items-center">
             <h2 className="text-richblack-5 text-lg font-semibold">
               Change Password
